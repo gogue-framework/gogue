@@ -60,7 +60,6 @@ func (c *Controller) DeleteEntity(entity int) {
 func (c *Controller) AddComponent(entity int, component Component) {
 	// First, get the type of the component
 	componentType := reflect.TypeOf(component)
-	fmt.Printf("Adding component of type %v to entity %v\n", componentType, entity)
 
 	// Record that the component type is associated with the entity.
 	c.components[componentType] = append(c.components[componentType], entity)
@@ -107,6 +106,17 @@ func (c *Controller) GetEntity(entity int) map[reflect.Type]Component {
 // GetEntities returns a map of all entities and their component instances
 func (c *Controller) GetEntities() map[int]map[reflect.Type]Component {
 	return c.entities
+}
+
+// UpdateComponent updates a component on an entity with a new version of the same component
+func (c *Controller) UpdateComponent(entity int, componentType reflect.Type, newComponent Component) int {
+	// First, remove the component in question (Don't actually update things, but rather remove and replace)
+	c.RemoveComponent(entity, componentType)
+
+	// Next, replace the removed component with the updated one
+	c.AddComponent(entity, newComponent)
+
+	return entity
 }
 
 // DeleteComponent will delete a component instance from an entity, based on component type. It will also remove the
