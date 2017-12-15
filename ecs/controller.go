@@ -3,10 +3,13 @@ package ecs
 import (
 	"reflect"
 	"fmt"
+	"sort"
 )
 
 type Controller struct {
 	systems map[reflect.Type]System
+	sortedSystems map[int][]System
+	priorityKeys []int
 	nextEntityID int
 	components map[reflect.Type][]int
 	entities map[int]map[reflect.Type]Component
@@ -17,6 +20,8 @@ type Controller struct {
 func NewController() *Controller {
 	controller := Controller{}
 	controller.systems = make(map[reflect.Type]System)
+	controller.sortedSystems = make(map[int][]System)
+	controller.priorityKeys = []int{}
 	controller.nextEntityID = 0
 	controller.components = make(map[reflect.Type][]int)
 	controller.entities = make(map[int]map[reflect.Type]Component)
@@ -152,6 +157,13 @@ func (c *Controller) AddSystem(system System, priority int) {
 	if _, ok := c.systems[systemType]; !ok {
 		// A system of this type has not been added yet, so add it to the systems list
 		c.systems[systemType] = system
+
+		// Now, append the system to a special list that will be used for sorting by priority
+		if !IntInSlice(priority, c.priorityKeys) {
+			c.priorityKeys = append(c.priorityKeys, priority)
+		}
+		c.sortedSystems[priority] = append(c.sortedSystems[priority], system)
+		sort.Ints(c.priorityKeys)
 	} else {
 		fmt.Printf("A system of type %v was already added to the controller %v!", systemType, c)
 	}
@@ -161,7 +173,10 @@ func (c *Controller) AddSystem(system System, priority int) {
 // order they are found, or if they have a priority, in priority order. If there is a mix of systems with priority and
 // without, systems with priority will be processed first (in order).
 func (c *Controller) Process() {
-	for _, system := range c.systems {
-		system.Process()
+	for _, key := range c.priorityKeys {
+		for _, system := range c.sortedSystems[key] {
+			system.Process()
+		}
 	}
 }
+
