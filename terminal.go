@@ -77,7 +77,7 @@ func CloseConsole() {
 
 // Print prints out a single character at the x, y coordinates provided, in the color provided,
 // and on the layer provided. If no layer is provided, layer 0 is used.
-func Print(x, y int, g Glyph, backgroundColor string, layer int) {
+func Print(x, y int, g Glyph, backgroundColor string, layer int, useExploredColor ...bool) {
 	// Set the layer first. If not provided, this defaults to 0, the base layer in BearLibTerminal
 	blt.Layer(layer)
 
@@ -88,7 +88,11 @@ func Print(x, y int, g Glyph, backgroundColor string, layer int) {
 	}
 
 	// Next, set the color to print in
-	blt.Color(blt.ColorFromName(g.Color()))
+	if len(useExploredColor) > 0 {
+		blt.Color(blt.ColorFromName(g.ExploredColor()))
+	} else {
+		blt.Color(blt.ColorFromName(g.Color()))
+	}
 
 	// Finally, print the character at the provided coordinates
 	blt.Print(x, y, string(g.Char()))

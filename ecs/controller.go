@@ -108,7 +108,7 @@ func (c *Controller) GetEntity(entity int) map[reflect.Type]Component {
 	return nil
 }
 
-// GetEntities returns a map of all entities and their component instances
+// GetEntities returns a gamemap of all entities and their component instances
 func (c *Controller) GetEntities() map[int]map[reflect.Type]Component {
 	return c.entities
 }
@@ -151,6 +151,10 @@ func (c *Controller) RemoveComponent(entity int, componentType reflect.Type) int
 	return entity
 }
 
+
+// AddSystem registers a system to the controller. A priority can be provided, and systems will be processed in
+// numeric order, low to high. If multiple systems are registered as the same priority, they will be randomly run within
+// that priroty group.
 func (c *Controller) AddSystem(system System, priority int) {
 	systemType := reflect.TypeOf(system)
 

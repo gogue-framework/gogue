@@ -3,11 +3,13 @@ package gogue
 type Glyph interface {
 	Char() rune
 	Color() string
+	ExploredColor() string
 }
 
 type glyph struct {
 	char rune
 	color string
+	unexploredColor string
 }
 
 func (g glyph) Char() rune {
@@ -18,8 +20,15 @@ func (g glyph) Color() string {
 	return g.color
 }
 
-func NewGlyph(char rune, color string) Glyph {
-	return glyph{char, color}
+func (g glyph) ExploredColor() string {
+	return g.unexploredColor
 }
 
-var EmptyGlyph = NewGlyph(' ', "white")
+func NewGlyph(char rune, color, exploredColor string) Glyph {
+	if exploredColor == "" {
+		exploredColor = "gray"
+	}
+	return glyph{char, color, exploredColor}
+}
+
+var EmptyGlyph = NewGlyph(' ', "white", "")
