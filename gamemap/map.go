@@ -69,7 +69,7 @@ func (m *Map) Render(gameCamera *camera.GameCamera, newCameraX, newCameraY int) 
 			}
 		}
 	}
-	newCameraX, newCameraY = gameCamera.ToCameraCoordinates(newCameraX, newCameraY)
+	//newCameraX, newCameraY = gameCamera.ToCameraCoordinates(newCameraX, newCameraY)
 	gameCamera.MoveCamera(newCameraX, newCameraY, m.Width, m.Height)
 
 	for x := 0; x < gameCamera.Width; x++ {
