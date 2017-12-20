@@ -65,7 +65,7 @@ func (m *Map) Render(gameCamera *camera.GameCamera, newCameraX, newCameraY int) 
 			// cleared.
 			for i := 0; i <= 2; i++ {
 
-				gogue.Print(x, y, gogue.EmptyGlyph, "", i)
+				gogue.PrintGlyph(x, y, gogue.EmptyGlyph, "", i)
 			}
 		}
 	}
@@ -78,9 +78,9 @@ func (m *Map) Render(gameCamera *camera.GameCamera, newCameraX, newCameraY int) 
 			mapX, mapY := gameCamera.X + x, gameCamera.Y + y
 
 			if m.Tiles[mapX][mapY].Visible {
-				gogue.Print(x, y, m.Tiles[mapX][mapY].Glyph, "", 0)
+				gogue.PrintGlyph(x, y, m.Tiles[mapX][mapY].Glyph, "", 0)
 			} else if m.Tiles[mapX][mapY].Explored {
-				gogue.Print(x, y, m.Tiles[mapX][mapY].Glyph, "", 0, true)
+				gogue.PrintGlyph(x, y, m.Tiles[mapX][mapY].Glyph, "", 0, true)
 			}
 
 

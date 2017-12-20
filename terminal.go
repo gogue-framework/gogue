@@ -75,9 +75,14 @@ func CloseConsole() {
 	blt.Close()
 }
 
-// Print prints out a single character at the x, y coordinates provided, in the color provided,
+func ClearArea(x, y, width, height, layer int) {
+	blt.Layer(layer)
+	blt.ClearArea(x, y, width, height)
+}
+
+// PrintGlyph prints out a single character at the x, y coordinates provided, in the color provided,
 // and on the layer provided. If no layer is provided, layer 0 is used.
-func Print(x, y int, g Glyph, backgroundColor string, layer int, useExploredColor ...bool) {
+func PrintGlyph(x, y int, g Glyph, backgroundColor string, layer int, useExploredColor ...bool) {
 	// Set the layer first. If not provided, this defaults to 0, the base layer in BearLibTerminal
 	blt.Layer(layer)
 
@@ -96,6 +101,29 @@ func Print(x, y int, g Glyph, backgroundColor string, layer int, useExploredColo
 
 	// Finally, print the character at the provided coordinates
 	blt.Print(x, y, string(g.Char()))
+}
+
+// PrintText will print a string of text, starting at the (X, Y) coords provided, using the color/background color
+// provided, on the layer provided.
+func PrintText(x, y int, text, color, backgroundColor string, layer int) {
+	// Set the layer first. If not provided, this defaults to 0, the base layer in BearLibTerminal
+	blt.Layer(layer)
+
+	if backgroundColor != "" {
+		// If a background color was provided, set that
+		// Background color can only be applied to the lowest layer
+		blt.BkColor(blt.ColorFromName(backgroundColor))
+	}
+
+	if color != "" {
+		// If a color was set, use that, otherwise, default to white
+		blt.Color(blt.ColorFromName(color))
+	} else {
+		blt.Color(blt.ColorFromName("white"))
+	}
+
+	// Finally, print the character at the provided coordinates
+	blt.Print(x, y, text)
 }
 
 // ReadInput reads the next input event from the Input queue.
