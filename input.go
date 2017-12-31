@@ -18,7 +18,7 @@ func NewTerminalInputHandler() *TerminalInputHandler {
 }
 
 // RegisterInputHandler registers a new key input handler to the provided key. args can optionally be provided
-func (ti TerminalInputHandler) RegisterInputHandler(key int, handlerFunction func(map[string]interface{}, *ecs.Controller), args map[string]interface{}) {
+func (ti *TerminalInputHandler) RegisterInputHandler(key int, handlerFunction func(map[string]interface{}, *ecs.Controller), args map[string]interface{}) {
 	// First, check to see if this key has already been registered
 	if _, ok := ti.keyHandlers[key]; ok {
 		fmt.Printf("The key %v has already been registered in this InputHandler. Aborting.", key)
@@ -35,10 +35,12 @@ func (ti TerminalInputHandler) RegisterInputHandler(key int, handlerFunction fun
 }
 
 // Process Input takes a key, checks for a registered handler, and then runs that handler, with any provided args
-func (ti TerminalInputHandler) ProcessInput(key int, controller *ecs.Controller) {
+func (ti *TerminalInputHandler) ProcessInput(key int, controller *ecs.Controller) {
 	// Check to see if the pressed key has a handler. If it does not, do nothing.
 	_, ok := ti.keyHandlers[key]
 
+	// If a key handler has been registered, and the state is not currently a menu, go ahead and process the input
+	// Otherwise, do nothing.
 	if ok {
 		keyHandlerFunction := ti.keyHandlers[key]
 		keyHandlerArgs := ti.handlerArgs[key]

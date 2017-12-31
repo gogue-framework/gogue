@@ -10,6 +10,8 @@ Development is on-going, so use at your own risk.
 This feature list is incomplete, as various pieces are still in development.
 
 - Terminal creation and management (using BearlibTerminal)
+    - Colors
+    - Easy font management
     - Glyph rendering
     - Input handling
 - Dynamic input registration system
@@ -19,9 +21,10 @@ This feature list is incomplete, as various pieces are still in development.
 - Field of View (only raycasting at the moment, but more to come)
 - UI
     - Logging
-    - Menus
 - Pathfinding
 - Random number generation
+    - Uniform, Normal Distribution, Ranges, Weighted choices
+    - Dice rolls (normal and open ended)
 - Random name generation
 
 ... and whatever else I deem useful

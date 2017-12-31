@@ -32,8 +32,8 @@ func init() {
 
 }
 
-// InitConsole sets up a BearLibTerminal conosle window
-// The X and Y dimensions, title, and a fullscreen flag can all be priovided
+// InitConsole sets up a BearLibTerminal console window
+// The X and Y dimensions, title, and a fullscreen flag can all be provided
 // The console window is not actually rendered to the screen until Refresh is called
 func InitConsole(windowSizeX, windowSizeY int, title string, fullScreen bool) {
 	blt.Open()
@@ -56,10 +56,20 @@ func InitConsole(windowSizeX, windowSizeY int, title string, fullScreen bool) {
 
 // SetFont sets the font size and font to use.
 // If this method is not called, the default font and size for BearLibTerminal is used
-func SetFont(fontSize int, fontPath string) {
+func SetPrimaryFont(fontSize int, fontPath string) {
 	// Next, setup the font config string
 	consoleFontSize := "size=" + strconv.Itoa(fontSize)
 	font := "font: " + fontPath + ", " + consoleFontSize
+
+	blt.Set(font + ";")
+	blt.Clear()
+}
+
+// AddFont adds a named font to the console, that can be used when printing text, as an alternative to the
+// primary font.
+func AddFont(name, path string, fontSize int) {
+	consoleFontSize := "size=" + strconv.Itoa(fontSize)
+	font := name + " font: " + path + ", " + consoleFontSize
 
 	blt.Set(font + ";")
 	blt.Clear()
@@ -78,6 +88,12 @@ func CloseConsole() {
 func ClearArea(x, y, width, height, layer int) {
 	blt.Layer(layer)
 	blt.ClearArea(x, y, width, height)
+}
+
+// ClearWindow is just a wrapper call around ClearArea that clears the entire terminal window, from (0,0) to
+// (WindowWidth, WindowHeight)
+func ClearWindow(windowWidth, windowHeight int) {
+	ClearArea(0, 0, windowWidth, windowHeight, 0)
 }
 
 // PrintGlyph prints out a single character at the x, y coordinates provided, in the color provided,
