@@ -2,7 +2,7 @@ package gogue
 
 import (
 	"fmt"
-	"gogue/ecs"
+	"github.com/jcerise/gogue/ecs"
 )
 
 type TerminalInputHandler struct {
