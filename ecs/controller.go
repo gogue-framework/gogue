@@ -184,3 +184,20 @@ func (c *Controller) Process() {
 	}
 }
 
+// HasSystem checks the controller to see if it has a given system associated with it
+func (c *Controller) HasSystem(systemType reflect.Type) bool {
+	if _, ok := c.systems[systemType]; ok {
+		return true
+	} else {
+		return false
+	}
+}
+
+// ProcessSystem allows for on demand processing of indovidual systems, rather than processing all at once via Process
+func (c *Controller) ProcessSystem(systemType reflect.Type) {
+	if c.HasSystem(systemType) {
+		system := c.systems[systemType]
+		system.Process()
+	}
+}
+
