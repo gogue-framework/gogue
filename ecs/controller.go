@@ -176,10 +176,15 @@ func (c *Controller) AddSystem(system System, priority int) {
 // Process kicks off system processing for all systems attached to the controller. Systems will be processed in the
 // order they are found, or if they have a priority, in priority order. If there is a mix of systems with priority and
 // without, systems with priority will be processed first (in order).
-func (c *Controller) Process() {
+func (c *Controller) Process(excludedSystems []reflect.Type) {
 	for _, key := range c.priorityKeys {
 		for _, system := range c.sortedSystems[key] {
-			system.Process()
+			systemType := reflect.TypeOf(system)
+
+			// Check if the current system type was marked as excluded on this call. If it was, not process it.
+			if !TypeInSlice(systemType, excludedSystems) {
+				system.Process()
+			}
 		}
 	}
 }

@@ -3,8 +3,8 @@ package gamemap
 import (
 	"math/rand"
 	"time"
-	"gogue"
-	"gogue/camera"
+	"github.com/jcerise/gogue"
+	"github.com/jcerise/gogue/camera"
 )
 
 type BySize [][]*Tile
