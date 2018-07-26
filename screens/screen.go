@@ -39,12 +39,12 @@ func (sm *ScreenManager) SetScreen(screenName string) {
 	// Check if the given screenName exists in the ScreenManager
 	if _, ok := sm.Screens[screenName]; ok {
 		// Call the exit function of the currentScreen, and set the currentScreen as the previousScreen
-		sm.CurrentScreen.exit()
+		sm.CurrentScreen.Exit()
 		sm.PreviousScreen = sm.CurrentScreen
 
 		// Set the provided screen as the currentScreen, and call the enter() function of the new currentScreen
 		sm.CurrentScreen = sm.Screens[screenName]
-		sm.CurrentScreen.enter()
+		sm.CurrentScreen.Enter()
 	} else {
 		// A screen with the given name does not exist
 		fmt.Printf("A screen with name %v was not found on ScreenManager %v!", screenName, sm)
