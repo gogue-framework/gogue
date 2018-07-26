@@ -3,11 +3,11 @@ package screens
 import "fmt"
 
 type Screen interface {
-	enter()
-	exit()
-	render()
-	handleInput()
-	useEcs()
+	Enter()
+	Exit()
+	Render()
+	HandleInput()
+	UseEcs()
 }
 
 type ScreenManager struct {
