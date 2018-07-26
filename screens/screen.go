@@ -7,7 +7,7 @@ type Screen interface {
 	Exit()
 	Render()
 	HandleInput()
-	UseEcs()
+	UseEcs() bool
 }
 
 type ScreenManager struct {
