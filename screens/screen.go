@@ -31,7 +31,7 @@ func (sm *ScreenManager) AddScreen(screenName string, screen Screen) {
 		// A screen with the given name does not yet exist on the ScreenManager, go ahead and add it
 		sm.Screens[screenName] = screen
 	} else {
-		fmt.Printf("A screen with name %v was already added to the ScreenManager %v!", systemType, c)
+		fmt.Printf("A screen with name %v was already added to the ScreenManager %v!", screenName, sm)
 	}
 }
 
