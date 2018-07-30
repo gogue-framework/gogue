@@ -1,7 +1,7 @@
 package ui
 
 import (
-	"gogue"
+	"github.com/jcerise/gogue"
 )
 
 type MessageLog struct {
