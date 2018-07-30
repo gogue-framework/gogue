@@ -29,6 +29,6 @@ func (ml *MenuList) Create(options map[int]string) {
 
 func (ml *MenuList) Print(height, width int) {
 	for keyRune, keyIndex := range ml.Inputs {
-		fmt.Printf("(%r) %v \n", keyRune, ml.Options[keyIndex])
+		fmt.Printf("(%v) %v \n", keyRune, ml.Options[keyIndex])
 	}
 }
