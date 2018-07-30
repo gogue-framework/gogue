@@ -1,6 +1,8 @@
 package ui
 
-import "fmt"
+import (
+	"github.com/jcerise/gogue"
+)
 
 const (
 	ORDLOWERSTART = 97
@@ -28,7 +30,9 @@ func (ml *MenuList) Create(options map[int]string) {
 }
 
 func (ml *MenuList) Print(height, width int) {
+	lineStart := 3
 	for keyRune, keyIndex := range ml.Inputs {
-		fmt.Printf("(%v) %v \n", keyRune, ml.Options[keyIndex])
+		gogue.PrintText(3, lineStart, "(" + string(keyRune) + ")" + ml.Options[keyIndex], "", "", 0)
+		lineStart += 1
 	}
 }
