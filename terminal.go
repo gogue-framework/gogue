@@ -26,6 +26,38 @@ const (
 	KEY_I = blt.TK_I
 	KEY_D = blt.TK_I
 	KEY_ESCAPE = blt.TK_ESCAPE
+	KEY_ENTER = blt.TK_ENTER
+)
+
+var (
+	RuneKeyMapping = map[rune]int{
+		'a': blt.TK_A,
+		'b': blt.TK_B,
+		'c': blt.TK_C,
+		'd': blt.TK_D,
+		'e': blt.TK_E,
+		'f': blt.TK_F,
+		'g': blt.TK_G,
+		'h': blt.TK_H,
+		'i': blt.TK_I,
+		'j': blt.TK_J,
+		'k': blt.TK_K,
+		'l': blt.TK_L,
+		'm': blt.TK_M,
+		'n': blt.TK_N,
+		'o': blt.TK_O,
+		'p': blt.TK_P,
+		'q': blt.TK_Q,
+		'r': blt.TK_R,
+		's': blt.TK_S,
+		't': blt.TK_T,
+		'u': blt.TK_U,
+		'v': blt.TK_V,
+		'w': blt.TK_W,
+		'x': blt.TK_X,
+		'y': blt.TK_Y,
+		'z': blt.TK_Z,
+	}
 )
 
 func init() {
