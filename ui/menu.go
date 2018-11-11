@@ -2,6 +2,7 @@ package ui
 
 import (
 	"github.com/jcerise/gogue"
+	"sort"
 )
 
 const (
@@ -11,6 +12,7 @@ const (
 type MenuList struct {
 	Options map[int]string
 	Inputs map[rune]int
+	keys []int
 	Paginated bool
 }
 
@@ -24,6 +26,7 @@ func (ml *MenuList) Create(options map[int]string) {
 	for identifier := range options {
 		if ordLower <= 122 {
 			ml.Inputs[rune(ordLower)] = identifier
+			ml.keys = append(ml.keys, ordLower)
 			ordLower += 1
 		}
 	}
@@ -31,8 +34,13 @@ func (ml *MenuList) Create(options map[int]string) {
 
 func (ml *MenuList) Print(height, width int) {
 	lineStart := 3
-	for keyRune, keyIndex := range ml.Inputs {
-		gogue.PrintText(3, lineStart, "(" + string(keyRune) + ")" + ml.Options[keyIndex], "", "", 0)
+
+	// Sort the index slice, this will allow for guaranteed printing order of the two data maps
+	sort.Ints(ml.keys)
+
+	for _, keyRune := range ml.keys {
+		input := ml.Inputs[rune(keyRune)]
+		gogue.PrintText(3, lineStart, "(" + string(keyRune) + ")" + ml.Options[input], "", "", 0)
 		lineStart += 1
 	}
 }
