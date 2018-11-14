@@ -13,50 +13,65 @@ const (
 	KEY_LEFT = blt.TK_LEFT
 	KEY_UP = blt.TK_UP
 	KEY_DOWN = blt.TK_DOWN
-	KEY_L = blt.TK_L
-	KEY_H = blt.TK_H
-	KEY_K = blt.TK_K
-	KEY_J = blt.TK_J
-	KEY_Y = blt.TK_Y
-	KEY_U = blt.TK_U
+	KEY_A = blt.TK_A
 	KEY_B = blt.TK_B
-	KEY_N = blt.TK_N
-	KEY_X = blt.TK_X
-	KEY_COMMA = blt.TK_COMMA
+	KEY_C = blt.TK_C
+	KEY_D = blt.TK_D
+	KEY_E = blt.TK_E
+	KEY_F = blt.TK_F
+	KEY_G = blt.TK_G
+	KEY_H = blt.TK_H
 	KEY_I = blt.TK_I
-	KEY_D = blt.TK_I
+	KEY_J = blt.TK_J
+	KEY_K = blt.TK_K
+	KEY_L = blt.TK_L
+	KEY_M = blt.TK_M
+	KEY_N = blt.TK_N
+	KEY_O = blt.TK_O
+	KEY_P = blt.TK_P
+	KEY_Q = blt.TK_Q
+	KEY_R = blt.TK_R
+	KEY_S = blt.TK_S
+	KEY_T = blt.TK_T
+	KEY_U = blt.TK_U
+	KEY_V = blt.TK_V
+	KEY_W = blt.TK_W
+	KEY_X = blt.TK_X
+	KEY_Y = blt.TK_Y
+	KEY_Z = blt.TK_Z
+	KEY_COMMA = blt.TK_COMMA
 	KEY_ESCAPE = blt.TK_ESCAPE
 	KEY_ENTER = blt.TK_ENTER
 )
 
 var (
-	RuneKeyMapping = map[rune]int{
-		'a': blt.TK_A,
-		'b': blt.TK_B,
-		'c': blt.TK_C,
-		'd': blt.TK_D,
-		'e': blt.TK_E,
-		'f': blt.TK_F,
-		'g': blt.TK_G,
-		'h': blt.TK_H,
-		'i': blt.TK_I,
-		'j': blt.TK_J,
-		'k': blt.TK_K,
-		'l': blt.TK_L,
-		'm': blt.TK_M,
-		'n': blt.TK_N,
-		'o': blt.TK_O,
-		'p': blt.TK_P,
-		'q': blt.TK_Q,
-		'r': blt.TK_R,
-		's': blt.TK_S,
-		't': blt.TK_T,
-		'u': blt.TK_U,
-		'v': blt.TK_V,
-		'w': blt.TK_W,
-		'x': blt.TK_X,
-		'y': blt.TK_Y,
-		'z': blt.TK_Z,
+	RuneKeyMapping = map[int]rune{
+		blt.TK_A: 'a',
+		blt.TK_B: 'b',
+		blt.TK_C: 'c',
+		blt.TK_D: 'd',
+		blt.TK_E: 'e',
+		blt.TK_F: 'f',
+		blt.TK_G: 'g',
+		blt.TK_H: 'h',
+		blt.TK_I: 'i',
+		blt.TK_J: 'j',
+		blt.TK_K: 'k',
+		blt.TK_L: 'l',
+		blt.TK_M: 'm',
+		blt.TK_N: 'n',
+		blt.TK_O: 'o',
+		blt.TK_P: 'p',
+		blt.TK_Q: 'q',
+		blt.TK_R: 'r',
+		blt.TK_S: 's',
+		blt.TK_T: 't',
+		blt.TK_U: 'u',
+		blt.TK_V: 'v',
+		blt.TK_W: 'w',
+		blt.TK_X: 'x',
+		blt.TK_Y: 'y',
+		blt.TK_Z: 'z',
 	}
 )
 
