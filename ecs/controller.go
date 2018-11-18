@@ -14,6 +14,9 @@ type Controller struct {
 	components map[reflect.Type][]int
 	entities map[int]map[reflect.Type]Component
 	deadEntities []int
+
+	// The component map will keep track of what components are available
+	componentMap map[string]Component
 }
 
 // NewController is a convenience/constructor method to properly initialize a new processor
@@ -26,6 +29,7 @@ func NewController() *Controller {
 	controller.components = make(map[reflect.Type][]int)
 	controller.entities = make(map[int]map[reflect.Type]Component)
 	controller.deadEntities = []int{}
+	controller.componentMap = make(map[string]Component)
 
 	return &controller
 }
@@ -57,6 +61,25 @@ func (c *Controller) DeleteEntity(entity int) {
 	// Then, delete the entity itself. The components have already been removed and disassociated with it, so a simple
 	// delete will do here
 	delete(c.entities, entity)
+}
+
+// MapComponent registers a component with the controller. This map of components gives the controller access to the
+// valid components for a game system, and allows for dynamic loading of components from the data loader.
+func (c *Controller) MapComponentClass(componentName string, component Component) {
+	// TODO: Possible to overwrite existing components with old name...
+	c.componentMap[componentName] = component
+}
+
+// GetMappedComponentClass returns a component class based on the name it was registered under. This allows for dyanamic
+// mapping of components to entities, for example, from the data loader.
+func (c *Controller) GetMappedComponentClass(componentName string) Component {
+	if _, ok := c.componentMap[componentName]; ok {
+		return c.componentMap[componentName]
+	} else {
+		// TODO: Add better (read: actual) error handling here
+		fmt.Println("Component not registered on Controller.")
+		return nil
+	}
 }
 
 // AddComponent adds a component to an entity. The component is added to the global list of components for the
