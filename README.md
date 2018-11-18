@@ -21,6 +21,7 @@ This feature list is incomplete, as various pieces are still in development.
 - Field of View (only raycasting at the moment, but more to come)
 - UI
     - Logging
+    - Screen Management
 - Pathfinding
 - Random number generation
     - Uniform, Normal Distribution, Ranges, Weighted choices
