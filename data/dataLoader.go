@@ -18,6 +18,13 @@ type FileLoader struct {
 	dataFilesLocation string
 }
 
+func NewFileLoader(dataDir string) *FileLoader {
+	fileLoader := FileLoader{}
+	fileLoader.dataFilesLocation = dataDir
+
+	return &fileLoader
+}
+
 // LoadDataFromFile takes a single filename (located in DataLoader.dataFilesLocation), and parses it, returning a
 // map representation of the data contained in the file
 func (fl *FileLoader) LoadDataFromFile(fileName string) map[string]interface{} {
