@@ -1,15 +1,14 @@
 package data
 
 import (
-	"fmt"
 	"github.com/jcerise/gogue"
 	"github.com/jcerise/gogue/ecs"
 	"reflect"
 )
 
-// This will be responsible for taking loaded data  from the text files (in the form of a map of strings), and turning
+// This will be responsible for taking loaded data from the text files (in the form of a map of strings), and turning
 // those into entities, as required. For example, we may have loaded several potion definitions into memory from the
-// definition files, and we now want to use those in the games. In order to do that, we would find the potion we want
+// definition files, and we now want to use those in the game. In order to do that, we would find the potion we want
 // to load, and then take that definition and turn it into an entity in the ECS. We can do this as many times as we
 // need per potion definition. In this way, we have an easy way of loading data file information into the ECS.
 
@@ -76,7 +75,6 @@ func (el *EntityLoader) getInterfaceValue(reflectedInterface interface{}) reflec
 func (el *EntityLoader) setFieldValues(values map[string]interface{}, value reflect.Value) {
 	for propertyName, propertyValue := range values {
 		field := value.FieldByName(propertyName)
-		fmt.Println(field.Kind())
 
 		if field.IsValid() && field.CanSet() {
 			if field.Kind() == reflect.Int {
@@ -103,7 +101,6 @@ func (el *EntityLoader) setFieldValues(values map[string]interface{}, value refl
 				}
 			}
 		}
-
 	}
 }
 

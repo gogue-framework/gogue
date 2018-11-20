@@ -16,6 +16,8 @@ This feature list is incomplete, as various pieces are still in development.
     - Input handling
 - Dynamic input registration system
 - Lightweight Entity/Component/System implementation
+- JSON data loading
+- Dynamic entity generation from JSON data
 - Map generation
 - Scrolling camera
 - Field of View (only raycasting at the moment, but more to come)
