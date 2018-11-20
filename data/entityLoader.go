@@ -2,8 +2,8 @@ package data
 
 import (
 	"fmt"
-	"gogue"
-	"gogue/ecs"
+	"github.com/jcerise/gogue"
+	"github.com/jcerise/gogue/ecs"
 	"reflect"
 )
 
