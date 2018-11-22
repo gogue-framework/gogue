@@ -77,8 +77,10 @@ func (el *EntityLoader) setFieldValues(values map[string]interface{}, value refl
 		field := value.FieldByName(propertyName)
 
 		if field.IsValid() && field.CanSet() {
-			if field.Kind() == reflect.Int {
+			if field.Kind() == reflect.Int64 {
 				field.SetInt(propertyValue.(int64))
+			} else if field.Kind() == reflect.Float64 {
+				field.SetFloat(propertyValue.(float64))
 			} else if field.Kind() == reflect.String {
 				field.SetString(propertyValue.(string))
 			} else if field.Kind() == reflect.Interface {
