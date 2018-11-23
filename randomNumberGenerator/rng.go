@@ -71,8 +71,8 @@ func (rng *RNG) GetWeightedEntity(values map[int]int) int {
 	// Next, get a random integer in the range of the total weight
 	r := rng.Range(0, totalWeight)
 
-	for weight := range values {
-		r -= weight
+	for weight, value := range values {
+		r -= value
 		if r <= 0 {
 			return weight
 		}
