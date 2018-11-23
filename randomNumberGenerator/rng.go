@@ -57,8 +57,8 @@ func (rng *RNG) Percentage() int {
 	return rng.rand.Intn(100)
 }
 
-func (rng *RNG) Range(n int) int {
-	return rng.rand.Intn(n)
+func (rng *RNG) Range(min, max int) int {
+	return rng.rand.Intn(max - min) + min
 }
 
 func (rng *RNG) GetWeightedEntity(values map[int]int) int {
@@ -69,7 +69,7 @@ func (rng *RNG) GetWeightedEntity(values map[int]int) int {
 	}
 
 	// Next, get a random integer in the range of the total weight
-	r := rng.Range(totalWeight)
+	r := rng.Range(0, totalWeight)
 
 	for weight, value := range values {
 		r -= weight
