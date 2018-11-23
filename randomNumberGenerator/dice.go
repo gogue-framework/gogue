@@ -28,15 +28,15 @@ func (diceRoller *DiceRoller) SetSeed(seed int64) {
 }
 
 func (diceRoller *DiceRoller) RollNSidedDie(n int) int {
-	return diceRoller.rng.Range(n) + 1
+	return diceRoller.rng.Range(0, n) + 1
 }
 
 func (diceRoller *DiceRoller) RollNSidedDieOpenEnded(n int) int {
-	roll := diceRoller.rng.Range(n) + 1
+	roll := diceRoller.rng.Range(0, n) + 1
 	totalRoll := roll
 
 	for roll == n {
-		roll = diceRoller.rng.Range(n) + 1
+		roll = diceRoller.rng.Range(0, n) + 1
 		totalRoll += roll
 	}
 
