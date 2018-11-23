@@ -44,6 +44,7 @@ type Map struct {
 	Width  int
 	Height int
 	Tiles  [][]*Tile
+	FloorTiles []Tile
 }
 
 func (m *Map) InitializeMap() {
