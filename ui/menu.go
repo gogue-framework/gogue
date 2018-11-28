@@ -53,6 +53,16 @@ func (ml *MenuList) Update(options map[int]string) bool {
 		// If it does not exist, we'll clear out the identifier value. Next, we'll iterate over the new list, and
 		// for each value that is not mapped to a key, we'll map it to one. This can be either an existing key, or
 		// a new key that will be added
+
+		// Before we do anything else, make sure we have maps to work with
+		if ml.Inputs == nil {
+			ml.Inputs = make(map[rune]int)
+		}
+
+		if ml.Options == nil {
+			ml.Options = make(map[int]string)
+		}
+
 		for key, identifier := range ml.Inputs {
 			// Check if the keys identifier is still in the updated list
 			if _, ok := options[identifier]; !ok {
