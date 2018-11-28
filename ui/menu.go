@@ -20,14 +20,22 @@ type MenuList struct {
 	highestOrd int
 }
 
+func NewMenuList(options map[int]string) *MenuList {
+	menuList := MenuList{}
+	menuList.Options = make(map[int]string)
+	menuList.Inputs = make(map[rune]int)
+	menuList.highestOrd = ORDLOWERSTART
+	menuList.Create(options)
+
+	return &menuList
+
+}
+
 // Create builds a new MenuList, given a mapping of options
 func (ml *MenuList) Create(options map[int]string) {
 	ml.Options = options
 
-	ml.Inputs = make(map[rune]int)
-
 	ordLower := ORDLOWERSTART
-	ml.highestOrd = ordLower
 
 	for identifier := range options {
 		if ordLower <= MAXORD {
