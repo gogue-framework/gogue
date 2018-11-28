@@ -27,6 +27,7 @@ func (ml *MenuList) Create(options map[int]string) {
 	ml.Inputs = make(map[rune]int)
 
 	ordLower := ORDLOWERSTART
+	ml.highestOrd = ordLower
 
 	for identifier := range options {
 		if ordLower <= MAXORD {
