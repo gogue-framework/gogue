@@ -108,7 +108,7 @@ func (ml *MenuList) Update(options map[int]string) bool {
 
 				// At this point, the item should have been placed. If it has not been, something has gone wrong
 				if !placed {
-					log.Fatal("Failed to place an item in the menu. Max Length likely exceeded.")
+					log.Print("Failed to place an item in the menu. Max Length likely exceeded.")
 				}
 			}
 		}
