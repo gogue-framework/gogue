@@ -77,7 +77,7 @@ func (c *Controller) GetMappedComponentClass(componentName string) Component {
 		return c.componentMap[componentName]
 	} else {
 		// TODO: Add better (read: actual) error handling here
-		fmt.Printf("Component[%s] not registered on Controller.", componentName)
+		fmt.Printf("Component[%s] not registered on Controller.\n", componentName)
 		return nil
 	}
 }
