@@ -112,9 +112,17 @@ func (ml *MenuList) Update(options map[int]string) bool {
 			}
 		}
 
+		// Ensure we break any pointers here, in case options was passed as one. This can cause an odd bug where the
+		// menu knows about new options before they have been passed for update.
+		newOptions := make(map[int]string)
+
+		for entity, name := range options {
+			newOptions[entity] = name
+		}
+
 		// Finally, now that all the new items have been placed, and items that need to be removed have been removed,
 		// set the menu options to the updated options list
-		ml.Options = options
+		ml.Options = newOptions
 
 		return true
 	}
