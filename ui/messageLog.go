@@ -24,19 +24,19 @@ func (ml *MessageLog) SendMessage(message string) {
 	ml.messages = append([]string{message}, ml.messages...)
 }
 
-func (ml *MessageLog) PrintMessages(viewAreaX, viewAreaY, windowSizeX, windowSizeY int) {
+func (ml *MessageLog) PrintMessages(viewAreaX, viewAreaY, windowSizeX, windowSizeY, displayNum int) {
 	// Print the latest five messages from the messageLog. These will be printed in reverse order (newest at the top),
 	// to make it appear they are scrolling down the screen
 	clearMessages(viewAreaX, viewAreaY, windowSizeX, windowSizeY, 1)
 
 	toShow := 0
 
-	if len(ml.messages) <= 5 {
+	if len(ml.messages) <= displayNum {
 		// Just loop through the messageLog, printing them in reverse order
 		toShow = len(ml.messages)
 	} else {
-		// If we have more than 5 messages stored, just show the five most recent
-		toShow = 5
+		// If we have more than {displayNum} messages stored, just show the {displayNum} most recent
+		toShow = displayNum
 	}
 
 	for i := toShow; i > 0; i-- {
