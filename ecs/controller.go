@@ -131,9 +131,21 @@ func (c *Controller) GetEntity(entity int) map[reflect.Type]Component {
 	return nil
 }
 
-// GetEntities returns a gamemap of all entities and their component instances
+// GetEntities returns a map of all entities and their component instances
 func (c *Controller) GetEntities() map[int]map[reflect.Type]Component {
 	return c.entities
+}
+
+// GetEntitiesWithComponent returns a list of all entities with a given component attached
+func (c *Controller) GetEntitiesWithComponent(componentType reflect.Type) []int {
+	entitiesWithComponent := make([]int, 0)
+	for entity := range c.entities {
+		if c.HasComponent(entity, componentType) {
+			entitiesWithComponent = append(entitiesWithComponent, entity)
+		}
+	}
+
+	return entitiesWithComponent
 }
 
 // UpdateComponent updates a component on an entity with a new version of the same component
