@@ -137,6 +137,7 @@ func (c *Controller) GetEntities() map[int]map[reflect.Type]Component {
 }
 
 // GetEntitiesWithComponent returns a list of all entities with a given component attached
+// TODO: Allow for passing a list of components
 func (c *Controller) GetEntitiesWithComponent(componentType reflect.Type) []int {
 	entitiesWithComponent := make([]int, 0)
 	for entity := range c.entities {
@@ -189,7 +190,7 @@ func (c *Controller) RemoveComponent(entity int, componentType reflect.Type) int
 
 // AddSystem registers a system to the controller. A priority can be provided, and systems will be processed in
 // numeric order, low to high. If multiple systems are registered as the same priority, they will be randomly run within
-// that priroty group.
+// that priority group.
 func (c *Controller) AddSystem(system System, priority int) {
 	systemType := reflect.TypeOf(system)
 
@@ -233,7 +234,7 @@ func (c *Controller) HasSystem(systemType reflect.Type) bool {
 	}
 }
 
-// ProcessSystem allows for on demand processing of indovidual systems, rather than processing all at once via Process
+// ProcessSystem allows for on demand processing of individual systems, rather than processing all at once via Process
 func (c *Controller) ProcessSystem(systemType reflect.Type) {
 	if c.HasSystem(systemType) {
 		system := c.systems[systemType]
