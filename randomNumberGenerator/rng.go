@@ -58,7 +58,7 @@ func (rng *RNG) Percentage() int {
 }
 
 func (rng *RNG) Range(min, max int) int {
-	return rng.rand.Intn(max + 1 - min) + min
+	return rng.rand.Intn(max - min + 1) + min
 }
 
 func (rng *RNG) GetWeightedEntity(values map[int]int) int {
