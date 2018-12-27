@@ -31,11 +31,11 @@ func (smq *SystemMessageQueue) BroadcastMessage(messageType SystemMessageType, m
 }
 
 // GetMessagesOfType returns a list of SystemMessages that have messageType. Can return an empty list
-func (smq *SystemMessageQueue) GetMessagesOfType(messageType SystemMessageType) []SystemMessage {
+func (smq *SystemMessageQueue) GetMessagesOfType(messageTypeName string) []SystemMessage {
 	messages := []SystemMessage{}
 
 	for _, message := range smq.Messages {
-		if message.MessageType == messageType {
+		if message.MessageType.Name == messageTypeName {
 			messages = append(messages, message)
 		}
 	}
