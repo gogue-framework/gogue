@@ -42,3 +42,16 @@ func (smq *SystemMessageQueue) GetMessagesOfType(messageTypeName string) []Syste
 
 	return messages
 }
+
+// DeleteMessages deletes a processed message from the queue (for example, if the event has been processed)
+func (smq *SystemMessageQueue) DeleteMessages(messageName string) {
+	modifiedQueue := smq.Messages
+	for index, message := range smq.Messages {
+		if message.MessageType.Name == messageName {
+			modifiedQueue[index] = modifiedQueue[len(modifiedQueue)-1]
+			modifiedQueue = modifiedQueue[:len(modifiedQueue)-1]
+		}
+	}
+
+	smq.Messages = modifiedQueue
+}
