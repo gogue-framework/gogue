@@ -2,7 +2,7 @@ package fov
 
 import (
 	"math"
-	"gogue/gamemap"
+	"github.com/jcerise/gogue/gamemap"
 )
 
 type FieldOfVision struct {
