@@ -30,6 +30,7 @@ type Tile struct {
 	Visible      bool
 	X            int
 	Y            int
+	Updated 	 bool
 }
 
 func (t *Tile) IsWall() bool {
@@ -86,13 +87,19 @@ func (m *Map) Render(gameCamera *camera.GameCamera, newCameraX, newCameraY int) 
 				mapY = 0
 			}
 
-			if m.Tiles[mapX][mapY].Visible {
-				gogue.PrintGlyph(x, y, m.Tiles[mapX][mapY].Glyph, "", 0)
-			} else if m.Tiles[mapX][mapY].Explored {
-				gogue.PrintGlyph(x, y, m.Tiles[mapX][mapY].Glyph, "", 0, true)
+			tile := m.Tiles[mapX][mapY]
+
+			// Check if the tile has been updated. This means that its state has changed since the last time it was
+			// rendered. If it has been, re-draw it. Otherwise, skip it.
+			if tile.Updated {
+				if tile.Visible {
+					gogue.PrintGlyph(x, y, tile.Glyph, "", 0)
+				} else if tile.Explored {
+					gogue.PrintGlyph(x, y, tile.Glyph, "", 0, true)
+				}
+
+				tile.Updated = false
 			}
-
-
 		}
 	}
 }
