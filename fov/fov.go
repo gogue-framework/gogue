@@ -54,8 +54,10 @@ func (f *FieldOfVision) RayCast(playerX, playerY int, gameMap *gamemap.Map) {
 		y := float64(playerY)
 
 		// Mark the players current position as explored
-		gameMap.Tiles[playerX][playerY].Explored = true
-		gameMap.Tiles[playerX][playerY].Visible = true
+		tile := gameMap.Tiles[playerX][playerY]
+		tile.Explored = true
+		tile.Visible = true
+		tile.Updated = true
 
 		for j := 0; j < f.torchRadius; j++ {
 			x -= ax
@@ -69,8 +71,11 @@ func (f *FieldOfVision) RayCast(playerX, playerY int, gameMap *gamemap.Map) {
 				break
 			}
 
-			gameMap.Tiles[roundedX][roundedY].Explored = true
-			gameMap.Tiles[roundedX][roundedY].Visible = true
+			tile := gameMap.Tiles[roundedX][roundedY]
+
+			tile.Explored = true
+			tile.Visible = true
+			tile.Updated = true
 
 			//fmt.Printf("Actual X (float64): %d, rounded X (int): %d\n", x, int(Round(x)))
 
