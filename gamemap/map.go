@@ -81,14 +81,18 @@ func (m *Map) Render(gameCamera *camera.GameCamera, newCameraX, newCameraY int) 
 
 			// Check if the tile has been updated. This means that its state has changed since the last time it was
 			// rendered. If it has been, re-draw it. Otherwise, skip it.
+			if tile.Updated {
 
-			// Clear the tile first, and then redraw
-			gogue.PrintGlyph(mapX, mapY, gogue.EmptyGlyph, "", 0)
+				// Clear the tile first, and then redraw
+				gogue.PrintGlyph(mapX, mapY, gogue.EmptyGlyph, "", 0)
 
-			if tile.Visible {
-				gogue.PrintGlyph(x, y, tile.Glyph, "", 0)
-			} else if tile.Explored {
-				gogue.PrintGlyph(x, y, tile.Glyph, "", 0, true)
+				if tile.Visible {
+					gogue.PrintGlyph(x, y, tile.Glyph, "", 0)
+				} else if tile.Explored {
+					gogue.PrintGlyph(x, y, tile.Glyph, "", 0, true)
+				}
+
+				tile.Updated = false
 			}
 		}
 	}
