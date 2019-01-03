@@ -79,9 +79,6 @@ func (m *Map) Render(gameCamera *camera.GameCamera, newCameraX, newCameraY int) 
 
 			tile := m.Tiles[mapX][mapY]
 
-			// Clear the tile first, and then redraw
-			gogue.PrintGlyph(mapX, mapY, gogue.EmptyGlyph, "", 0)
-
 			if tile.Visible {
 				gogue.PrintGlyph(x, y, tile.Glyph, "", 0)
 			} else if tile.Explored {
