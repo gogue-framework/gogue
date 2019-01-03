@@ -79,11 +79,16 @@ func (m *Map) Render(gameCamera *camera.GameCamera, newCameraX, newCameraY int) 
 
 			tile := m.Tiles[mapX][mapY]
 
-			if tile.Visible {
-				gogue.PrintGlyph(x, y, tile.Glyph, "", 0)
-			} else if tile.Explored {
-				gogue.PrintGlyph(x, y, tile.Glyph, "", 0, true)
+			if tile.Updated {
+				if tile.Visible {
+					gogue.PrintGlyph(x, y, tile.Glyph, "", 0)
+				} else if tile.Explored {
+					gogue.PrintGlyph(x, y, tile.Glyph, "", 0, true)
+				}
+
+				tile.Updated = false
 			}
+
 		}
 	}
 }
