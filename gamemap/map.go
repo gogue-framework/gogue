@@ -61,7 +61,6 @@ func (m *Map) InitializeMap() {
 
 func (m *Map) Render(gameCamera *camera.GameCamera, newCameraX, newCameraY int) {
 
-	//newCameraX, newCameraY = gameCamera.ToCameraCoordinates(newCameraX, newCameraY)
 	gameCamera.MoveCamera(newCameraX, newCameraY, m.Width, m.Height)
 
 	for x := 0; x < gameCamera.Width; x++ {
@@ -79,16 +78,11 @@ func (m *Map) Render(gameCamera *camera.GameCamera, newCameraX, newCameraY int) 
 
 			tile := m.Tiles[mapX][mapY]
 
-			if tile.Updated {
-				if tile.Visible {
-					gogue.PrintGlyph(x, y, tile.Glyph, "", 0)
-				} else if tile.Explored {
-					gogue.PrintGlyph(x, y, tile.Glyph, "", 0, true)
-				}
-
-				tile.Updated = false
+			if tile.Visible {
+				gogue.PrintGlyph(x, y, tile.Glyph, "", 0)
+			} else if tile.Explored {
+				gogue.PrintGlyph(x, y, tile.Glyph, "", 0, true)
 			}
-
 		}
 	}
 }
