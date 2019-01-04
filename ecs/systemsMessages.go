@@ -2,11 +2,11 @@ package ecs
 
 type SystemMessageType struct {
 	Name string
-	CreatingSystem System
 }
 
 type SystemMessage struct {
 	MessageType SystemMessageType
+	Originator System
 	MessageContent map[string]string
 }
 
@@ -31,8 +31,8 @@ func InitializeSystemMessageQueue() *SystemMessageQueue {
 
 // BroadcastMessage appends a system message onto the games SystemMessageQueue, allowing it to consumed by a service
 // subscribes to the MessageType.
-func (smq *SystemMessageQueue) BroadcastMessage(messageType SystemMessageType, messageContent map[string]string) {
-	newMessage := SystemMessage{MessageType: messageType, MessageContent: messageContent}
+func (smq *SystemMessageQueue) BroadcastMessage(messageType SystemMessageType, messageContent map[string]string, originator System) {
+	newMessage := SystemMessage{MessageType: messageType, MessageContent: messageContent, Originator: originator}
 
 	// Find all subscriptions to this message type, and add this message to the subscribers message queue
 	for subscribedSystem, typeList := range smq.Subscriptions {
