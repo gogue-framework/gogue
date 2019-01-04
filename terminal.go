@@ -73,6 +73,7 @@ var (
 		blt.TK_Y: 'y',
 		blt.TK_Z: 'z',
 	}
+	compositionMode = 0
 )
 
 func init() {
@@ -82,7 +83,7 @@ func init() {
 // InitConsole sets up a BearLibTerminal console window
 // The X and Y dimensions, title, and a fullscreen flag can all be provided
 // The console window is not actually rendered to the screen until Refresh is called
-func InitConsole(windowSizeX, windowSizeY int, title string, fullScreen bool, compositionMode int) {
+func InitConsole(windowSizeX, windowSizeY int, title string, fullScreen bool) {
 	blt.Open()
 
 	// BearLibTerminal uses configuration strings to set itself up, so we need to build these strings here
@@ -121,6 +122,15 @@ func AddFont(name, path string, fontSize int) {
 
 	blt.Set(font + ";")
 	blt.Clear()
+}
+
+// SetCompositionMode sets the composition mode for drawing glyphs to the terminal. 0 is no composition, meaning the
+// entire cell will be replaced by the character drawn. 1 means the character drawn will be composed onto any lower
+// level characters
+func SetCompositionMode(mode int) {
+	if mode == 0 || mode == 1 {
+		compositionMode = mode
+	}
 }
 
 // refresh calls blt.Refresh on the current console window
@@ -164,6 +174,7 @@ func PrintGlyph(x, y int, g Glyph, backgroundColor string, layer int, useExplore
 	}
 
 	// Finally, print the character at the provided coordinates
+	blt.Composition(compositionMode)
 	blt.Print(x, y, string(g.Char()))
 }
 
