@@ -18,16 +18,21 @@ type SystemMessage struct {
 // be cleared out occasionally, either by the subscribing systems, or the game loop. Pretty simple for now, but should
 // solve a subset of problems nicely.
 type SystemMessageQueue struct {
-	Messages []SystemMessage
+	Messages map[System][]SystemMessage
+	Subscriptions map[System][]SystemMessageType
 }
 
 // BroadcastMessage appends a system message onto the games SystemMessageQueue, allowing it to consumed by a service
 // subscribes to the MessageType.
-// TODO: This name is a little misleading, as it doesn't actually broadcast, so much as append to a list for consumption
 func (smq *SystemMessageQueue) BroadcastMessage(messageType SystemMessageType, messageContent map[string]string) {
 	newMessage := SystemMessage{MessageType: messageType, MessageContent: messageContent}
 
-	smq.Messages = append(smq.Messages, newMessage)
+	// Find all subscriptions to this message type, and add this message to the subscribers message queue
+	for subscribedSystem, typeList := range smq.Subscriptions {
+		if MessageTypeInSlice(messageType, typeList) {
+			smq.Messages[subscribedSystem] = append(smq.Messages[subscribedSystem], newMessage)
+		}
+	}
 }
 
 // GetMessagesOfType returns a list of SystemMessages that have messageType. Can return an empty list
@@ -54,4 +59,14 @@ func (smq *SystemMessageQueue) DeleteMessages(messageName string) {
 	}
 
 	smq.Messages = modifiedQueue
+}
+
+//MessageTypeInSlice will return true if the MessageType provided is present in the slice provided, false otherwise
+func MessageTypeInSlice(a SystemMessageType, list []SystemMessageType) bool {
+	for _, b := range list {
+		if b == a {
+			return true
+		}
+	}
+	return false
 }
