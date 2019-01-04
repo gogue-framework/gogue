@@ -139,8 +139,8 @@ func ClearArea(x, y, width, height, layer int) {
 
 // ClearWindow is just a wrapper call around ClearArea that clears the entire terminal window, from (0,0) to
 // (WindowWidth, WindowHeight)
-func ClearWindow(windowWidth, windowHeight int) {
-	ClearArea(0, 0, windowWidth, windowHeight, 0)
+func ClearWindow(windowWidth, windowHeight, layer int) {
+	ClearArea(0, 0, windowWidth, windowHeight, layer)
 }
 
 // PrintGlyph prints out a single character at the x, y coordinates provided, in the color provided,
