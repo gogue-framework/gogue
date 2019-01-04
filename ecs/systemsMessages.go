@@ -22,6 +22,13 @@ type SystemMessageQueue struct {
 	Subscriptions map[System][]SystemMessageType
 }
 
+func initializeSystemMessageQueue() *SystemMessageQueue {
+	smq := SystemMessageQueue{}
+	smq.Messages = make(map[System][]SystemMessage)
+	smq.Subscriptions = make(map[System][]SystemMessageType)
+	return &smq
+}
+
 // BroadcastMessage appends a system message onto the games SystemMessageQueue, allowing it to consumed by a service
 // subscribes to the MessageType.
 func (smq *SystemMessageQueue) BroadcastMessage(messageType SystemMessageType, messageContent map[string]string) {
@@ -35,14 +42,12 @@ func (smq *SystemMessageQueue) BroadcastMessage(messageType SystemMessageType, m
 	}
 }
 
-// GetMessagesOfType returns a list of SystemMessages that have messageType. Can return an empty list
-func (smq *SystemMessageQueue) GetMessagesOfType(messageTypeName string) []SystemMessage {
+// GetSubscribedMessages returns a list of SystemMessages that have messageType. Can return an empty list
+func (smq *SystemMessageQueue) GetSubscribedMessages(system System) []SystemMessage {
 	messages := []SystemMessage{}
 
-	for _, message := range smq.Messages {
-		if message.MessageType.Name == messageTypeName {
-			messages = append(messages, message)
-		}
+	for _, message := range smq.Messages[system] {
+		messages = append(messages, message)
 	}
 
 	return messages
