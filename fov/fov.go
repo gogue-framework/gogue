@@ -77,8 +77,6 @@ func (f *FieldOfVision) RayCast(playerX, playerY int, gameMap *gamemap.Map) {
 			tile.Visible = true
 			tile.Updated = true
 
-			//fmt.Printf("Actual X (float64): %d, rounded X (int): %d\n", x, int(Round(x)))
-
 			if gameMap.Tiles[roundedX][roundedY].BlocksSight == true {
 				// The ray hit a wall, go no further
 				break

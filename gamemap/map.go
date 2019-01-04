@@ -1,10 +1,10 @@
 package gamemap
 
 import (
-	"math/rand"
-	"time"
 	"github.com/jcerise/gogue"
 	"github.com/jcerise/gogue/camera"
+	"math/rand"
+	"time"
 )
 
 type BySize [][]*Tile
@@ -22,15 +22,16 @@ func (s BySize) Less(i, j int) bool {
 }
 
 type Tile struct {
-	Glyph	gogue.Glyph
-	Blocked      bool
+	Glyph       gogue.Glyph
+	Blocked     bool
 	BlocksSight bool
-	Visited      bool
-	Explored     bool
-	Visible      bool
-	X            int
-	Y            int
-	Updated 	 bool
+	BlocksSound bool
+	Visited     bool
+	Explored    bool
+	Visible     bool
+	X           int
+	Y           int
+	Noises      map[int]float64
 }
 
 func (t *Tile) IsWall() bool {
@@ -42,9 +43,9 @@ func (t *Tile) IsWall() bool {
 }
 
 type Map struct {
-	Width  int
-	Height int
-	Tiles  [][]*Tile
+	Width      int
+	Height     int
+	Tiles      [][]*Tile
 	FloorTiles []*Tile
 }
 
@@ -66,7 +67,7 @@ func (m *Map) Render(gameCamera *camera.GameCamera, newCameraX, newCameraY int) 
 	for x := 0; x < gameCamera.Width; x++ {
 		for y := 0; y < gameCamera.Height; y++ {
 
-			mapX, mapY := gameCamera.X + x, gameCamera.Y + y
+			mapX, mapY := gameCamera.X+x, gameCamera.Y+y
 
 			if mapX < 0 {
 				mapX = 0
@@ -107,6 +108,14 @@ func (m *Map) IsVisibleToPlayer(x, y int) bool {
 
 func (m *Map) IsVisibleAndExplored(x, y int) bool {
 	if m.Tiles[x][y].Visible && m.Tiles[x][y].Explored {
+		return true
+	} else {
+		return false
+	}
+}
+
+func (m *Map) HasNoises(x, y int) bool {
+	if len(m.Tiles[x][y].Noises) > 0 {
 		return true
 	} else {
 		return false
