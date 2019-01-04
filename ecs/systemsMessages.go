@@ -75,3 +75,13 @@ func MessageTypeInSlice(a SystemMessageType, list []SystemMessageType) bool {
 	}
 	return false
 }
+
+//MessageTypeInSliceOfMessages will return true if the MessageType provided is present in the slice provided, false otherwise
+func MessageTypeInSliceOfMessages(a SystemMessageType, list []SystemMessage) bool {
+	for _, b := range list {
+		if b.MessageType == a {
+			return true
+		}
+	}
+	return false
+}
