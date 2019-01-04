@@ -82,7 +82,7 @@ func init() {
 // InitConsole sets up a BearLibTerminal console window
 // The X and Y dimensions, title, and a fullscreen flag can all be provided
 // The console window is not actually rendered to the screen until Refresh is called
-func InitConsole(windowSizeX, windowSizeY int, title string, fullScreen bool) {
+func InitConsole(windowSizeX, windowSizeY int, title string, fullScreen bool, compositionMode int) {
 	blt.Open()
 
 	// BearLibTerminal uses configuration strings to set itself up, so we need to build these strings here
@@ -98,6 +98,7 @@ func InitConsole(windowSizeX, windowSizeY int, title string, fullScreen bool) {
 
 	// Now, put it all together
 	blt.Set(window + "; ")
+	blt.Composition(compositionMode)
 	blt.Clear()
 }
 
