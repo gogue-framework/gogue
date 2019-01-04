@@ -57,7 +57,6 @@ func (f *FieldOfVision) RayCast(playerX, playerY int, gameMap *gamemap.Map) {
 		tile := gameMap.Tiles[playerX][playerY]
 		tile.Explored = true
 		tile.Visible = true
-		tile.Updated = true
 
 		for j := 0; j < f.torchRadius; j++ {
 			x -= ax
@@ -75,7 +74,6 @@ func (f *FieldOfVision) RayCast(playerX, playerY int, gameMap *gamemap.Map) {
 
 			tile.Explored = true
 			tile.Visible = true
-			tile.Updated = true
 
 			if gameMap.Tiles[roundedX][roundedY].BlocksSight == true {
 				// The ray hit a wall, go no further
