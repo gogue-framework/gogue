@@ -22,7 +22,7 @@ type SystemMessageQueue struct {
 	Subscriptions map[System][]SystemMessageType
 }
 
-func initializeSystemMessageQueue() *SystemMessageQueue {
+func InitializeSystemMessageQueue() *SystemMessageQueue {
 	smq := SystemMessageQueue{}
 	smq.Messages = make(map[System][]SystemMessage)
 	smq.Subscriptions = make(map[System][]SystemMessageType)
