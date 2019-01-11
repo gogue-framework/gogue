@@ -97,6 +97,47 @@ func (m *Map) IsBlocked(x, y int) bool {
 	}
 }
 
+func (m *Map) BlocksNoises(x, y int) bool {
+	// Check to see if the provided coordinates contain a tile that blocks noises
+	if m.Tiles[x][y].BlocksSound {
+		return true
+	} else {
+		return false
+	}
+}
+
+// GetNeighbors will return a list of tiles that are directly next to the given coordinates. It can optionally exclude
+// blocked tiles
+func (m *Map) GetNeighbors(x, y int) []*Tile {
+	neighbors := []*Tile{}
+
+	for i := -1; i <= 1; i++ {
+		for j := -1; j <= 1; j++ {
+
+			// Make sure the neighbor we're checking is within the bounds of the map
+			if x + i < 0 {
+				x = 0
+			} else if x + i > m.Width {
+				x = m.Width
+			} else {
+				x = x + i
+			}
+
+			if y + j < 0 {
+				y = 0
+			} else if y + j > m.Height {
+				y = m.Height
+			} else {
+				y = y + j
+			}
+
+			neighbors = append(neighbors, m.Tiles[x][y])
+		}
+	}
+
+	return neighbors
+}
+
 func (m *Map) IsVisibleToPlayer(x, y int) bool {
 	// Check to see if the given position on the map is visible to the player currently
 	if m.Tiles[x][y].Visible {
@@ -120,4 +161,21 @@ func (m *Map) HasNoises(x, y int) bool {
 	} else {
 		return false
 	}
+}
+
+func (m *Map) GetAdjacentNoisesForEntity(entity, x, y int) map[*Tile]float64 {
+	// Get a list of the neighboring tiles for the location
+	tiles := m.GetNeighbors(x, y)
+
+	noisyTiles := make(map[*Tile]float64)
+
+	for _, tile := range tiles {
+		for noiseEntity, noise := range m.Tiles[x][y].Noises {
+			if noiseEntity == entity {
+				noisyTiles[tile] = noise
+			}
+		}
+	}
+
+	return noisyTiles
 }
