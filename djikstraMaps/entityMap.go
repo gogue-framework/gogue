@@ -80,8 +80,8 @@ func (edm *EntityDijkstraMap) GenerateMap(surface *gamemap.Map) {
 	// based on how far away from the source it is. Make a visited array first though (everything but the source is
 	// unvisited initially. Also mark blocking tiles as visited.
 	visited := make(map[gamemap.CoordinatePair]bool)
-	for x := 0; x < surface.Width-1; x++ {
-		for y := 0; y < surface.Height-1; y++ {
+	for x := 0; x < surface.Width; x++ {
+		for y := 0; y < surface.Height; y++ {
 			coordinates := gamemap.CoordinatePair{X: x, Y: y}
 
 			// Mark all blocking tiles as visited, so we don't even bother with them.
