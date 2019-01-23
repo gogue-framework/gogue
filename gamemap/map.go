@@ -21,6 +21,11 @@ func (s BySize) Less(i, j int) bool {
 	return len(s[i]) < len(s[j])
 }
 
+type CoordinatePair struct {
+	X int
+	Y int
+}
+
 type Tile struct {
 	Glyph       gogue.Glyph
 	Blocked     bool
