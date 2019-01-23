@@ -37,7 +37,7 @@ type EntityDijkstraMap struct {
 	ValuesMap map[gamemap.CoordinatePair]int
 }
 
-func NewEntityMap(sourceEntity int, sourceX, sourceY int, mapType string) *EntityDijkstraMap {
+func NewEntityMap(sourceEntity int, sourceX, sourceY int, mapType *gamemap.Map) *EntityDijkstraMap {
 	edm := EntityDijkstraMap{}
 	edm.ValuesMap = make(map[gamemap.CoordinatePair]int)
 
