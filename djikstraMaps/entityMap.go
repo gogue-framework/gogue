@@ -93,10 +93,10 @@ func (edm *EntityDijkstraMap) GenerateMap(surface *gamemap.Map) {
 		}
 	}
 
-	edm.BreadthFirstSearch(edm.sourceX, edm.sourceY, surface.Width, surface.Height, 0, visited)
+	edm.BreadthFirstSearch(edm.sourceX, edm.sourceY, surface.Width, surface.Height, 0, visited, surface)
 }
 
-func (edm *EntityDijkstraMap) BreadthFirstSearch(x, y, n, m, value int, visited map[gamemap.CoordinatePair]bool) {
+func (edm *EntityDijkstraMap) BreadthFirstSearch(x, y, n, m, value int, visited map[gamemap.CoordinatePair]bool, surface *gamemap.Map) {
 	// Check if this location has already been visited
 	coordinates := gamemap.CoordinatePair{X: x, Y: y}
 
@@ -116,7 +116,7 @@ func (edm *EntityDijkstraMap) BreadthFirstSearch(x, y, n, m, value int, visited 
 		// NorthWest
 		if ((coords.X - 1) > 0 && (coords.Y - 1) > 0) && ((coords.X - 1) <= n && (coords.Y - 1) <= m) {
 			newCoords := gamemap.CoordinatePair{X:coords.X - 1, Y:coords.Y - 1}
-			if !visited[newCoords] {
+			if !visited[newCoords] && !surface.Tiles[newCoords.X][newCoords.Y].IsWall() {
 				// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
 				// add it to the coordQueue; We'll check its neighbors soon
 
@@ -129,7 +129,7 @@ func (edm *EntityDijkstraMap) BreadthFirstSearch(x, y, n, m, value int, visited 
 		// West
 		if ((coords.X - 1) > 0 && (coords.Y) > 0) && ((coords.X - 1) <= n && (coords.Y) <= m) {
 			newCoords := gamemap.CoordinatePair{X:coords.X - 1, Y:coords.Y}
-			if !visited[newCoords] {
+			if !visited[newCoords] && !surface.Tiles[newCoords.X][newCoords.Y].IsWall() {
 				// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
 				// add it to the coordQueue; We'll check its neighbors soon
 
@@ -142,7 +142,7 @@ func (edm *EntityDijkstraMap) BreadthFirstSearch(x, y, n, m, value int, visited 
 		// SouthWest
 		if ((coords.X - 1) > 0 && (coords.Y + 1) > 0) && ((coords.X - 1) <= n && (coords.Y + 1) <= m) {
 			newCoords := gamemap.CoordinatePair{X:coords.X - 1, Y:coords.Y + 1}
-			if !visited[newCoords] {
+			if !visited[newCoords] && !surface.Tiles[newCoords.X][newCoords.Y].IsWall() {
 				// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
 				// add it to the coordQueue; We'll check its neighbors soon
 
@@ -155,7 +155,7 @@ func (edm *EntityDijkstraMap) BreadthFirstSearch(x, y, n, m, value int, visited 
 		// South
 		if ((coords.X) > 0 && (coords.Y + 1) > 0) && ((coords.X) <= n && (coords.Y + 1) <= m) {
 			newCoords := gamemap.CoordinatePair{X:coords.X, Y:coords.Y + 1}
-			if !visited[newCoords] {
+			if !visited[newCoords] && !surface.Tiles[newCoords.X][newCoords.Y].IsWall() {
 				// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
 				// add it to the coordQueue; We'll check its neighbors soon
 
@@ -168,7 +168,7 @@ func (edm *EntityDijkstraMap) BreadthFirstSearch(x, y, n, m, value int, visited 
 		// SouthEast
 		if ((coords.X + 1) > 0 && (coords.Y + 1) > 0) && ((coords.X + 1) <= n && (coords.Y + 1) <= m) {
 			newCoords := gamemap.CoordinatePair{X:coords.X + 1, Y:coords.Y + 1}
-			if !visited[newCoords] {
+			if !visited[newCoords] && !surface.Tiles[newCoords.X][newCoords.Y].IsWall() {
 				// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
 				// add it to the coordQueue; We'll check its neighbors soon
 
@@ -181,7 +181,7 @@ func (edm *EntityDijkstraMap) BreadthFirstSearch(x, y, n, m, value int, visited 
 		// East
 		if ((coords.X + 1) > 0 && (coords.Y) > 0) && ((coords.X + 1) <= n && (coords.Y) <= m) {
 			newCoords := gamemap.CoordinatePair{X:coords.X + 1, Y:coords.Y}
-			if !visited[newCoords] {
+			if !visited[newCoords] && !surface.Tiles[newCoords.X][newCoords.Y].IsWall() {
 				// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
 				// add it to the coordQueue; We'll check its neighbors soon
 
@@ -194,7 +194,7 @@ func (edm *EntityDijkstraMap) BreadthFirstSearch(x, y, n, m, value int, visited 
 		// NorthEast
 		if ((coords.X + 1) > 0 && (coords.Y - 1) > 0) && ((coords.X + 1) <= n && (coords.Y - 1) <= m) {
 			newCoords := gamemap.CoordinatePair{X:coords.X - 1, Y:coords.Y - 1}
-			if !visited[newCoords] {
+			if !visited[newCoords] && !surface.Tiles[newCoords.X][newCoords.Y].IsWall() {
 				// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
 				// add it to the coordQueue; We'll check its neighbors soon
 
@@ -207,7 +207,7 @@ func (edm *EntityDijkstraMap) BreadthFirstSearch(x, y, n, m, value int, visited 
 		// North
 		if ((coords.X) > 0 && (coords.Y - 1) > 0) && ((coords.X) <= n && (coords.Y - 1) <= m) {
 			newCoords := gamemap.CoordinatePair{X:coords.X, Y:coords.Y - 1}
-			if !visited[newCoords] {
+			if !visited[newCoords] && !surface.Tiles[newCoords.X][newCoords.Y].IsWall() {
 				// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
 				// add it to the coordQueue; We'll check its neighbors soon
 
