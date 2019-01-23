@@ -98,16 +98,19 @@ func (edm *EntityDijkstraMap) GenerateMap(surface *gamemap.Map) {
 
 func (edm *EntityDijkstraMap) DepthFirstSearch(x, y, n, m, value int, visited map[gamemap.CoordinatePair]bool) {
 	if x >= n || y >= m {
+		value = 0
 		return
 	}
 
 	if x < 0 || y < 0 {
+		value = 0
 		return
 	}
 
 	// Check if this location has already been visited
 	coordinates := gamemap.CoordinatePair{X: x, Y: y}
 	if visited[coordinates] {
+		value = 0
 		return
 	}
 
