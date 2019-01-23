@@ -76,11 +76,7 @@ func (edm *EntityDijkstraMap) UpdateMap(surface *gamemap.Map) {
 
 // GenerateMap will create a Dijkstra map, centered around the source entities current location.
 func (edm *EntityDijkstraMap) GenerateMap(surface *gamemap.Map) {
-	// First, set the location of the source entity to a value of 0 (or a very high number, if inverted)
-	startingCoords := gamemap.CoordinatePair{X: edm.sourceX, Y: edm.sourceY}
-	edm.ValuesMap[startingCoords] = 0
-
-	// Now, starting from the source, flood fill every tile on the map, incrementing the value for each tile by one,
+	// Starting from the source, flood fill every tile on the map, incrementing the value for each tile by one,
 	// based on how far away from the source it is. Make a visited array first though (everything but the source is
 	// unvisited initially. Also mark blocking tiles as visited.
 	visited := make(map[gamemap.CoordinatePair]bool)
@@ -88,8 +84,8 @@ func (edm *EntityDijkstraMap) GenerateMap(surface *gamemap.Map) {
 		for y := 0; y < surface.Height-1; y++ {
 			coordinates := gamemap.CoordinatePair{X: x, Y: y}
 
-			// Mark all blocking tiles as visited, so we don't even bother with them, and do the same for the source.
-			if surface.Tiles[x][y].Blocked || (coordinates.X == startingCoords.X && coordinates.Y == startingCoords.Y) {
+			// Mark all blocking tiles as visited, so we don't even bother with them.
+			if surface.Tiles[x][y].Blocked {
 				visited[coordinates] = true
 			} else {
 				visited[coordinates] = false
@@ -97,7 +93,7 @@ func (edm *EntityDijkstraMap) GenerateMap(surface *gamemap.Map) {
 		}
 	}
 
-	edm.DepthFirstSearch(edm.sourceX, edm.sourceY, surface.Width, surface.Height, 1, visited)
+	edm.DepthFirstSearch(edm.sourceX, edm.sourceY, surface.Width, surface.Height, 0, visited)
 }
 
 func (edm *EntityDijkstraMap) DepthFirstSearch(x, y, n, m, value int, visited map[gamemap.CoordinatePair]bool) {
