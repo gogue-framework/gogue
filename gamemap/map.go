@@ -56,9 +56,9 @@ type Map struct {
 
 func (m *Map) InitializeMap() {
 	// Initialize a two dimensional array that will represent the current game map (of dimensions Width x Height)
-	m.Tiles = make([][]*Tile, m.Width)
+	m.Tiles = make([][]*Tile, m.Width + 1)
 	for i := range m.Tiles {
-		m.Tiles[i] = make([]*Tile, m.Height)
+		m.Tiles[i] = make([]*Tile, m.Height + 1)
 	}
 
 	// Set a seed for procedural generation
