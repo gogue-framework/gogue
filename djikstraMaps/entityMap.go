@@ -93,41 +93,127 @@ func (edm *EntityDijkstraMap) GenerateMap(surface *gamemap.Map) {
 		}
 	}
 
-	edm.DepthFirstSearch(edm.sourceX, edm.sourceY, surface.Width, surface.Height, 0, visited)
+	edm.BreadthFirstSearch(edm.sourceX, edm.sourceY, surface.Width, surface.Height, 0, visited)
 }
 
-func (edm *EntityDijkstraMap) DepthFirstSearch(x, y, n, m, value int, visited map[gamemap.CoordinatePair]bool) {
-	if x >= n || y >= m {
-		value = 0
-		return
-	}
-
-	if x < 0 || y < 0 {
-		value = 0
-		return
-	}
-
+func (edm *EntityDijkstraMap) BreadthFirstSearch(x, y, n, m, value int, visited map[gamemap.CoordinatePair]bool) {
 	// Check if this location has already been visited
 	coordinates := gamemap.CoordinatePair{X: x, Y: y}
-	if visited[coordinates] {
-		value = 0
-		return
-	}
 
 	// Mark this location as visited, set the value for this location in the EDM, and increase the value by one
 	// This will ensure that each subsequently further tile will have an increased value
-	visited[coordinates] = true
 	edm.ValuesMap[coordinates] = value
-	value += 1
 
-	// Check each tile in the eight cardinal and inter-cardinal directions in the same manner
-	edm.DepthFirstSearch(x-1, y-1, n, m, value, visited)
-	edm.DepthFirstSearch(x-1, y, n, m, value, visited)
-	edm.DepthFirstSearch(x-1, y+1, n, m, value, visited)
-	edm.DepthFirstSearch(x, y-1, n, m, value, visited)
-	edm.DepthFirstSearch(x, y+1, n, m, value, visited)
-	edm.DepthFirstSearch(x+1, y-1, n, m, value, visited)
-	edm.DepthFirstSearch(x+1, y, n, m, value, visited)
-	edm.DepthFirstSearch(x+1, y+1, n, m, value, visited)
+	coordQueue := []gamemap.CoordinatePair{coordinates}
+
+	for len(coordQueue) > 0 {
+		coords :=  coordQueue[len(coordQueue)-1]
+		coordQueue = coordQueue[:len(coordQueue)-1]
+
+		// Check all the immediate neighbors, and set values for them based on the current coordinates value
+		// NorthWest
+		if ((coords.X - 1) > 0 && (coords.Y - 1) > 0) && ((coords.X - 1) <= n && (coords.Y - 1) <= m) {
+			newCoords := gamemap.CoordinatePair{X:coords.X - 1, Y:coords.Y - 1}
+			if !visited[newCoords] {
+				// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
+				// add it to the coordQueue; We'll check its neighbors soon
+
+				visited[coords] = true
+				edm.ValuesMap[newCoords] = edm.ValuesMap[coords] + 1
+				coordQueue = append(coordQueue, newCoords)
+			}
+		}
+
+		// West
+		if ((coords.X - 1) > 0 && (coords.Y) > 0) && ((coords.X - 1) <= n && (coords.Y) <= m) {
+			newCoords := gamemap.CoordinatePair{X:coords.X - 1, Y:coords.Y}
+			if !visited[newCoords] {
+				// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
+				// add it to the coordQueue; We'll check its neighbors soon
+
+				visited[coords] = true
+				edm.ValuesMap[newCoords] = edm.ValuesMap[coords] + 1
+				coordQueue = append(coordQueue, newCoords)
+			}
+		}
+
+		// SouthWest
+		if ((coords.X - 1) > 0 && (coords.Y + 1) > 0) && ((coords.X - 1) <= n && (coords.Y + 1) <= m) {
+			newCoords := gamemap.CoordinatePair{X:coords.X - 1, Y:coords.Y + 1}
+			if !visited[newCoords] {
+				// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
+				// add it to the coordQueue; We'll check its neighbors soon
+
+				visited[coords] = true
+				edm.ValuesMap[newCoords] = edm.ValuesMap[coords] + 1
+				coordQueue = append(coordQueue, newCoords)
+			}
+		}
+
+		// South
+		if ((coords.X) > 0 && (coords.Y + 1) > 0) && ((coords.X) <= n && (coords.Y + 1) <= m) {
+			newCoords := gamemap.CoordinatePair{X:coords.X, Y:coords.Y + 1}
+			if !visited[newCoords] {
+				// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
+				// add it to the coordQueue; We'll check its neighbors soon
+
+				visited[coords] = true
+				edm.ValuesMap[newCoords] = edm.ValuesMap[coords] + 1
+				coordQueue = append(coordQueue, newCoords)
+			}
+		}
+
+		// SouthEast
+		if ((coords.X + 1) > 0 && (coords.Y + 1) > 0) && ((coords.X + 1) <= n && (coords.Y + 1) <= m) {
+			newCoords := gamemap.CoordinatePair{X:coords.X + 1, Y:coords.Y + 1}
+			if !visited[newCoords] {
+				// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
+				// add it to the coordQueue; We'll check its neighbors soon
+
+				visited[coords] = true
+				edm.ValuesMap[newCoords] = edm.ValuesMap[coords] + 1
+				coordQueue = append(coordQueue, newCoords)
+			}
+		}
+
+		// East
+		if ((coords.X + 1) > 0 && (coords.Y) > 0) && ((coords.X + 1) <= n && (coords.Y) <= m) {
+			newCoords := gamemap.CoordinatePair{X:coords.X + 1, Y:coords.Y}
+			if !visited[newCoords] {
+				// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
+				// add it to the coordQueue; We'll check its neighbors soon
+
+				visited[coords] = true
+				edm.ValuesMap[newCoords] = edm.ValuesMap[coords] + 1
+				coordQueue = append(coordQueue, newCoords)
+			}
+		}
+
+		// NorthEast
+		if ((coords.X + 1) > 0 && (coords.Y - 1) > 0) && ((coords.X + 1) <= n && (coords.Y - 1) <= m) {
+			newCoords := gamemap.CoordinatePair{X:coords.X - 1, Y:coords.Y - 1}
+			if !visited[newCoords] {
+				// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
+				// add it to the coordQueue; We'll check its neighbors soon
+
+				visited[coords] = true
+				edm.ValuesMap[newCoords] = edm.ValuesMap[coords] + 1
+				coordQueue = append(coordQueue, newCoords)
+			}
+		}
+
+		// North
+		if ((coords.X) > 0 && (coords.Y - 1) > 0) && ((coords.X) <= n && (coords.Y - 1) <= m) {
+			newCoords := gamemap.CoordinatePair{X:coords.X, Y:coords.Y - 1}
+			if !visited[newCoords] {
+				// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
+				// add it to the coordQueue; We'll check its neighbors soon
+
+				visited[coords] = true
+				edm.ValuesMap[newCoords] = edm.ValuesMap[coords] + 1
+				coordQueue = append(coordQueue, newCoords)
+			}
+		}
+	}
 }
 
