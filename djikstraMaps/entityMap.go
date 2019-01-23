@@ -104,6 +104,8 @@ func (edm *EntityDijkstraMap) BreadthFirstSearch(x, y, n, m, value int, visited 
 	// This will ensure that each subsequently further tile will have an increased value
 	edm.ValuesMap[coordinates] = value
 
+	visited[coordinates] = true
+
 	coordQueue := []gamemap.CoordinatePair{coordinates}
 
 	for len(coordQueue) > 0 {
