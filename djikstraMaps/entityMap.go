@@ -1,10 +1,10 @@
-package djikstraMaps
+package DijkstraMaps
 
 import (
 	"github.com/jcerise/gogue/gamemap"
 )
 
-// An EntityMap is a Djikstra map that centers around an entity. This could be the player, an item, a monster, a door,
+// An EntityMap is a Dijkstra map that centers around an entity. This could be the player, an item, a monster, a door,
 // etc. They are the simplest implementation, as the map radiates values from a single point, setting that point (the
 // location of the entity) as the source, meaning it will have the lowest value. These maps can optionally be inverted,
 // to make other entities move away from it (fleeing, for example). Each map will keep track of where the source entity
@@ -27,7 +27,7 @@ import (
 // from that entity, 0 is indifference, and negative numbers mean high desire. Multiply values on the map by the desires
 // and you end up with a combined set of maps with values that reflect the monsters desires.
 
-type EntityDjikstraMap struct {
+type EntityDijkstraMap struct {
 	source int // The source entity ID
 	sourceX int
 	sourceY int
@@ -37,8 +37,8 @@ type EntityDjikstraMap struct {
 	ValuesMap map[gamemap.CoordinatePair]int
 }
 
-func NewEntityMap(sourceEntity int, sourceX, sourceY int, mapType string) *EntityDjikstraMap {
-	edm := EntityDjikstraMap{}
+func NewEntityMap(sourceEntity int, sourceX, sourceY int, mapType string) *EntityDijkstraMap {
+	edm := EntityDijkstraMap{}
 	edm.ValuesMap = make(map[gamemap.CoordinatePair]int)
 
 	// Set the source position
@@ -57,7 +57,7 @@ func NewEntityMap(sourceEntity int, sourceX, sourceY int, mapType string) *Entit
 
 // UpdateSourceCoordinates sets the sourceX and sourceY properties to the latest values available, recording the
 // previous coordinates for later use.
-func (edm *EntityDjikstraMap) UpdateSourceCoordinates(x, y int) {
+func (edm *EntityDijkstraMap) UpdateSourceCoordinates(x, y int) {
 	edm.sourcePrevX = edm.sourceX
 	edm.sourcePrevY = edm.sourceY
 
@@ -67,15 +67,15 @@ func (edm *EntityDjikstraMap) UpdateSourceCoordinates(x, y int) {
 
 // UpdateMap checks the map to see if the update criteria (location of the source entity has changed) is met. If so,
 // the map will be regenerated.
-func (edm *EntityDjikstraMap) UpdateMap(surface *gamemap.Map) {
+func (edm *EntityDijkstraMap) UpdateMap(surface *gamemap.Map) {
 	if (edm.sourceX != edm.sourcePrevX) || (edm.sourceY != edm.sourcePrevY) {
 		// The coordinates differ from the last previous set, meaning the entity has moved. Re-generate the map.
 		edm.GenerateMap(surface)
 	}
 }
 
-// GenerateMap will create a Djikstra map, centered around the source entities current location.
-func (edm *EntityDjikstraMap) GenerateMap(surface *gamemap.Map) {
+// GenerateMap will create a Dijkstra map, centered around the source entities current location.
+func (edm *EntityDijkstraMap) GenerateMap(surface *gamemap.Map) {
 	// First, set the location of the source entity to a value of 0 (or a very high number, if inverted)
 	startingCoords := gamemap.CoordinatePair{X: edm.sourceX, Y: edm.sourceY}
 	edm.ValuesMap[startingCoords] = 0
@@ -100,7 +100,7 @@ func (edm *EntityDjikstraMap) GenerateMap(surface *gamemap.Map) {
 	edm.DepthFirstSearch(edm.sourceX, edm.sourceY, surface.Width, surface.Height, 1, visited)
 }
 
-func (edm *EntityDjikstraMap) DepthFirstSearch(x, y, n, m, value int, visited map[gamemap.CoordinatePair]bool) {
+func (edm *EntityDijkstraMap) DepthFirstSearch(x, y, n, m, value int, visited map[gamemap.CoordinatePair]bool) {
 	if x >= n || y >= m {
 		return
 	}
