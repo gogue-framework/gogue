@@ -118,7 +118,7 @@ func (edm *EntityDijkstraMap) BreadthFirstSearch(x, y, n, m, value int, visited 
 				// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
 				// add it to the coordQueue; We'll check its neighbors soon
 
-				visited[coords] = true
+				visited[newCoords] = true
 				edm.ValuesMap[newCoords] = edm.ValuesMap[coords] + 1
 				coordQueue = append(coordQueue, newCoords)
 			}
@@ -131,7 +131,7 @@ func (edm *EntityDijkstraMap) BreadthFirstSearch(x, y, n, m, value int, visited 
 				// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
 				// add it to the coordQueue; We'll check its neighbors soon
 
-				visited[coords] = true
+				visited[newCoords] = true
 				edm.ValuesMap[newCoords] = edm.ValuesMap[coords] + 1
 				coordQueue = append(coordQueue, newCoords)
 			}
@@ -144,7 +144,7 @@ func (edm *EntityDijkstraMap) BreadthFirstSearch(x, y, n, m, value int, visited 
 				// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
 				// add it to the coordQueue; We'll check its neighbors soon
 
-				visited[coords] = true
+				visited[newCoords] = true
 				edm.ValuesMap[newCoords] = edm.ValuesMap[coords] + 1
 				coordQueue = append(coordQueue, newCoords)
 			}
@@ -157,7 +157,7 @@ func (edm *EntityDijkstraMap) BreadthFirstSearch(x, y, n, m, value int, visited 
 				// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
 				// add it to the coordQueue; We'll check its neighbors soon
 
-				visited[coords] = true
+				visited[newCoords] = true
 				edm.ValuesMap[newCoords] = edm.ValuesMap[coords] + 1
 				coordQueue = append(coordQueue, newCoords)
 			}
@@ -170,7 +170,7 @@ func (edm *EntityDijkstraMap) BreadthFirstSearch(x, y, n, m, value int, visited 
 				// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
 				// add it to the coordQueue; We'll check its neighbors soon
 
-				visited[coords] = true
+				visited[newCoords] = true
 				edm.ValuesMap[newCoords] = edm.ValuesMap[coords] + 1
 				coordQueue = append(coordQueue, newCoords)
 			}
@@ -183,7 +183,7 @@ func (edm *EntityDijkstraMap) BreadthFirstSearch(x, y, n, m, value int, visited 
 				// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
 				// add it to the coordQueue; We'll check its neighbors soon
 
-				visited[coords] = true
+				visited[newCoords] = true
 				edm.ValuesMap[newCoords] = edm.ValuesMap[coords] + 1
 				coordQueue = append(coordQueue, newCoords)
 			}
@@ -196,7 +196,7 @@ func (edm *EntityDijkstraMap) BreadthFirstSearch(x, y, n, m, value int, visited 
 				// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
 				// add it to the coordQueue; We'll check its neighbors soon
 
-				visited[coords] = true
+				visited[newCoords] = true
 				edm.ValuesMap[newCoords] = edm.ValuesMap[coords] + 1
 				coordQueue = append(coordQueue, newCoords)
 			}
@@ -209,7 +209,7 @@ func (edm *EntityDijkstraMap) BreadthFirstSearch(x, y, n, m, value int, visited 
 				// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
 				// add it to the coordQueue; We'll check its neighbors soon
 
-				visited[coords] = true
+				visited[newCoords] = true
 				edm.ValuesMap[newCoords] = edm.ValuesMap[coords] + 1
 				coordQueue = append(coordQueue, newCoords)
 			}
