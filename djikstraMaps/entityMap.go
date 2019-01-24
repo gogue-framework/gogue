@@ -114,107 +114,92 @@ func (edm *EntityDijkstraMap) BreadthFirstSearch(x, y, n, m, value int, visited 
 
 		// Check all the immediate neighbors, and set values for them based on the current coordinates value
 		// NorthWest
-		if ((coords.X - 1) > 0 && (coords.Y - 1) > 0) && ((coords.X - 1) <= n && (coords.Y - 1) <= m) {
-			newCoords := gamemap.CoordinatePair{X:coords.X - 1, Y:coords.Y - 1}
-			if !visited[newCoords] && !surface.Tiles[newCoords.X][newCoords.Y].IsWall() {
-				// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
-				// add it to the coordQueue; We'll check its neighbors soon
+		newCoords := gamemap.CoordinatePair{X:coords.X - 1, Y:coords.Y - 1}
+		if !visited[newCoords] && !surface.Tiles[newCoords.X][newCoords.Y].IsWall() {
+			// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
+			// add it to the coordQueue; We'll check its neighbors soon
 
-				visited[newCoords] = true
-				edm.ValuesMap[newCoords] = edm.ValuesMap[coords] + 1
-				coordQueue = append(coordQueue, newCoords)
-			}
+			visited[newCoords] = true
+			edm.ValuesMap[newCoords] = edm.ValuesMap[coords] + 1
+			coordQueue = append(coordQueue, newCoords)
 		}
 
-		// West
-		if ((coords.X - 1) > 0 && (coords.Y) > 0) && ((coords.X - 1) <= n && (coords.Y) <= m) {
-			newCoords := gamemap.CoordinatePair{X:coords.X - 1, Y:coords.Y}
-			if !visited[newCoords] && !surface.Tiles[newCoords.X][newCoords.Y].IsWall() {
-				// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
-				// add it to the coordQueue; We'll check its neighbors soon
 
-				visited[newCoords] = true
-				edm.ValuesMap[newCoords] = edm.ValuesMap[coords] + 1
-				coordQueue = append(coordQueue, newCoords)
-			}
+		// West
+		newCoords = gamemap.CoordinatePair{X:coords.X - 1, Y:coords.Y}
+		if !visited[newCoords] && !surface.Tiles[newCoords.X][newCoords.Y].IsWall() {
+			// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
+			// add it to the coordQueue; We'll check its neighbors soon
+
+			visited[newCoords] = true
+			edm.ValuesMap[newCoords] = edm.ValuesMap[coords] + 1
+			coordQueue = append(coordQueue, newCoords)
 		}
 
 		// SouthWest
-		if ((coords.X - 1) > 0 && (coords.Y + 1) > 0) && ((coords.X - 1) <= n && (coords.Y + 1) <= m) {
-			newCoords := gamemap.CoordinatePair{X:coords.X - 1, Y:coords.Y + 1}
-			if !visited[newCoords] && !surface.Tiles[newCoords.X][newCoords.Y].IsWall() {
-				// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
-				// add it to the coordQueue; We'll check its neighbors soon
+		newCoords = gamemap.CoordinatePair{X:coords.X - 1, Y:coords.Y + 1}
+		if !visited[newCoords] && !surface.Tiles[newCoords.X][newCoords.Y].IsWall() {
+			// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
+			// add it to the coordQueue; We'll check its neighbors soon
 
-				visited[newCoords] = true
-				edm.ValuesMap[newCoords] = edm.ValuesMap[coords] + 1
-				coordQueue = append(coordQueue, newCoords)
-			}
+			visited[newCoords] = true
+			edm.ValuesMap[newCoords] = edm.ValuesMap[coords] + 1
+			coordQueue = append(coordQueue, newCoords)
 		}
 
 		// South
-		if ((coords.X) > 0 && (coords.Y + 1) > 0) && ((coords.X) <= n && (coords.Y + 1) <= m) {
-			newCoords := gamemap.CoordinatePair{X:coords.X, Y:coords.Y + 1}
-			if !visited[newCoords] && !surface.Tiles[newCoords.X][newCoords.Y].IsWall() {
-				// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
-				// add it to the coordQueue; We'll check its neighbors soon
+		newCoords = gamemap.CoordinatePair{X:coords.X, Y:coords.Y + 1}
+		if !visited[newCoords] && !surface.Tiles[newCoords.X][newCoords.Y].IsWall() {
+			// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
+			// add it to the coordQueue; We'll check its neighbors soon
 
-				visited[newCoords] = true
-				edm.ValuesMap[newCoords] = edm.ValuesMap[coords] + 1
-				coordQueue = append(coordQueue, newCoords)
-			}
+			visited[newCoords] = true
+			edm.ValuesMap[newCoords] = edm.ValuesMap[coords] + 1
+			coordQueue = append(coordQueue, newCoords)
 		}
 
 		// SouthEast
-		if ((coords.X + 1) > 0 && (coords.Y + 1) > 0) && ((coords.X + 1) <= n && (coords.Y + 1) <= m) {
-			newCoords := gamemap.CoordinatePair{X:coords.X + 1, Y:coords.Y + 1}
-			if !visited[newCoords] && !surface.Tiles[newCoords.X][newCoords.Y].IsWall() {
-				// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
-				// add it to the coordQueue; We'll check its neighbors soon
+		newCoords = gamemap.CoordinatePair{X:coords.X + 1, Y:coords.Y + 1}
+		if !visited[newCoords] && !surface.Tiles[newCoords.X][newCoords.Y].IsWall() {
+			// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
+			// add it to the coordQueue; We'll check its neighbors soon
 
-				visited[newCoords] = true
-				edm.ValuesMap[newCoords] = edm.ValuesMap[coords] + 1
-				coordQueue = append(coordQueue, newCoords)
-			}
+			visited[newCoords] = true
+			edm.ValuesMap[newCoords] = edm.ValuesMap[coords] + 1
+			coordQueue = append(coordQueue, newCoords)
 		}
 
 		// East
-		if ((coords.X + 1) > 0 && (coords.Y) > 0) && ((coords.X + 1) <= n && (coords.Y) <= m) {
-			newCoords := gamemap.CoordinatePair{X:coords.X + 1, Y:coords.Y}
-			if !visited[newCoords] && !surface.Tiles[newCoords.X][newCoords.Y].IsWall() {
-				// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
-				// add it to the coordQueue; We'll check its neighbors soon
+		newCoords = gamemap.CoordinatePair{X:coords.X + 1, Y:coords.Y}
+		if !visited[newCoords] && !surface.Tiles[newCoords.X][newCoords.Y].IsWall() {
+			// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
+			// add it to the coordQueue; We'll check its neighbors soon
 
-				visited[newCoords] = true
-				edm.ValuesMap[newCoords] = edm.ValuesMap[coords] + 1
-				coordQueue = append(coordQueue, newCoords)
-			}
+			visited[newCoords] = true
+			edm.ValuesMap[newCoords] = edm.ValuesMap[coords] + 1
+			coordQueue = append(coordQueue, newCoords)
 		}
 
 		// NorthEast
-		if ((coords.X + 1) > 0 && (coords.Y - 1) > 0) && ((coords.X + 1) <= n && (coords.Y - 1) <= m) {
-			newCoords := gamemap.CoordinatePair{X:coords.X - 1, Y:coords.Y - 1}
-			if !visited[newCoords] && !surface.Tiles[newCoords.X][newCoords.Y].IsWall() {
-				// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
-				// add it to the coordQueue; We'll check its neighbors soon
+		newCoords = gamemap.CoordinatePair{X:coords.X - 1, Y:coords.Y - 1}
+		if !visited[newCoords] && !surface.Tiles[newCoords.X][newCoords.Y].IsWall() {
+			// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
+			// add it to the coordQueue; We'll check its neighbors soon
 
-				visited[newCoords] = true
-				edm.ValuesMap[newCoords] = edm.ValuesMap[coords] + 1
-				coordQueue = append(coordQueue, newCoords)
-			}
+			visited[newCoords] = true
+			edm.ValuesMap[newCoords] = edm.ValuesMap[coords] + 1
+			coordQueue = append(coordQueue, newCoords)
 		}
 
 		// North
-		if ((coords.X) > 0 && (coords.Y - 1) > 0) && ((coords.X) <= n && (coords.Y - 1) <= m) {
-			newCoords := gamemap.CoordinatePair{X:coords.X, Y:coords.Y - 1}
-			if !visited[newCoords] && !surface.Tiles[newCoords.X][newCoords.Y].IsWall() {
-				// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
-				// add it to the coordQueue; We'll check its neighbors soon
+		newCoords = gamemap.CoordinatePair{X:coords.X, Y:coords.Y - 1}
+		if !visited[newCoords] && !surface.Tiles[newCoords.X][newCoords.Y].IsWall() {
+			// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
+			// add it to the coordQueue; We'll check its neighbors soon
 
-				visited[newCoords] = true
-				edm.ValuesMap[newCoords] = edm.ValuesMap[coords] + 1
-				coordQueue = append(coordQueue, newCoords)
-			}
+			visited[newCoords] = true
+			edm.ValuesMap[newCoords] = edm.ValuesMap[coords] + 1
+			coordQueue = append(coordQueue, newCoords)
 		}
 	}
 }
