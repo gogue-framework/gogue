@@ -34,12 +34,12 @@ type EntityDijkstraMap struct {
 	sourcePrevX int
 	sourcePrevY int
 	mapType string
-	ValuesMap map[gamemap.CoordinatePair]int
+	ValuesMap map[*gamemap.Tile]int
 }
 
 func NewEntityMap(sourceEntity int, sourceX, sourceY int, mapType string) *EntityDijkstraMap {
 	edm := EntityDijkstraMap{}
-	edm.ValuesMap = make(map[gamemap.CoordinatePair]int)
+	edm.ValuesMap = make(map[*gamemap.Tile]int)
 
 	// Set the source position
 	edm.sourceX = sourceX
@@ -79,115 +79,115 @@ func (edm *EntityDijkstraMap) GenerateMap(surface *gamemap.Map) {
 	// Starting from the source, flood fill every tile on the map, incrementing the value for each tile by one,
 	// based on how far away from the source it is. Make a visited array first though (everything but the source is
 	// unvisited initially. Also mark blocking tiles as visited.
-	visited := make(map[gamemap.CoordinatePair]bool)
+	visited := make(map[*gamemap.Tile]bool)
 
 	edm.BreadthFirstSearch(edm.sourceX, edm.sourceY, surface.Width, surface.Height, 0, visited, surface)
 }
 
-func (edm *EntityDijkstraMap) BreadthFirstSearch(x, y, n, m, value int, visited map[gamemap.CoordinatePair]bool, surface *gamemap.Map) {
+func (edm *EntityDijkstraMap) BreadthFirstSearch(x, y, n, m, value int, visited map[*gamemap.Tile]bool, surface *gamemap.Map) {
 	// Check if this location has already been visited
-	coordinates := gamemap.CoordinatePair{X: x, Y: y}
+	tile := surface.Tiles[x][y]
 
 	// Mark this location as visited, set the value for this location in the EDM, and increase the value by one
 	// This will ensure that each subsequently further tile will have an increased value
-	edm.ValuesMap[coordinates] = value
+	edm.ValuesMap[tile] = value
 
-	visited[coordinates] = true
+	visited[tile] = true
 
-	coordQueue := []gamemap.CoordinatePair{coordinates}
+	tileQueue := []*gamemap.Tile{tile}
 
-	for len(coordQueue) > 0 {
-		coords :=  coordQueue[len(coordQueue)-1]
-		coordQueue = coordQueue[:len(coordQueue)-1]
+	for len(tileQueue) > 0 {
+		curTile :=  tileQueue[len(tileQueue)-1]
+		tileQueue = tileQueue[:len(tileQueue)-1]
 
 		// Check all the immediate neighbors, and set values for them based on the current coordinates value
 		// NorthWest
-		newCoords := gamemap.CoordinatePair{X:coords.X - 1, Y:coords.Y - 1}
-		if !visited[newCoords] && !surface.Tiles[newCoords.X][newCoords.Y].IsWall() {
+		neighborTile := surface.Tiles[curTile.X - 1][curTile.Y - 1]
+		if !visited[neighborTile] && !neighborTile.IsWall() {
 			// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
-			// add it to the coordQueue; We'll check its neighbors soon
+			// add it to the tileQueue; We'll check its neighbors soon
 
-			visited[newCoords] = true
-			edm.ValuesMap[newCoords] = edm.ValuesMap[coords] + 1
-			coordQueue = append(coordQueue, newCoords)
+			visited[neighborTile] = true
+			edm.ValuesMap[neighborTile] = edm.ValuesMap[curTile] + 1
+			tileQueue = append(tileQueue, neighborTile)
 		}
 
 
 		// West
-		newCoords = gamemap.CoordinatePair{X:coords.X - 1, Y:coords.Y}
-		if !visited[newCoords] && !surface.Tiles[newCoords.X][newCoords.Y].IsWall() {
+		neighborTile = surface.Tiles[curTile.X - 1][curTile.Y]
+		if !visited[neighborTile] && !neighborTile.IsWall() {
 			// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
-			// add it to the coordQueue; We'll check its neighbors soon
+			// add it to the tileQueue; We'll check its neighbors soon
 
-			visited[newCoords] = true
-			edm.ValuesMap[newCoords] = edm.ValuesMap[coords] + 1
-			coordQueue = append(coordQueue, newCoords)
+			visited[neighborTile] = true
+			edm.ValuesMap[neighborTile] = edm.ValuesMap[curTile] + 1
+			tileQueue = append(tileQueue, neighborTile)
 		}
 
 		// SouthWest
-		newCoords = gamemap.CoordinatePair{X:coords.X - 1, Y:coords.Y + 1}
-		if !visited[newCoords] && !surface.Tiles[newCoords.X][newCoords.Y].IsWall() {
+		neighborTile = surface.Tiles[curTile.X - 1][curTile.Y + 1]
+		if !visited[neighborTile] && !neighborTile.IsWall() {
 			// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
-			// add it to the coordQueue; We'll check its neighbors soon
+			// add it to the tileQueue; We'll check its neighbors soon
 
-			visited[newCoords] = true
-			edm.ValuesMap[newCoords] = edm.ValuesMap[coords] + 1
-			coordQueue = append(coordQueue, newCoords)
+			visited[neighborTile] = true
+			edm.ValuesMap[neighborTile] = edm.ValuesMap[curTile] + 1
+			tileQueue = append(tileQueue, neighborTile)
 		}
 
 		// South
-		newCoords = gamemap.CoordinatePair{X:coords.X, Y:coords.Y + 1}
-		if !visited[newCoords] && !surface.Tiles[newCoords.X][newCoords.Y].IsWall() {
+		neighborTile = surface.Tiles[curTile.X][curTile.Y + 1]
+		if !visited[neighborTile] && !neighborTile.IsWall() {
 			// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
-			// add it to the coordQueue; We'll check its neighbors soon
+			// add it to the tileQueue; We'll check its neighbors soon
 
-			visited[newCoords] = true
-			edm.ValuesMap[newCoords] = edm.ValuesMap[coords] + 1
-			coordQueue = append(coordQueue, newCoords)
+			visited[neighborTile] = true
+			edm.ValuesMap[neighborTile] = edm.ValuesMap[curTile] + 1
+			tileQueue = append(tileQueue, neighborTile)
 		}
 
 		// SouthEast
-		newCoords = gamemap.CoordinatePair{X:coords.X + 1, Y:coords.Y + 1}
-		if !visited[newCoords] && !surface.Tiles[newCoords.X][newCoords.Y].IsWall() {
+		neighborTile = surface.Tiles[curTile.X + 1][curTile.Y + 1]
+		if !visited[neighborTile] && !neighborTile.IsWall() {
 			// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
-			// add it to the coordQueue; We'll check its neighbors soon
+			// add it to the tileQueue; We'll check its neighbors soon
 
-			visited[newCoords] = true
-			edm.ValuesMap[newCoords] = edm.ValuesMap[coords] + 1
-			coordQueue = append(coordQueue, newCoords)
+			visited[neighborTile] = true
+			edm.ValuesMap[neighborTile] = edm.ValuesMap[curTile] + 1
+			tileQueue = append(tileQueue, neighborTile)
 		}
 
 		// East
-		newCoords = gamemap.CoordinatePair{X:coords.X + 1, Y:coords.Y}
-		if !visited[newCoords] && !surface.Tiles[newCoords.X][newCoords.Y].IsWall() {
+		neighborTile = surface.Tiles[curTile.X + 1][curTile.Y]
+		if !visited[neighborTile] && !neighborTile.IsWall() {
 			// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
-			// add it to the coordQueue; We'll check its neighbors soon
+			// add it to the tileQueue; We'll check its neighbors soon
 
-			visited[newCoords] = true
-			edm.ValuesMap[newCoords] = edm.ValuesMap[coords] + 1
-			coordQueue = append(coordQueue, newCoords)
+			visited[neighborTile] = true
+			edm.ValuesMap[neighborTile] = edm.ValuesMap[curTile] + 1
+			tileQueue = append(tileQueue, neighborTile)
 		}
 
 		// NorthEast
-		newCoords = gamemap.CoordinatePair{X:coords.X + 1, Y:coords.Y - 1}
-		if !visited[newCoords] && !surface.Tiles[newCoords.X][newCoords.Y].IsWall() {
+		neighborTile = surface.Tiles[curTile.X + 1][curTile.Y - 1]
+		if !visited[neighborTile] && !neighborTile.IsWall() {
 			// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
-			// add it to the coordQueue; We'll check its neighbors soon
+			// add it to the tileQueue; We'll check its neighbors soon
 
-			visited[newCoords] = true
-			edm.ValuesMap[newCoords] = edm.ValuesMap[coords] + 1
-			coordQueue = append(coordQueue, newCoords)
+			visited[neighborTile] = true
+			edm.ValuesMap[neighborTile] = edm.ValuesMap[curTile] + 1
+			tileQueue = append(tileQueue, neighborTile)
 		}
 
 		// North
-		newCoords = gamemap.CoordinatePair{X:coords.X, Y:coords.Y - 1}
-		if !visited[newCoords] && !surface.Tiles[newCoords.X][newCoords.Y].IsWall() {
+		neighborTile = surface.Tiles[curTile.X][curTile.Y - 1]
+		if !visited[neighborTile] && !neighborTile.IsWall() {
 			// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
-			// add it to the coordQueue; We'll check its neighbors soon
+			// add it to the tileQueue; We'll check its neighbors soon
 
-			visited[newCoords] = true
-			edm.ValuesMap[newCoords] = edm.ValuesMap[coords] + 1
-			coordQueue = append(coordQueue, newCoords)
+			visited[neighborTile] = true
+			edm.ValuesMap[neighborTile] = edm.ValuesMap[curTile] + 1
+			tileQueue = append(tileQueue, neighborTile)
 		}
 	}
 }
