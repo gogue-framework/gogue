@@ -58,11 +58,19 @@ func (rng *RNG) Percentage() int {
 }
 
 func (rng *RNG) Range(min, max int) int {
-	return rng.rand.Intn(max - min) + min
+	if min == max {
+		return min
+	} else {
+		return rng.rand.Intn(max - min) + min
+	}
 }
 
 func (rng *RNG) RangeNegative(min, max int) int {
-	return rng.rand.Intn(max - min + 1) + min
+	if min == max {
+		return min
+	} else {
+		return rng.rand.Intn(max - min + 1) + min
+	}
 }
 
 func (rng *RNG) GetWeightedEntity(values map[int]int) int {
