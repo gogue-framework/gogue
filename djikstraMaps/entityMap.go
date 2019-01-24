@@ -169,7 +169,7 @@ func (edm *EntityDijkstraMap) BreadthFirstSearch(x, y, n, m, value int, visited 
 		}
 
 		// NorthEast
-		newCoords = gamemap.CoordinatePair{X:coords.X - 1, Y:coords.Y - 1}
+		newCoords = gamemap.CoordinatePair{X:coords.X + 1, Y:coords.Y - 1}
 		if !visited[newCoords] && !surface.Tiles[newCoords.X][newCoords.Y].IsWall() {
 			// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
 			// add it to the coordQueue; We'll check its neighbors soon
