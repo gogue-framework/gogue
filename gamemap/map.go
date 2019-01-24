@@ -69,6 +69,8 @@ func (m *Map) Render(gameCamera *camera.GameCamera, newCameraX, newCameraY int) 
 
 	gameCamera.MoveCamera(newCameraX, newCameraY, m.Width, m.Height)
 
+	printedTiles := make(map[CoordinatePair]bool)
+
 	for x := 0; x < gameCamera.Width; x++ {
 		for y := 0; y < gameCamera.Height; y++ {
 
@@ -83,11 +85,17 @@ func (m *Map) Render(gameCamera *camera.GameCamera, newCameraX, newCameraY int) 
 			}
 
 			tile := m.Tiles[mapX][mapY]
+			coordPair := CoordinatePair{X:mapX, Y:mapY}
 
-			if tile.Visible {
+			// Print the tile, if it meets the following criteria:
+			// 1. Its visible or explored
+			// 2. It hasn't been printed yet. This will prevent over printing due to camera conversion
+			if tile.Visible && !printedTiles[coordPair] {
 				gogue.PrintGlyph(x, y, tile.Glyph, "", 0)
-			} else if tile.Explored {
+				printedTiles[coordPair] = true
+			} else if tile.Explored && !printedTiles[coordPair] {
 				gogue.PrintGlyph(x, y, tile.Glyph, "", 0, true)
+				printedTiles[coordPair] = true
 			}
 		}
 	}
