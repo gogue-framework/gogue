@@ -37,9 +37,12 @@ type EntityDijkstraMap struct {
 	ValuesMap [][]int
 }
 
-func NewEntityMap(sourceEntity int, sourceX, sourceY int, mapType string, mapWidth int) *EntityDijkstraMap {
+func NewEntityMap(sourceEntity int, sourceX, sourceY int, mapType string, mapWidth, mapHeight int) *EntityDijkstraMap {
 	edm := EntityDijkstraMap{}
 	edm.ValuesMap = make([][]int, mapWidth + 1)
+	for i := range edm.ValuesMap {
+		edm.ValuesMap[i] = make([]int, mapHeight + 1)
+	}
 
 	// Set the source position
 	edm.sourceX = sourceX
