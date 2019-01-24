@@ -34,12 +34,12 @@ type EntityDijkstraMap struct {
 	sourcePrevX int
 	sourcePrevY int
 	mapType string
-	ValuesMap map[*gamemap.Tile]int
+	ValuesMap [][]int
 }
 
 func NewEntityMap(sourceEntity int, sourceX, sourceY int, mapType string) *EntityDijkstraMap {
 	edm := EntityDijkstraMap{}
-	edm.ValuesMap = make(map[*gamemap.Tile]int)
+	edm.ValuesMap = [][]int{}
 
 	// Set the source position
 	edm.sourceX = sourceX
@@ -90,7 +90,7 @@ func (edm *EntityDijkstraMap) BreadthFirstSearch(x, y, n, m, value int, visited 
 
 	// Mark this location as visited, set the value for this location in the EDM, and increase the value by one
 	// This will ensure that each subsequently further tile will have an increased value
-	edm.ValuesMap[tile] = value
+	edm.ValuesMap[x][y] = value
 
 	visited[tile] = true
 
@@ -108,7 +108,7 @@ func (edm *EntityDijkstraMap) BreadthFirstSearch(x, y, n, m, value int, visited 
 			// add it to the tileQueue; We'll check its neighbors soon
 
 			visited[neighborTile] = true
-			edm.ValuesMap[neighborTile] = edm.ValuesMap[curTile] + 1
+			edm.ValuesMap[neighborTile.X][neighborTile.Y] = edm.ValuesMap[curTile.X][curTile.Y] + 1
 			tileQueue = append(tileQueue, neighborTile)
 		}
 
@@ -120,7 +120,7 @@ func (edm *EntityDijkstraMap) BreadthFirstSearch(x, y, n, m, value int, visited 
 			// add it to the tileQueue; We'll check its neighbors soon
 
 			visited[neighborTile] = true
-			edm.ValuesMap[neighborTile] = edm.ValuesMap[curTile] + 1
+			edm.ValuesMap[neighborTile.X][neighborTile.Y] = edm.ValuesMap[curTile.X][curTile.Y] + 1
 			tileQueue = append(tileQueue, neighborTile)
 		}
 
@@ -131,7 +131,7 @@ func (edm *EntityDijkstraMap) BreadthFirstSearch(x, y, n, m, value int, visited 
 			// add it to the tileQueue; We'll check its neighbors soon
 
 			visited[neighborTile] = true
-			edm.ValuesMap[neighborTile] = edm.ValuesMap[curTile] + 1
+			edm.ValuesMap[neighborTile.X][neighborTile.Y] = edm.ValuesMap[curTile.X][curTile.Y] + 1
 			tileQueue = append(tileQueue, neighborTile)
 		}
 
@@ -142,7 +142,7 @@ func (edm *EntityDijkstraMap) BreadthFirstSearch(x, y, n, m, value int, visited 
 			// add it to the tileQueue; We'll check its neighbors soon
 
 			visited[neighborTile] = true
-			edm.ValuesMap[neighborTile] = edm.ValuesMap[curTile] + 1
+			edm.ValuesMap[neighborTile.X][neighborTile.Y] = edm.ValuesMap[curTile.X][curTile.Y] + 1
 			tileQueue = append(tileQueue, neighborTile)
 		}
 
@@ -153,7 +153,7 @@ func (edm *EntityDijkstraMap) BreadthFirstSearch(x, y, n, m, value int, visited 
 			// add it to the tileQueue; We'll check its neighbors soon
 
 			visited[neighborTile] = true
-			edm.ValuesMap[neighborTile] = edm.ValuesMap[curTile] + 1
+			edm.ValuesMap[neighborTile.X][neighborTile.Y] = edm.ValuesMap[curTile.X][curTile.Y] + 1
 			tileQueue = append(tileQueue, neighborTile)
 		}
 
@@ -164,7 +164,7 @@ func (edm *EntityDijkstraMap) BreadthFirstSearch(x, y, n, m, value int, visited 
 			// add it to the tileQueue; We'll check its neighbors soon
 
 			visited[neighborTile] = true
-			edm.ValuesMap[neighborTile] = edm.ValuesMap[curTile] + 1
+			edm.ValuesMap[neighborTile.X][neighborTile.Y] = edm.ValuesMap[curTile.X][curTile.Y] + 1
 			tileQueue = append(tileQueue, neighborTile)
 		}
 
@@ -175,7 +175,7 @@ func (edm *EntityDijkstraMap) BreadthFirstSearch(x, y, n, m, value int, visited 
 			// add it to the tileQueue; We'll check its neighbors soon
 
 			visited[neighborTile] = true
-			edm.ValuesMap[neighborTile] = edm.ValuesMap[curTile] + 1
+			edm.ValuesMap[neighborTile.X][neighborTile.Y] = edm.ValuesMap[curTile.X][curTile.Y] + 1
 			tileQueue = append(tileQueue, neighborTile)
 		}
 
@@ -186,7 +186,7 @@ func (edm *EntityDijkstraMap) BreadthFirstSearch(x, y, n, m, value int, visited 
 			// add it to the tileQueue; We'll check its neighbors soon
 
 			visited[neighborTile] = true
-			edm.ValuesMap[neighborTile] = edm.ValuesMap[curTile] + 1
+			edm.ValuesMap[neighborTile.X][neighborTile.Y] = edm.ValuesMap[curTile.X][curTile.Y] + 1
 			tileQueue = append(tileQueue, neighborTile)
 		}
 	}
