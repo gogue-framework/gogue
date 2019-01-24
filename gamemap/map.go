@@ -85,7 +85,8 @@ func (m *Map) Render(gameCamera *camera.GameCamera, newCameraX, newCameraY int) 
 			}
 
 			tile := m.Tiles[mapX][mapY]
-			coordPair := CoordinatePair{X:mapX, Y:mapY}
+			camX, camY := gameCamera.ToCameraCoordinates(mapX, mapY)
+			coordPair := CoordinatePair{X:camX, Y:camY}
 
 			// Print the tile, if it meets the following criteria:
 			// 1. Its visible or explored
