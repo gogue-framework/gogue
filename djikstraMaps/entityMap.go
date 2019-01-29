@@ -100,8 +100,10 @@ func (edm *EntityDijkstraMap) BreadthFirstSearch(x, y, n, m, value int, visited 
 	tileQueue := []*gamemap.Tile{tile}
 
 	for len(tileQueue) > 0 {
-		curTile :=  tileQueue[len(tileQueue)-1]
-		tileQueue = tileQueue[:len(tileQueue)-1]
+		curTile :=  tileQueue[0]
+		tileQueue = tileQueue[1:]
+
+		curValue := edm.ValuesMap[curTile.X][curTile.Y] + 1
 
 		// Check all the immediate neighbors, and set values for them based on the current coordinates value
 		// NorthWest
@@ -111,7 +113,7 @@ func (edm *EntityDijkstraMap) BreadthFirstSearch(x, y, n, m, value int, visited 
 			// add it to the tileQueue; We'll check its neighbors soon
 
 			visited[neighborTile] = true
-			edm.ValuesMap[neighborTile.X][neighborTile.Y] = edm.ValuesMap[curTile.X][curTile.Y] + 1
+			edm.ValuesMap[neighborTile.X][neighborTile.Y] = curValue
 			tileQueue = append(tileQueue, neighborTile)
 		}
 
@@ -123,7 +125,7 @@ func (edm *EntityDijkstraMap) BreadthFirstSearch(x, y, n, m, value int, visited 
 			// add it to the tileQueue; We'll check its neighbors soon
 
 			visited[neighborTile] = true
-			edm.ValuesMap[neighborTile.X][neighborTile.Y] = edm.ValuesMap[curTile.X][curTile.Y] + 1
+			edm.ValuesMap[neighborTile.X][neighborTile.Y] = curValue
 			tileQueue = append(tileQueue, neighborTile)
 		}
 
@@ -134,7 +136,7 @@ func (edm *EntityDijkstraMap) BreadthFirstSearch(x, y, n, m, value int, visited 
 			// add it to the tileQueue; We'll check its neighbors soon
 
 			visited[neighborTile] = true
-			edm.ValuesMap[neighborTile.X][neighborTile.Y] = edm.ValuesMap[curTile.X][curTile.Y] + 1
+			edm.ValuesMap[neighborTile.X][neighborTile.Y] = curValue
 			tileQueue = append(tileQueue, neighborTile)
 		}
 
@@ -145,7 +147,7 @@ func (edm *EntityDijkstraMap) BreadthFirstSearch(x, y, n, m, value int, visited 
 			// add it to the tileQueue; We'll check its neighbors soon
 
 			visited[neighborTile] = true
-			edm.ValuesMap[neighborTile.X][neighborTile.Y] = edm.ValuesMap[curTile.X][curTile.Y] + 1
+			edm.ValuesMap[neighborTile.X][neighborTile.Y] = curValue
 			tileQueue = append(tileQueue, neighborTile)
 		}
 
@@ -156,7 +158,7 @@ func (edm *EntityDijkstraMap) BreadthFirstSearch(x, y, n, m, value int, visited 
 			// add it to the tileQueue; We'll check its neighbors soon
 
 			visited[neighborTile] = true
-			edm.ValuesMap[neighborTile.X][neighborTile.Y] = edm.ValuesMap[curTile.X][curTile.Y] + 1
+			edm.ValuesMap[neighborTile.X][neighborTile.Y] = curValue
 			tileQueue = append(tileQueue, neighborTile)
 		}
 
@@ -167,7 +169,7 @@ func (edm *EntityDijkstraMap) BreadthFirstSearch(x, y, n, m, value int, visited 
 			// add it to the tileQueue; We'll check its neighbors soon
 
 			visited[neighborTile] = true
-			edm.ValuesMap[neighborTile.X][neighborTile.Y] = edm.ValuesMap[curTile.X][curTile.Y] + 1
+			edm.ValuesMap[neighborTile.X][neighborTile.Y] = curValue
 			tileQueue = append(tileQueue, neighborTile)
 		}
 
@@ -178,7 +180,7 @@ func (edm *EntityDijkstraMap) BreadthFirstSearch(x, y, n, m, value int, visited 
 			// add it to the tileQueue; We'll check its neighbors soon
 
 			visited[neighborTile] = true
-			edm.ValuesMap[neighborTile.X][neighborTile.Y] = edm.ValuesMap[curTile.X][curTile.Y] + 1
+			edm.ValuesMap[neighborTile.X][neighborTile.Y] = curValue
 			tileQueue = append(tileQueue, neighborTile)
 		}
 
@@ -189,7 +191,7 @@ func (edm *EntityDijkstraMap) BreadthFirstSearch(x, y, n, m, value int, visited 
 			// add it to the tileQueue; We'll check its neighbors soon
 
 			visited[neighborTile] = true
-			edm.ValuesMap[neighborTile.X][neighborTile.Y] = edm.ValuesMap[curTile.X][curTile.Y] + 1
+			edm.ValuesMap[neighborTile.X][neighborTile.Y] = curValue
 			tileQueue = append(tileQueue, neighborTile)
 		}
 	}
