@@ -28,7 +28,7 @@ This feature list is incomplete, as various pieces are still in development.
 - Djikstra Maps implementation (http://www.roguebasin.com/index.php?title=The_Incredible_Power_of_Dijkstra_Maps)
     - Single entity maps
     - multi-entity maps
-    - combined map decisions
+    - combined maps
 - Random number generation
     - Uniform, Normal Distribution, Ranges, Weighted choices
     - Dice rolls (normal and open ended)
