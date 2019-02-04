@@ -24,6 +24,7 @@ This feature list is incomplete, as various pieces are still in development.
 - UI
     - Logging
     - Screen Management
+    - Menu system (primitive)
 - Pathfinding (A* for now, but also Djikstra Maps)
 - Djikstra Maps implementation (http://www.roguebasin.com/index.php?title=The_Incredible_Power_of_Dijkstra_Maps)
     - Single entity maps
