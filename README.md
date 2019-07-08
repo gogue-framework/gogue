@@ -41,6 +41,8 @@ This feature list is incomplete, as various pieces are still in development.
 
 Standard Go package install - `go get github.com/jcerise/gogue`
 
+Or if using Modules, simply include `github.com/jcerise/gogue` in your project imports and build.
+
 ### Prerequisites
 
-BearLibTerminal is required to use this package. I'll put specific platform install instructions here, as it varies from platform to platform, and is not well documented (I feel).
+BearLibTerminal is required to use this package. You can find install instructions for various operating systems here: https://github.com/jcerise/gogue/wiki
