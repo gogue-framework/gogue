@@ -1,7 +1,7 @@
 package gogue
 
 import (
-	blt "bearlibterminal"
+	blt "github.com/jcerise/bearlibterminalgo"
 	"strconv"
 )
 

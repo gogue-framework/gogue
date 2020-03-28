@@ -37,7 +37,9 @@ func NewController() *Controller {
 // Create a new entity in the world. An entity is simply a unique integer.
 // If any components are provided, they will be associated with the created entity
 func (c *Controller) CreateEntity(components []Component) int {
-	c.nextEntityID += 1
+	entity := c.nextEntityID
+
+	c.entities[c.nextEntityID] = make(map[reflect.Type]Component)
 
 	if len(components) > 0 {
 		for _, v := range components {
@@ -45,9 +47,9 @@ func (c *Controller) CreateEntity(components []Component) int {
 		}
 	}
 
-	c.entities[c.nextEntityID] = make(map[reflect.Type]Component)
+	c.nextEntityID += 1
 
-	return c.nextEntityID
+	return entity
 }
 
 // DeleteEntity removes an entity, all component instances attached to that entity, and any components associations with
@@ -79,6 +81,16 @@ func (c *Controller) GetMappedComponentClass(componentName string) Component {
 		// TODO: Add better (read: actual) error handling here
 		fmt.Printf("Component[%s] not registered on Controller.\n", componentName)
 		return nil
+	}
+}
+
+// HasComponentClass returns true if the named component has been mapped, IE a component mapped
+// under "position" has been mapped to a PositionComponent
+func (c *Controller) HasMappedComponent(componentName string) bool {
+	if _, ok := c.componentMap[componentName]; ok {
+		return true
+	} else {
+		return false
 	}
 }
 
