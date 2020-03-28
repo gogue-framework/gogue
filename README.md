@@ -1,5 +1,7 @@
 # Gogue - Roguelike toolkit for Go
 
+![Go](https://github.com/jcerise/gogue/workflows/Go/badge.svg?branch=master)
+
 Gogue aims to create a simple to use toolkit for creating Roguelike games in the Go language. It uses BearLibTerminal for rendering, so that will be required to use the toolkit.
 This is by no means a complete toolkit, but its got (and will have) a bunch of things I've found handy for building roguelikes. Hopefully someone else finds them handy as well.
 
