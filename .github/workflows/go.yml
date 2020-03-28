@@ -18,6 +18,15 @@ jobs:
       with:
         go-version: 1.13
       id: go
+    
+    - name: Install BearLibTerminal lib
+      run: |
+        wget -O blt.tar.bz2 http://foo.wyrd.name/_media/en:bearlibterminal:bearlibterminal_0.15.7.tar.bz2
+        tar xf blt.tar.bz2
+        cp BearLibTerminal_0.15.7/Linux64/libBearLibTerminal.so /usr/local/lib
+        ldconfig -n -v /usr/local/lib
+        rm -rf BearLibTerminal_0.15.7
+        rm blt.tar.bz2
 
     - name: Check out code into the Go module directory
       uses: actions/checkout@v2
