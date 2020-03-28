@@ -125,10 +125,12 @@ func TestGetEntitiesWithComponent(t *testing.T) {
 	entity3 := controller.CreateEntity([]Component{PositionComponent{}})
 
 	entityList := controller.GetEntitiesWithComponent(PositionComponent{}.TypeOf())
-	assert.Equal(t, entityList, []int{entity, entity3})
+	assert.Contains(t, entityList, entity)
+	assert.Contains(t, entityList, entity3)
 
 	entityList = controller.GetEntitiesWithComponent(AppearanceComponent{}.TypeOf())
-	assert.Equal(t, entityList, []int{entity, entity2})
+	assert.Contains(t, entityList, entity)
+	assert.Contains(t, entityList, entity2)
 
 	entityList = controller.GetEntitiesWithComponent(RandomComponent{}.TypeOf())
 	assert.Empty(t, entityList)
