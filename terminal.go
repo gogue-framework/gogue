@@ -8,40 +8,40 @@ import (
 const (
 	// Not sure if converting these is going to prove useful or not
 	// KEY just seems more natural than TK
-	KEY_CLOSE = blt.TK_CLOSE
-	KEY_RIGHT = blt.TK_RIGHT
-	KEY_LEFT = blt.TK_LEFT
-	KEY_UP = blt.TK_UP
-	KEY_DOWN = blt.TK_DOWN
-	KEY_A = blt.TK_A
-	KEY_B = blt.TK_B
-	KEY_C = blt.TK_C
-	KEY_D = blt.TK_D
-	KEY_E = blt.TK_E
-	KEY_F = blt.TK_F
-	KEY_G = blt.TK_G
-	KEY_H = blt.TK_H
-	KEY_I = blt.TK_I
-	KEY_J = blt.TK_J
-	KEY_K = blt.TK_K
-	KEY_L = blt.TK_L
-	KEY_M = blt.TK_M
-	KEY_N = blt.TK_N
-	KEY_O = blt.TK_O
-	KEY_P = blt.TK_P
-	KEY_Q = blt.TK_Q
-	KEY_R = blt.TK_R
-	KEY_S = blt.TK_S
-	KEY_T = blt.TK_T
-	KEY_U = blt.TK_U
-	KEY_V = blt.TK_V
-	KEY_W = blt.TK_W
-	KEY_X = blt.TK_X
-	KEY_Y = blt.TK_Y
-	KEY_Z = blt.TK_Z
-	KEY_COMMA = blt.TK_COMMA
+	KEY_CLOSE  = blt.TK_CLOSE
+	KEY_RIGHT  = blt.TK_RIGHT
+	KEY_LEFT   = blt.TK_LEFT
+	KEY_UP     = blt.TK_UP
+	KEY_DOWN   = blt.TK_DOWN
+	KEY_A      = blt.TK_A
+	KEY_B      = blt.TK_B
+	KEY_C      = blt.TK_C
+	KEY_D      = blt.TK_D
+	KEY_E      = blt.TK_E
+	KEY_F      = blt.TK_F
+	KEY_G      = blt.TK_G
+	KEY_H      = blt.TK_H
+	KEY_I      = blt.TK_I
+	KEY_J      = blt.TK_J
+	KEY_K      = blt.TK_K
+	KEY_L      = blt.TK_L
+	KEY_M      = blt.TK_M
+	KEY_N      = blt.TK_N
+	KEY_O      = blt.TK_O
+	KEY_P      = blt.TK_P
+	KEY_Q      = blt.TK_Q
+	KEY_R      = blt.TK_R
+	KEY_S      = blt.TK_S
+	KEY_T      = blt.TK_T
+	KEY_U      = blt.TK_U
+	KEY_V      = blt.TK_V
+	KEY_W      = blt.TK_W
+	KEY_X      = blt.TK_X
+	KEY_Y      = blt.TK_Y
+	KEY_Z      = blt.TK_Z
+	KEY_COMMA  = blt.TK_COMMA
 	KEY_ESCAPE = blt.TK_ESCAPE
-	KEY_ENTER = blt.TK_ENTER
+	KEY_ENTER  = blt.TK_ENTER
 )
 
 var (

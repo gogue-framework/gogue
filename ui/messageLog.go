@@ -10,7 +10,7 @@ type MessageLog struct {
 }
 
 func NewMessageLog(maxLength int) *MessageLog {
-	messageLog := MessageLog{MaxLength:maxLength}
+	messageLog := MessageLog{MaxLength: maxLength}
 	messageLog.messages = make([]string, messageLog.MaxLength)
 	return &messageLog
 }
@@ -40,14 +40,14 @@ func (ml *MessageLog) PrintMessages(viewAreaX, viewAreaY, windowSizeX, windowSiz
 	}
 
 	for i := toShow; i > 0; i-- {
-		gogue.PrintText(1, (viewAreaY - 1) + i, ml.messages[i-1], "white", "", 1)
+		gogue.PrintText(1, (viewAreaY-1)+i, ml.messages[i-1], "white", "", 1)
 	}
 }
 
 // ClearMessage clears the defined message area, starting at viewAreaX and Y, and ending at the width and height of
 // the message area
 func clearMessages(viewAreaX, viewAreaY, windowSizeX, windowSizeY, layer int) {
-	gogue.ClearArea(viewAreaX, viewAreaY, windowSizeX, windowSizeY - viewAreaY, 1)
+	gogue.ClearArea(viewAreaX, viewAreaY, windowSizeX, windowSizeY-viewAreaY, 1)
 }
 
 // PrintToMessageArea clears the message area, and print a single message at the top

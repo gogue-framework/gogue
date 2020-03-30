@@ -56,9 +56,9 @@ type Map struct {
 
 func (m *Map) InitializeMap() {
 	// Initialize a two dimensional array that will represent the current game map (of dimensions Width x Height)
-	m.Tiles = make([][]*Tile, m.Width + 1)
+	m.Tiles = make([][]*Tile, m.Width+1)
 	for i := range m.Tiles {
-		m.Tiles[i] = make([]*Tile, m.Height + 1)
+		m.Tiles[i] = make([]*Tile, m.Height+1)
 	}
 
 	// Set a seed for procedural generation
@@ -88,9 +88,9 @@ func (m *Map) Render(gameCamera *camera.GameCamera, newCameraX, newCameraY int) 
 			// Print the tile, if it meets the following criteria:
 			// 1. Its visible or explored
 			// 2. It hasn't been printed yet. This will prevent over printing due to camera conversion
-			if tile.Visible{
+			if tile.Visible {
 				gogue.PrintGlyph(camX, camY, tile.Glyph, "", 0)
-			} else if tile.Explored{
+			} else if tile.Explored {
 				gogue.PrintGlyph(camX, camY, tile.Glyph, "", 0, true)
 			}
 		}
@@ -124,17 +124,17 @@ func (m *Map) GetNeighbors(x, y int) []*Tile {
 		for j := -1; j <= 1; j++ {
 
 			// Make sure the neighbor we're checking is within the bounds of the map
-			if x + i < 0 {
+			if x+i < 0 {
 				x = 0
-			} else if x + i > m.Width {
+			} else if x+i > m.Width {
 				x = m.Width
 			} else {
 				x = x + i
 			}
 
-			if y + j < 0 {
+			if y+j < 0 {
 				y = 0
-			} else if y + j > m.Height {
+			} else if y+j > m.Height {
 				y = m.Height
 			} else {
 				y = y + j

@@ -11,8 +11,8 @@ type Screen interface {
 }
 
 type ScreenManager struct {
-	Screens map[string]Screen
-	CurrentScreen Screen
+	Screens        map[string]Screen
+	CurrentScreen  Screen
 	PreviousScreen Screen
 }
 

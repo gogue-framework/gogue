@@ -5,8 +5,8 @@ type SystemMessageType struct {
 }
 
 type SystemMessage struct {
-	MessageType SystemMessageType
-	Originator System
+	MessageType    SystemMessageType
+	Originator     System
 	MessageContent map[string]string
 }
 
@@ -18,7 +18,7 @@ type SystemMessage struct {
 // be cleared out occasionally, either by the subscribing systems, or the game loop. Pretty simple for now, but should
 // solve a subset of problems nicely.
 type SystemMessageQueue struct {
-	Messages map[System][]SystemMessage
+	Messages      map[System][]SystemMessage
 	Subscriptions map[System][]SystemMessageType
 }
 

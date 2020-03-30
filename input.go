@@ -49,4 +49,3 @@ func (ti *TerminalInputHandler) ProcessInput(key int, controller *ecs.Controller
 	}
 
 }
-

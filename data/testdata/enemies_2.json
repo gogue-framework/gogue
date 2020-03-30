@@ -1,0 +1,65 @@
+{
+  "level_2": {
+    "small_rat_2": {
+      "components": {
+        "position": {},
+        "appearance": {
+          "Name": "Small rat",
+          "Description": "A very small rat. It doesn't look very tough.",
+          "Glyph": {
+            "Char": "r",
+            "Color": "brown"
+          },
+          "Layer": 1
+        },
+        "energy": {
+          "TotalEnergy": 2,
+          "CurrentEnergy": 0
+        },
+        "blocking": {},
+        "cowardly": {},
+        "simpleai": {}
+      }
+    },
+    "large_rat_2": {
+      "components": {
+        "position": {},
+        "appearance": {
+          "Name": "Large rat",
+          "Description": "A very large rat. It's big...but still doesn't look too tough.",
+          "Glyph": {
+            "Char": "R",
+            "Color": "brown"
+          },
+          "Layer": 1
+        },
+        "energy": {
+          "TotalEnergy": 2,
+          "CurrentEnergy": 0
+        },
+        "blocking": {},
+        "simpleai": {}
+      }
+    },
+    "cave_bat_2": {
+      "components": {
+        "position": {},
+        "appearance": {
+          "Name": "Cave bat",
+          "Description": "A small, gray, bat. It's fast, bot not a threat. By itself.",
+          "Glyph": {
+            "Char": "b",
+            "Color": "gray"
+          },
+          "Layer": 1
+        },
+        "energy": {
+          "TotalEnergy": 1,
+          "CurrentEnergy": 0
+        },
+        "blocking": {},
+        "simpleai": {}
+      }
+    }
+  }
+}

@@ -9,14 +9,14 @@ import (
 
 const (
 	ORDLOWERSTART = 97
-	MAXORD = 122
+	MAXORD        = 122
 )
 
 type MenuList struct {
-	Options map[int]string
-	Inputs map[rune]int
-	keys []int
-	Paginated bool
+	Options    map[int]string
+	Inputs     map[rune]int
+	keys       []int
+	Paginated  bool
 	highestOrd int
 }
 
@@ -139,7 +139,7 @@ func (ml *MenuList) Print(height, width, xOffset, yOffset int) {
 
 	for _, keyRune := range ml.keys {
 		input := ml.Inputs[rune(keyRune)]
-		gogue.PrintText(xOffset, lineStart, "(" + string(keyRune) + ")" + ml.Options[input], "", "", 0)
+		gogue.PrintText(xOffset, lineStart, "("+string(keyRune)+")"+ml.Options[input], "", "", 0)
 		lineStart += 1
 	}
 }

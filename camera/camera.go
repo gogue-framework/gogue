@@ -20,11 +20,11 @@ func (c *GameCamera) MoveCamera(targetX int, targetY int, mapWidth int, mapHeigh
 		y = 0
 	}
 
-	if x > mapWidth - c.Width {
+	if x > mapWidth-c.Width {
 		x = mapWidth - c.Width
 	}
 
-	if y > mapHeight - c.Height {
+	if y > mapHeight-c.Height {
 		y = mapHeight - c.Height
 	}
 
@@ -41,4 +41,3 @@ func (c *GameCamera) ToCameraCoordinates(mapX int, mapY int) (cameraX int, camer
 
 	return x, y
 }
-

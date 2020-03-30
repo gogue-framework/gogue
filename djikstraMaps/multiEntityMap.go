@@ -26,18 +26,18 @@ type DMSource struct {
 }
 
 type MultiEntityDijkstraMap struct {
-	sources map[int]DMSource
-	mapType string
+	sources   map[int]DMSource
+	mapType   string
 	ValuesMap [][]int
-	visited map[*gamemap.Tile]bool
+	visited   map[*gamemap.Tile]bool
 }
 
 func NewMultiEntityyMap(sourceEntity int, sourceList map[int]DMSource, mapType string, mapWidth, mapHeight int) *MultiEntityDijkstraMap {
 	medm := MultiEntityDijkstraMap{}
-	medm.ValuesMap = make([][]int, mapWidth + 1)
+	medm.ValuesMap = make([][]int, mapWidth+1)
 	medm.visited = make(map[*gamemap.Tile]bool)
 	for i := range medm.ValuesMap {
-		medm.ValuesMap[i] = make([]int, mapHeight + 1)
+		medm.ValuesMap[i] = make([]int, mapHeight+1)
 	}
 
 	medm.sources = sourceList
@@ -116,7 +116,7 @@ func (medm *MultiEntityDijkstraMap) SingleRoundBreadthFirstSearch(x, y int, surf
 
 	// Check all the immediate neighbors, and set values for them based on the current coordinates value
 	// NorthWest
-	neighborTile := surface.Tiles[curTile.X - 1][curTile.Y - 1]
+	neighborTile := surface.Tiles[curTile.X-1][curTile.Y-1]
 	if !medm.visited[neighborTile] && !neighborTile.IsWall() {
 		// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
 		// add it to the tileQueue; We'll check its neighbors soon
@@ -126,9 +126,8 @@ func (medm *MultiEntityDijkstraMap) SingleRoundBreadthFirstSearch(x, y int, surf
 		tileQueue = append(tileQueue, neighborTile)
 	}
 
-
 	// West
-	neighborTile = surface.Tiles[curTile.X - 1][curTile.Y]
+	neighborTile = surface.Tiles[curTile.X-1][curTile.Y]
 	if !medm.visited[neighborTile] && !neighborTile.IsWall() {
 		// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
 		// add it to the tileQueue; We'll check its neighbors soon
@@ -139,7 +138,7 @@ func (medm *MultiEntityDijkstraMap) SingleRoundBreadthFirstSearch(x, y int, surf
 	}
 
 	// SouthWest
-	neighborTile = surface.Tiles[curTile.X - 1][curTile.Y + 1]
+	neighborTile = surface.Tiles[curTile.X-1][curTile.Y+1]
 	if !medm.visited[neighborTile] && !neighborTile.IsWall() {
 		// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
 		// add it to the tileQueue; We'll check its neighbors soon
@@ -150,7 +149,7 @@ func (medm *MultiEntityDijkstraMap) SingleRoundBreadthFirstSearch(x, y int, surf
 	}
 
 	// South
-	neighborTile = surface.Tiles[curTile.X][curTile.Y + 1]
+	neighborTile = surface.Tiles[curTile.X][curTile.Y+1]
 	if !medm.visited[neighborTile] && !neighborTile.IsWall() {
 		// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
 		// add it to the tileQueue; We'll check its neighbors soon
@@ -161,7 +160,7 @@ func (medm *MultiEntityDijkstraMap) SingleRoundBreadthFirstSearch(x, y int, surf
 	}
 
 	// SouthEast
-	neighborTile = surface.Tiles[curTile.X + 1][curTile.Y + 1]
+	neighborTile = surface.Tiles[curTile.X+1][curTile.Y+1]
 	if !medm.visited[neighborTile] && !neighborTile.IsWall() {
 		// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
 		// add it to the tileQueue; We'll check its neighbors soon
@@ -172,7 +171,7 @@ func (medm *MultiEntityDijkstraMap) SingleRoundBreadthFirstSearch(x, y int, surf
 	}
 
 	// East
-	neighborTile = surface.Tiles[curTile.X + 1][curTile.Y]
+	neighborTile = surface.Tiles[curTile.X+1][curTile.Y]
 	if !medm.visited[neighborTile] && !neighborTile.IsWall() {
 		// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
 		// add it to the tileQueue; We'll check its neighbors soon
@@ -183,7 +182,7 @@ func (medm *MultiEntityDijkstraMap) SingleRoundBreadthFirstSearch(x, y int, surf
 	}
 
 	// NorthEast
-	neighborTile = surface.Tiles[curTile.X + 1][curTile.Y - 1]
+	neighborTile = surface.Tiles[curTile.X+1][curTile.Y-1]
 	if !medm.visited[neighborTile] && !neighborTile.IsWall() {
 		// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
 		// add it to the tileQueue; We'll check its neighbors soon
@@ -194,7 +193,7 @@ func (medm *MultiEntityDijkstraMap) SingleRoundBreadthFirstSearch(x, y int, surf
 	}
 
 	// North
-	neighborTile = surface.Tiles[curTile.X][curTile.Y - 1]
+	neighborTile = surface.Tiles[curTile.X][curTile.Y-1]
 	if !medm.visited[neighborTile] && !neighborTile.IsWall() {
 		// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
 		// add it to the tileQueue; We'll check its neighbors soon

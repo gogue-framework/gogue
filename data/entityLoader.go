@@ -105,6 +105,3 @@ func (el *EntityLoader) setFieldValues(values map[string]interface{}, value refl
 		}
 	}
 }
-
-
-

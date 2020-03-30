@@ -1,8 +1,8 @@
 package randomNumberGenerator
 
 import (
-	"time"
 	"math/rand"
+	"time"
 )
 
 type DiceRoller struct {

@@ -7,8 +7,8 @@ type Glyph interface {
 }
 
 type glyph struct {
-	char string
-	color string
+	char            string
+	color           string
 	unexploredColor string
 }
 

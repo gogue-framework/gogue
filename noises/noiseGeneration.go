@@ -6,8 +6,8 @@ import (
 )
 
 type NoiseGenerator struct {
-	cosTable    map[int]float64
-	sinTable    map[int]float64
+	cosTable map[int]float64
+	sinTable map[int]float64
 }
 
 func (f *NoiseGenerator) Initialize() {
@@ -47,7 +47,7 @@ func (f *NoiseGenerator) RayCastSound(entity, entityX, entityY int, intensity fl
 		// entities location), reduce the intensity by 1. Once the intensity is 0, stop.
 		reducedIntensity := intensity - 1
 
-		for j := reducedIntensity; j > 0 ; j-- {
+		for j := reducedIntensity; j > 0; j-- {
 			x -= ax
 			y -= ay
 

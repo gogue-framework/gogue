@@ -28,20 +28,20 @@ import (
 // and you end up with a combined set of maps with values that reflect the monsters desires.
 
 type EntityDijkstraMap struct {
-	source int // The source entity ID
-	sourceX int
-	sourceY int
+	source      int // The source entity ID
+	sourceX     int
+	sourceY     int
 	sourcePrevX int
 	sourcePrevY int
-	mapType string
-	ValuesMap [][]int
+	mapType     string
+	ValuesMap   [][]int
 }
 
 func NewEntityMap(sourceEntity int, sourceX, sourceY int, mapType string, mapWidth, mapHeight int) *EntityDijkstraMap {
 	edm := EntityDijkstraMap{}
-	edm.ValuesMap = make([][]int, mapWidth + 1)
+	edm.ValuesMap = make([][]int, mapWidth+1)
 	for i := range edm.ValuesMap {
-		edm.ValuesMap[i] = make([]int, mapHeight + 1)
+		edm.ValuesMap[i] = make([]int, mapHeight+1)
 	}
 
 	// Set the source position
@@ -100,14 +100,14 @@ func (edm *EntityDijkstraMap) BreadthFirstSearch(x, y, n, m, value int, visited 
 	tileQueue := []*gamemap.Tile{tile}
 
 	for len(tileQueue) > 0 {
-		curTile :=  tileQueue[0]
+		curTile := tileQueue[0]
 		tileQueue = tileQueue[1:]
 
 		curValue := edm.ValuesMap[curTile.X][curTile.Y] + 1
 
 		// Check all the immediate neighbors, and set values for them based on the current coordinates value
 		// NorthWest
-		neighborTile := surface.Tiles[curTile.X - 1][curTile.Y - 1]
+		neighborTile := surface.Tiles[curTile.X-1][curTile.Y-1]
 		if !visited[neighborTile] && !neighborTile.IsWall() {
 			// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
 			// add it to the tileQueue; We'll check its neighbors soon
@@ -117,9 +117,8 @@ func (edm *EntityDijkstraMap) BreadthFirstSearch(x, y, n, m, value int, visited 
 			tileQueue = append(tileQueue, neighborTile)
 		}
 
-
 		// West
-		neighborTile = surface.Tiles[curTile.X - 1][curTile.Y]
+		neighborTile = surface.Tiles[curTile.X-1][curTile.Y]
 		if !visited[neighborTile] && !neighborTile.IsWall() {
 			// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
 			// add it to the tileQueue; We'll check its neighbors soon
@@ -130,7 +129,7 @@ func (edm *EntityDijkstraMap) BreadthFirstSearch(x, y, n, m, value int, visited 
 		}
 
 		// SouthWest
-		neighborTile = surface.Tiles[curTile.X - 1][curTile.Y + 1]
+		neighborTile = surface.Tiles[curTile.X-1][curTile.Y+1]
 		if !visited[neighborTile] && !neighborTile.IsWall() {
 			// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
 			// add it to the tileQueue; We'll check its neighbors soon
@@ -141,7 +140,7 @@ func (edm *EntityDijkstraMap) BreadthFirstSearch(x, y, n, m, value int, visited 
 		}
 
 		// South
-		neighborTile = surface.Tiles[curTile.X][curTile.Y + 1]
+		neighborTile = surface.Tiles[curTile.X][curTile.Y+1]
 		if !visited[neighborTile] && !neighborTile.IsWall() {
 			// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
 			// add it to the tileQueue; We'll check its neighbors soon
@@ -152,7 +151,7 @@ func (edm *EntityDijkstraMap) BreadthFirstSearch(x, y, n, m, value int, visited 
 		}
 
 		// SouthEast
-		neighborTile = surface.Tiles[curTile.X + 1][curTile.Y + 1]
+		neighborTile = surface.Tiles[curTile.X+1][curTile.Y+1]
 		if !visited[neighborTile] && !neighborTile.IsWall() {
 			// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
 			// add it to the tileQueue; We'll check its neighbors soon
@@ -163,7 +162,7 @@ func (edm *EntityDijkstraMap) BreadthFirstSearch(x, y, n, m, value int, visited 
 		}
 
 		// East
-		neighborTile = surface.Tiles[curTile.X + 1][curTile.Y]
+		neighborTile = surface.Tiles[curTile.X+1][curTile.Y]
 		if !visited[neighborTile] && !neighborTile.IsWall() {
 			// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
 			// add it to the tileQueue; We'll check its neighbors soon
@@ -174,7 +173,7 @@ func (edm *EntityDijkstraMap) BreadthFirstSearch(x, y, n, m, value int, visited 
 		}
 
 		// NorthEast
-		neighborTile = surface.Tiles[curTile.X + 1][curTile.Y - 1]
+		neighborTile = surface.Tiles[curTile.X+1][curTile.Y-1]
 		if !visited[neighborTile] && !neighborTile.IsWall() {
 			// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
 			// add it to the tileQueue; We'll check its neighbors soon
@@ -185,7 +184,7 @@ func (edm *EntityDijkstraMap) BreadthFirstSearch(x, y, n, m, value int, visited 
 		}
 
 		// North
-		neighborTile = surface.Tiles[curTile.X][curTile.Y - 1]
+		neighborTile = surface.Tiles[curTile.X][curTile.Y-1]
 		if !visited[neighborTile] && !neighborTile.IsWall() {
 			// This is a valid, un-visited, neighbor. Give it a value of (currentVal + 1), add it to the valueMap, and
 			// add it to the tileQueue; We'll check its neighbors soon
@@ -196,4 +195,3 @@ func (edm *EntityDijkstraMap) BreadthFirstSearch(x, y, n, m, value int, visited 
 		}
 	}
 }
-

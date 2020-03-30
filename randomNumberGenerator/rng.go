@@ -1,9 +1,9 @@
 package randomNumberGenerator
 
 import (
-	"time"
-	"math/rand"
 	"math"
+	"math/rand"
+	"time"
 )
 
 type RNG struct {
@@ -34,7 +34,7 @@ func (rng *RNG) Uniform() float64 {
 }
 
 func (rng *RNG) UniformRange(a, b float64) float64 {
-	return a + rng.Uniform() * (b - a)
+	return a + rng.Uniform()*(b-a)
 }
 
 func (rng *RNG) Normal(mean, stddev float64) float64 {
@@ -47,9 +47,9 @@ func (rng *RNG) Normal(mean, stddev float64) float64 {
 		r = x*x + y*y
 	}
 
-	result := x * math.Sqrt(-2 * math.Log(r) / r)
+	result := x * math.Sqrt(-2*math.Log(r)/r)
 
-	return mean + stddev * result
+	return mean + stddev*result
 
 }
 
@@ -61,7 +61,7 @@ func (rng *RNG) Range(min, max int) int {
 	if min == max {
 		return min
 	} else {
-		return rng.rand.Intn(max - min) + min
+		return rng.rand.Intn(max-min) + min
 	}
 }
 
@@ -69,7 +69,7 @@ func (rng *RNG) RangeNegative(min, max int) int {
 	if min == max {
 		return min
 	} else {
-		return rng.rand.Intn(max - min + 1) + min
+		return rng.rand.Intn(max-min+1) + min
 	}
 }
 
@@ -92,4 +92,3 @@ func (rng *RNG) GetWeightedEntity(values map[int]int) int {
 
 	return -1
 }
-

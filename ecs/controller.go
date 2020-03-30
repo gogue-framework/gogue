@@ -1,19 +1,19 @@
 package ecs
 
 import (
-	"reflect"
 	"fmt"
+	"reflect"
 	"sort"
 )
 
 type Controller struct {
-	systems map[reflect.Type]System
+	systems       map[reflect.Type]System
 	sortedSystems map[int][]System
-	priorityKeys []int
-	nextEntityID int
-	components map[reflect.Type][]int
-	entities map[int]map[reflect.Type]Component
-	deadEntities []int
+	priorityKeys  []int
+	nextEntityID  int
+	components    map[reflect.Type][]int
+	entities      map[int]map[reflect.Type]Component
+	deadEntities  []int
 
 	// The component map will keep track of what components are available
 	componentMap map[string]Component
@@ -179,7 +179,7 @@ func (c *Controller) RemoveComponent(entity int, componentType reflect.Type) int
 	// Find the index of the entity to operate on in the components slice
 	index := -1
 	for i, v := range c.components[componentType] {
-		if (v == entity) {
+		if v == entity {
 			index = i
 		}
 	}
@@ -198,7 +198,6 @@ func (c *Controller) RemoveComponent(entity int, componentType reflect.Type) int
 
 	return entity
 }
-
 
 // AddSystem registers a system to the controller. A priority can be provided, and systems will be processed in
 // numeric order, low to high. If multiple systems are registered as the same priority, they will be randomly run within
@@ -253,4 +252,3 @@ func (c *Controller) ProcessSystem(systemType reflect.Type) {
 		system.Process()
 	}
 }
-
