@@ -23,8 +23,8 @@ jobs:
       run: |
         wget -O blt.tar.bz2 http://foo.wyrd.name/_media/en:bearlibterminal:bearlibterminal_0.15.7.tar.bz2
         tar xf blt.tar.bz2
-        sudo cp BearLibTerminal_0.15.7/Linux64/libBearLibTerminal.so /usr/local/lib
-        sudo ldconfig -n -v /usr/local/lib
+        sudo cp BearLibTerminal_0.15.7/Linux64/libBearLibTerminal.so /usr/lib
+        sudo ldconfig -n -v /usr/lib
         rm -rf BearLibTerminal_0.15.7
         rm blt.tar.bz2
 
