@@ -6,7 +6,7 @@ import (
 )
 
 func TestNewCamera(t *testing.T) {
-	gameCamera, err := NewGameCamera(0, 1 ,2 ,3)
+	gameCamera, err := NewGameCamera(0, 1, 2, 3)
 
 	assert.NotNil(t, gameCamera)
 	assert.Nil(t, err)
