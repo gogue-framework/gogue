@@ -39,6 +39,8 @@ type Tile struct {
 	Noises      map[int]float64
 }
 
+// IsWall determines if a tile acts as a wall or not. A wall blocks sight and movement. If both of these criteria are
+// true, the tile is said to be a wall.
 func (t *Tile) IsWall() bool {
 	if t.BlocksSight && t.Blocked {
 		return true
@@ -54,6 +56,9 @@ type Map struct {
 	FloorTiles []*Tile
 }
 
+// InitializeMap sets up a GameMap for use. It sets the Tiles property of the GameMap to a 2D array of Tile objects,
+// with a width and height matching those set for the GameMap. It also initializes a random seed to use for map
+// generation
 func (m *Map) InitializeMap() {
 	// Initialize a two dimensional array that will represent the current game map (of dimensions Width x Height)
 	m.Tiles = make([][]*Tile, m.Width+1)
@@ -65,6 +70,10 @@ func (m *Map) InitializeMap() {
 	rand.Seed(time.Now().UTC().UnixNano())
 }
 
+// Render draws a GameMap to the terminal, within a Camera viewport. It will only draw tiles from the GameMap that
+// visible to the player, and within the viewport of the Camera. If a Tile does not meet these criteria, it will not be
+// drawn. If a Tile is within the viewport of the Camera, but is outside the players FOV, and has been explored, it will
+// be drawn using the Tile.Glyph exploredColor.
 func (m *Map) Render(gameCamera *camera.GameCamera, newCameraX, newCameraY int) {
 
 	gameCamera.MoveCamera(newCameraX, newCameraY, m.Width, m.Height)
@@ -97,6 +106,7 @@ func (m *Map) Render(gameCamera *camera.GameCamera, newCameraX, newCameraY int) 
 	}
 }
 
+// IsBlocked returns true if the Tile in the GameMap has its blocked property set to true. False otherwise.
 func (m *Map) IsBlocked(x, y int) bool {
 	// Check to see if the provided coordinates contain a blocked tile
 	if m.Tiles[x][y].Blocked {
@@ -119,28 +129,31 @@ func (m *Map) BlocksNoises(x, y int) bool {
 // blocked tiles
 func (m *Map) GetNeighbors(x, y int) []*Tile {
 	neighbors := []*Tile{}
+	sourceTile := m.Tiles[x][y]
+
+	nX := 0
+	nY := 0
 
 	for i := -1; i <= 1; i++ {
 		for j := -1; j <= 1; j++ {
 
 			// Make sure the neighbor we're checking is within the bounds of the map
-			if x+i < 0 {
-				x = 0
-			} else if x+i > m.Width {
-				x = m.Width
+			if x+i < 0 || x+i > m.Width {
+				continue
 			} else {
-				x = x + i
+				nX = x + i
 			}
 
-			if y+j < 0 {
-				y = 0
-			} else if y+j > m.Height {
-				y = m.Height
+			if y+j < 0 || y+j > m.Height {
+				continue
 			} else {
-				y = y + j
+				nY = y + j
 			}
 
-			neighbors = append(neighbors, m.Tiles[x][y])
+			// Exclude the source Tile
+			if m.Tiles[nX][nY] != sourceTile {
+				neighbors = append(neighbors, m.Tiles[nX][nY])
+			}
 		}
 	}
 
