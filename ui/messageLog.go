@@ -47,7 +47,7 @@ func (ml *MessageLog) PrintMessages(viewAreaX, viewAreaY, windowSizeX, windowSiz
 	printedMessages := []string{}
 
 	for i := toShow; i > 0; i-- {
-		gogue.PrintText(1, (viewAreaY-1)+i, ml.messages[i-1], "white", "", 1)
+		gogue.PrintText(1, (viewAreaY-1)+i, 0, 0, ml.messages[i-1], "white", "", 1)
 		printedMessages = append(printedMessages, ml.messages[i-1])
 	}
 
@@ -63,5 +63,5 @@ func clearMessages(viewAreaX, viewAreaY, windowSizeX, windowSizeY, layer int) {
 // PrintToMessageArea clears the message area, and print a single message at the top
 func PrintToMessageArea(message string, viewAreaX, viewAreaY, windowSizeX, windowSizeY, layer int) {
 	clearMessages(viewAreaX, viewAreaY, windowSizeX, windowSizeY, layer)
-	gogue.PrintText(1, viewAreaY, message, "white", "", 1)
+	gogue.PrintText(1, viewAreaY, 0, 0, message, "white", "", 1)
 }

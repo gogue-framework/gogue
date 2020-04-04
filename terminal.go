@@ -179,7 +179,7 @@ func PrintGlyph(x, y int, g Glyph, backgroundColor string, layer int, useExplore
 }
 
 // PrintText will print a string of text, starting at the (X, Y) coords provided, using the color/background color
-// provided, on the layer provided.
+// provided, on the layer provided. If width and height are 0, text will be printed at standard size
 func PrintText(x, y, width, height int, text, color, backgroundColor string, layer int) {
 	// Set the layer first. If not provided, this defaults to 0, the base layer in BearLibTerminal
 	blt.Layer(layer)

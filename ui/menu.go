@@ -139,7 +139,7 @@ func (ml *MenuList) Print(height, width, xOffset, yOffset int) {
 
 	for _, keyRune := range ml.keys {
 		input := ml.Inputs[rune(keyRune)]
-		gogue.PrintText(xOffset, lineStart, "("+string(keyRune)+")"+ml.Options[input], "", "", 0)
+		gogue.PrintText(xOffset, lineStart, 0, 0, "("+string(keyRune)+")"+ml.Options[input], "", "", 0)
 		lineStart += 1
 	}
 }
