@@ -1,8 +1,8 @@
 package DijkstraMaps
 
 import (
-	"github.com/jcerise/gogue/ecs"
-	"github.com/jcerise/gogue/gamemap"
+	"github.com/gogue-framework/gogue/ecs"
+	"github.com/gogue-framework/gogue/gamemap"
 )
 
 // A MultiEntityMap is a Dijkstra map that tracks several entities. It is very similar to the single entity map, in that

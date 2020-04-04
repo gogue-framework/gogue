@@ -1,7 +1,7 @@
 package DijkstraMaps
 
 import (
-	"github.com/jcerise/gogue/gamemap"
+	"github.com/gogue-framework/gogue/gamemap"
 )
 
 // An EntityMap is a Dijkstra map that centers around an entity. This could be the player, an item, a monster, a door,

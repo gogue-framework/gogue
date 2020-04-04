@@ -1,7 +1,7 @@
 package gamemap
 
 import (
-	"github.com/jcerise/gogue"
+	"github.com/gogue-framework/gogue"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )

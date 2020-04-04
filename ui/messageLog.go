@@ -1,7 +1,7 @@
 package ui
 
 import (
-	"github.com/jcerise/gogue"
+	"github.com/gogue-framework/gogue"
 )
 
 type MessageLog struct {
@@ -11,10 +11,13 @@ type MessageLog struct {
 
 func NewMessageLog(maxLength int) *MessageLog {
 	messageLog := MessageLog{MaxLength: maxLength}
-	messageLog.messages = make([]string, messageLog.MaxLength)
+	messageLog.messages = []string{}
 	return &messageLog
 }
 
+// SendMessage adds a new message to the MessageLog. If the new message would exceed the total number of messages this
+// MessageLog can hold, the oldest message will be truncated from the log. New messages are pre-pended onto the messages
+// slice
 func (ml *MessageLog) SendMessage(message string) {
 	// Prepend the message onto the messageLog slice
 	if len(ml.messages) >= ml.MaxLength {
@@ -24,7 +27,9 @@ func (ml *MessageLog) SendMessage(message string) {
 	ml.messages = append([]string{message}, ml.messages...)
 }
 
-func (ml *MessageLog) PrintMessages(viewAreaX, viewAreaY, windowSizeX, windowSizeY, displayNum int) {
+// PrintMessages prints messages, up to displayNum, in reverse order (newest messages get printed first). Any messges
+// in the messages slice will not be printed
+func (ml *MessageLog) PrintMessages(viewAreaX, viewAreaY, windowSizeX, windowSizeY, displayNum int) []string {
 	// Print the latest five messages from the messageLog. These will be printed in reverse order (newest at the top),
 	// to make it appear they are scrolling down the screen
 	clearMessages(viewAreaX, viewAreaY, windowSizeX, windowSizeY, 1)
@@ -39,9 +44,14 @@ func (ml *MessageLog) PrintMessages(viewAreaX, viewAreaY, windowSizeX, windowSiz
 		toShow = displayNum
 	}
 
+	printedMessages := []string{}
+
 	for i := toShow; i > 0; i-- {
 		gogue.PrintText(1, (viewAreaY-1)+i, ml.messages[i-1], "white", "", 1)
+		printedMessages = append(printedMessages, ml.messages[i-1])
 	}
+
+	return printedMessages
 }
 
 // ClearMessage clears the defined message area, starting at viewAreaX and Y, and ending at the width and height of

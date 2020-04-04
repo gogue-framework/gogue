@@ -1,8 +1,8 @@
 package data
 
 import (
-	"github.com/jcerise/gogue"
-	"github.com/jcerise/gogue/ecs"
+	"github.com/gogue-framework/gogue"
+	"github.com/gogue-framework/gogue/ecs"
 	"reflect"
 )
 

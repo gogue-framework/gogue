@@ -1,7 +1,7 @@
 package ui
 
 import (
-	"github.com/jcerise/gogue"
+	"github.com/gogue-framework/gogue"
 	"log"
 	"reflect"
 	"sort"

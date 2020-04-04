@@ -1,6 +1,6 @@
 package noises
 
-import "github.com/jcerise/gogue/gamemap"
+import "github.com/gogue-framework/gogue/gamemap"
 
 // DegradeNoises iterates over every tile on the map, and reduces the amount of noise on each tile by a set amount.
 // If a noise reaches an intensity of 0, the noise is removed from the tile. This is intended to be run each frame.

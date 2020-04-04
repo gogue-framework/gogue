@@ -1,8 +1,8 @@
 package gamemap
 
 import (
-	"github.com/jcerise/gogue"
-	"github.com/jcerise/gogue/camera"
+	"github.com/gogue-framework/gogue"
+	"github.com/gogue-framework/gogue/camera"
 	"math/rand"
 	"time"
 )

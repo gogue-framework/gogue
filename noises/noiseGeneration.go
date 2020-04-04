@@ -1,7 +1,7 @@
 package noises
 
 import (
-	"github.com/jcerise/gogue/gamemap"
+	"github.com/gogue-framework/gogue/gamemap"
 	"math"
 )
 
