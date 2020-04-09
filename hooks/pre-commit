@@ -4,9 +4,12 @@ echo "Pre-commit checks..."
 
 FILES=$(go list ./... | grep -v /vendor/)
 
-echo "go fmt\n"
+echo "go fmt"
 go fmt ${FILES}
+echo "success!"
+echo ""
 
+echo "go vet"
 # Check all files for suspicious constructs
 {
 	go vet ${FILES}
@@ -18,17 +21,25 @@ go fmt ${FILES}
 		exit 1
 	fi
 }
+echo "success!"
+echo ""
 
+echo "go lint"
 # Lint the entire project. Requires golint (https://github.com/golang/lint)
-{
-	golint ./...
-} || {
-	exitStatus=$?
+failed=false
 
-	if [ $exitStatus ]; then
-		printf "\nGoLint issues found in your code, please fix them and try again."
-		exit 1
-	fi
-}
+for file in ${FILES}; do
+    # redirect stderr so that violations and summaries are properly interleaved.
+    if ! golint -set_exit_status "$file" 2>&1
+    then
+        failed=true
+    fi
+done
+
+if [[ $failed == "true" ]]; then
+    exit 1
+fi
+echo "success!"
+echo ""
 
 echo "Pre-commit checks successful!"

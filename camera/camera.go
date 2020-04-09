@@ -2,6 +2,8 @@ package camera
 
 import "errors"
 
+// GameCamera represents a viewport over the game map. It is a rectangle, with origin at (X, Y), and a width and height
+// specified. Only content within this viewport will be shown to the user, nothing outside the bounds will be drawn.
 type GameCamera struct {
 	X      int
 	Y      int

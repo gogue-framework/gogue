@@ -6,9 +6,9 @@ import (
 	"testing"
 )
 
-// GenerateArena takes a Map object, and creates a giant room, ringed with walls. This is a very simple type of
+// GenerateArena takes a GameMap object, and creates a giant room, ringed with walls. This is a very simple type of
 // map that contains no features other than the walls.
-func GenerateArena(surface *Map, wallGlyph, floorGlyph gogue.Glyph) {
+func GenerateArena(surface *GameMap, wallGlyph, floorGlyph gogue.Glyph) {
 	// Generates a large, empty room, with walls ringing the outside edges
 	for x := 0; x <= surface.Width; x++ {
 		for y := 0; y <= surface.Height; y++ {
@@ -37,7 +37,7 @@ func TestTile_IsWall(t *testing.T) {
 }
 
 func TestMap_InitializeMap(t *testing.T) {
-	gameMap := Map{Width: 100, Height: 100}
+	gameMap := GameMap{Width: 100, Height: 100}
 
 	gameMap.InitializeMap()
 
@@ -49,7 +49,7 @@ func TestMap_IsBlocked(t *testing.T) {
 	wallGlyph := gogue.NewGlyph("#", "white", "gray")
 	floorGlyph := gogue.NewGlyph(".", "white", "gray")
 
-	gameMap := Map{Width: 100, Height: 100}
+	gameMap := GameMap{Width: 100, Height: 100}
 	gameMap.InitializeMap()
 
 	// Generate an arena style map
@@ -69,7 +69,7 @@ func TestMap_GetNeighbors(t *testing.T) {
 	wallGlyph := gogue.NewGlyph("#", "white", "gray")
 	floorGlyph := gogue.NewGlyph(".", "white", "gray")
 
-	gameMap := Map{Width: 100, Height: 100}
+	gameMap := GameMap{Width: 100, Height: 100}
 	gameMap.InitializeMap()
 
 	// Generate an arena style map

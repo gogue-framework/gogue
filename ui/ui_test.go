@@ -49,7 +49,7 @@ func TestMessageLog_PrintMessages(t *testing.T) {
 	messageLog.SendMessage("newest message")
 	assert.Equal(t, 6, len(messageLog.messages))
 
-	printedMessages := messageLog.PrintMessages(0, 0, 0 ,0, 5)
+	printedMessages := messageLog.PrintMessages(0, 0, 0, 0, 5)
 	assert.Equal(t, 5, len(printedMessages))
 	assert.Equal(t, "newest message", printedMessages[4])
 

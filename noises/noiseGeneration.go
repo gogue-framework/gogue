@@ -5,12 +5,15 @@ import (
 	"math"
 )
 
+// NoiseGenerator generates noises on tiles in a circle around an entity
 type NoiseGenerator struct {
 	cosTable map[int]float64
 	sinTable map[int]float64
 }
 
-func (f *NoiseGenerator) Initialize() {
+// InitializeNoiseGenerator creates and stores cos and sin tables for 360 degrees, so they don't have to be regenerated
+// each time this object is used.
+func (f *NoiseGenerator) InitializeNoiseGenerator() {
 
 	f.cosTable = make(map[int]float64)
 	f.sinTable = make(map[int]float64)
@@ -24,11 +27,12 @@ func (f *NoiseGenerator) Initialize() {
 	}
 }
 
-func (f *NoiseGenerator) RayCastSound(entity, entityX, entityY int, intensity float64, gameMap *gamemap.Map) {
-	// Cast out rays each degree in a 360 circle from the entity. If a ray passes over a floor (does not block sound)
-	// tile, keep going, up to the maximum distance the sound can travel from the entity. If the ray intersects a wall
-	// (blocks sound), stop, as the sound will not penetrate the wall. Every tile that the sound carries through will
-	// get a noise value corresponding to the entity, and the value of the sound
+// RayCastSound casts out rays each degree in a 360 circle from the entity. If a ray passes over a floor (does not block sound)
+// tile, keep going, up to the maximum distance the sound can travel from the entity. If the ray intersects a wall
+// (blocks sound), stop, as the sound will not penetrate the wall. Every tile that the sound carries through will
+// get a noise value corresponding to the entity, and the value of the sound. Sound degrades the further from the
+// source it is.
+func (f *NoiseGenerator) RayCastSound(entity, entityX, entityY int, intensity float64, gameMap *gamemap.GameMap) {
 
 	for i := 0; i < 360; i++ {
 
@@ -51,8 +55,8 @@ func (f *NoiseGenerator) RayCastSound(entity, entityX, entityY int, intensity fl
 			x -= ax
 			y -= ay
 
-			roundedX := int(Round(x))
-			roundedY := int(Round(y))
+			roundedX := int(round(x))
+			roundedY := int(round(y))
 
 			if x < 0 || x > float64(gameMap.Width-1) || y < 0 || y > float64(gameMap.Height-1) {
 				// If the ray is cast outside of the map, stop
@@ -62,7 +66,7 @@ func (f *NoiseGenerator) RayCastSound(entity, entityX, entityY int, intensity fl
 			tile := gameMap.Tiles[roundedX][roundedY]
 			tile.Noises[entity] = j
 
-			if gameMap.Tiles[roundedX][roundedY].BlocksSound == true {
+			if gameMap.Tiles[roundedX][roundedY].BlocksNoises == true {
 				// The ray hit a tile that does not transmit sound, go no further
 				break
 			}
@@ -70,6 +74,6 @@ func (f *NoiseGenerator) RayCastSound(entity, entityX, entityY int, intensity fl
 	}
 }
 
-func Round(f float64) float64 {
+func round(f float64) float64 {
 	return math.Floor(f + .5)
 }

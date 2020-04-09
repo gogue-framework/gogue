@@ -4,11 +4,13 @@ import (
 	"github.com/gogue-framework/gogue"
 )
 
+// MessageLog keeps track of a list messages, and defines how many messages to keep track of before truncating the list
 type MessageLog struct {
 	messages  []string
 	MaxLength int
 }
 
+// NewMessageLog creates a new MessageLog with a maxLength
 func NewMessageLog(maxLength int) *MessageLog {
 	messageLog := MessageLog{MaxLength: maxLength}
 	messageLog.messages = []string{}

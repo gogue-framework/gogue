@@ -1,9 +1,13 @@
 package ecs
 
+// SystemMessageType represents a type of SystemMessage
 type SystemMessageType struct {
 	Name string
 }
 
+// SystemMessage is a message sent between ECS systems. It contains a type, an origin, and content. A system can send
+// a message of a type, and any subscribers to that type will be notified that the message was sent, and can then act
+// accordingly.
 type SystemMessage struct {
 	MessageType    SystemMessageType
 	Originator     System
@@ -22,7 +26,8 @@ type SystemMessageQueue struct {
 	Subscriptions map[System][]SystemMessageType
 }
 
-func InitializeSystemMessageQueue() *SystemMessageQueue {
+// NewSystemMessageQueue creates and initializes a new SystemMessageQueue, used for passing messages between ECS Systems
+func NewSystemMessageQueue() *SystemMessageQueue {
 	smq := SystemMessageQueue{}
 	smq.Messages = make(map[System][]SystemMessage)
 	smq.Subscriptions = make(map[System][]SystemMessageType)

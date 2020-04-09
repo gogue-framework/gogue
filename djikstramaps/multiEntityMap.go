@@ -1,11 +1,20 @@
-package DijkstraMaps
+package dijkstramaps
 
 import (
 	"github.com/gogue-framework/gogue/ecs"
 	"github.com/gogue-framework/gogue/gamemap"
 )
 
-// A MultiEntityMap is a Dijkstra map that tracks several entities. It is very similar to the single entity map, in that
+// DMSource represents a single source in a multi-entity Dijkstra map
+type DMSource struct {
+	entity int // The source entity ID
+	X      int
+	Y      int
+	PrevX  int
+	PrevY  int
+}
+
+// MultiEntityDijkstraMap is a Dijkstra map that tracks several entities. It is very similar to the single entity map, in that
 // each entity radiates a value outwards from it, the entity being the source. The main difference is that there can be
 // many sources, each affecting the values of the map.
 //
@@ -16,15 +25,6 @@ import (
 //
 // It must be noted, this type of map assumes that all sources are of the same entity type, otherwise, it wouldn't
 // really make sense.
-
-type DMSource struct {
-	entity int // The source entity ID
-	X      int
-	Y      int
-	PrevX  int
-	PrevY  int
-}
-
 type MultiEntityDijkstraMap struct {
 	sources   map[int]DMSource
 	mapType   string
@@ -32,7 +32,10 @@ type MultiEntityDijkstraMap struct {
 	visited   map[*gamemap.Tile]bool
 }
 
-func NewMultiEntityyMap(sourceEntity int, sourceList map[int]DMSource, mapType string, mapWidth, mapHeight int) *MultiEntityDijkstraMap {
+// NewMultiEntityMap creates a new multi-entity Dijkstra map. sourceList is the list of sources for the map to operate
+// from, and mapWidth and mapHeight indicate how large the resulting map should be (typically the size of the gamemap).
+// mapType is a string identifier for the map.
+func NewMultiEntityMap(sourceList map[int]DMSource, mapType string, mapWidth, mapHeight int) *MultiEntityDijkstraMap {
 	medm := MultiEntityDijkstraMap{}
 	medm.ValuesMap = make([][]int, mapWidth+1)
 	medm.visited = make(map[*gamemap.Tile]bool)
@@ -48,10 +51,13 @@ func NewMultiEntityyMap(sourceEntity int, sourceList map[int]DMSource, mapType s
 	return &medm
 }
 
+// AddSourceEntity adds a new entity to the source list for a multi-entity map
 func (medm *MultiEntityDijkstraMap) AddSourceEntity(source DMSource) {
 	medm.sources[source.entity] = source
 }
 
+// UpdateSourceEntity updates an existing source with a new position, for example, if the source entity moved, the
+// Dijkstra map will need to be re-calculated based on the entities new position.
 func (medm *MultiEntityDijkstraMap) UpdateSourceEntity(entity, newX, newY int) {
 	source := medm.sources[entity]
 
@@ -62,7 +68,11 @@ func (medm *MultiEntityDijkstraMap) UpdateSourceEntity(entity, newX, newY int) {
 	source.Y = newY
 }
 
-func (medm *MultiEntityDijkstraMap) GenerateMap(surface *gamemap.Map) {
+// GenerateMap runs through creating a new multi-entity dijkstra map. This will calculate distances for every tile in
+// the map, from each source entity, to each other source entity. For example, if two source entities are three tiles
+// apart, the max distance for a tile between them would be two, as we only care about the maximum distance from any
+// entity.
+func (medm *MultiEntityDijkstraMap) GenerateMap(surface *gamemap.GameMap) {
 	sourceList := make(map[int][]*gamemap.Tile, len(medm.sources))
 	medm.visited = make(map[*gamemap.Tile]bool)
 
@@ -101,7 +111,11 @@ func (medm *MultiEntityDijkstraMap) GenerateMap(surface *gamemap.Map) {
 	}
 }
 
-func (medm *MultiEntityDijkstraMap) SingleRoundBreadthFirstSearch(x, y int, surface *gamemap.Map) []*gamemap.Tile {
+// SingleRoundBreadthFirstSearch runs a single round of a breadth first search algorithm. This will calculate distances
+// for one level of distance from a source entity, rather than calculating every distance at once. This is useful for
+// calculating multiple entity distances, as we can do them one level, and entity, at a time, and the see where the
+// distances may overlap.
+func (medm *MultiEntityDijkstraMap) SingleRoundBreadthFirstSearch(x, y int, surface *gamemap.GameMap) []*gamemap.Tile {
 	// Check if this location has already been visited
 	curTile := surface.Tiles[x][y]
 

@@ -5,46 +5,48 @@ import (
 	"strconv"
 )
 
+// Not sure if converting these is going to prove useful or not
+// KEY just seems more natural than TK
 const (
-	// Not sure if converting these is going to prove useful or not
-	// KEY just seems more natural than TK
-	KEY_CLOSE  = blt.TK_CLOSE
-	KEY_RIGHT  = blt.TK_RIGHT
-	KEY_LEFT   = blt.TK_LEFT
-	KEY_UP     = blt.TK_UP
-	KEY_DOWN   = blt.TK_DOWN
-	KEY_A      = blt.TK_A
-	KEY_B      = blt.TK_B
-	KEY_C      = blt.TK_C
-	KEY_D      = blt.TK_D
-	KEY_E      = blt.TK_E
-	KEY_F      = blt.TK_F
-	KEY_G      = blt.TK_G
-	KEY_H      = blt.TK_H
-	KEY_I      = blt.TK_I
-	KEY_J      = blt.TK_J
-	KEY_K      = blt.TK_K
-	KEY_L      = blt.TK_L
-	KEY_M      = blt.TK_M
-	KEY_N      = blt.TK_N
-	KEY_O      = blt.TK_O
-	KEY_P      = blt.TK_P
-	KEY_Q      = blt.TK_Q
-	KEY_R      = blt.TK_R
-	KEY_S      = blt.TK_S
-	KEY_T      = blt.TK_T
-	KEY_U      = blt.TK_U
-	KEY_V      = blt.TK_V
-	KEY_W      = blt.TK_W
-	KEY_X      = blt.TK_X
-	KEY_Y      = blt.TK_Y
-	KEY_Z      = blt.TK_Z
-	KEY_COMMA  = blt.TK_COMMA
-	KEY_ESCAPE = blt.TK_ESCAPE
-	KEY_ENTER  = blt.TK_ENTER
+	KeyClose  = blt.TK_CLOSE
+	KeyRight  = blt.TK_RIGHT
+	KeyLeft   = blt.TK_LEFT
+	KeyUp     = blt.TK_UP
+	KeyDown   = blt.TK_DOWN
+	KeyA      = blt.TK_A
+	KeyB      = blt.TK_B
+	KeyC      = blt.TK_C
+	KeyD      = blt.TK_D
+	KeyE      = blt.TK_E
+	KeyF      = blt.TK_F
+	KeyG      = blt.TK_G
+	KeyH      = blt.TK_H
+	KeyI      = blt.TK_I
+	KeyJ      = blt.TK_J
+	KeyK      = blt.TK_K
+	KeyL      = blt.TK_L
+	KeyM      = blt.TK_M
+	KeyN      = blt.TK_N
+	KeyO      = blt.TK_O
+	KeyP      = blt.TK_P
+	KeyQ      = blt.TK_Q
+	KeyR      = blt.TK_R
+	KeyS      = blt.TK_S
+	KeyT      = blt.TK_T
+	KeyU      = blt.TK_U
+	KeyV      = blt.TK_V
+	KeyW      = blt.TK_W
+	KeyX      = blt.TK_X
+	KeyY      = blt.TK_Y
+	KeyZ      = blt.TK_Z
+	KeyComman = blt.TK_COMMA
+	KeyEscape = blt.TK_ESCAPE
+	KeyEnter  = blt.TK_ENTER
 )
 
 var (
+	// RuneKeyMapping maps keypresses to the respective Go Rune representations. This can be useful for checking
+	// the rune associated with a keypress.
 	RuneKeyMapping = map[int]rune{
 		blt.TK_A: 'a',
 		blt.TK_B: 'b',
@@ -103,7 +105,7 @@ func InitConsole(windowSizeX, windowSizeY int, title string, fullScreen bool) {
 	blt.Clear()
 }
 
-// SetFont sets the font size and font to use.
+// SetPrimaryFont sets the font size and font to use.
 // If this method is not called, the default font and size for BearLibTerminal is used
 func SetPrimaryFont(fontSize int, fontPath string) {
 	// Next, setup the font config string
@@ -133,16 +135,18 @@ func SetCompositionMode(mode int) {
 	}
 }
 
-// refresh calls blt.Refresh on the current console window
+// Refresh calls blt.Refresh on the current console window
 func Refresh() {
 	blt.Refresh()
 }
 
-// closeConsole calls blt.Close on the current console window
+// CloseConsole calls blt.Close on the current console window
 func CloseConsole() {
 	blt.Close()
 }
 
+// ClearArea clears a (rectangular) area of the terminal, starting at (x, y), and containing the area to
+// (x + width, y + height).
 func ClearArea(x, y, width, height, layer int) {
 	blt.Layer(layer)
 	blt.ClearArea(x, y, width, height)
@@ -213,9 +217,9 @@ func ReadInput(nonBlocking bool) int {
 
 		if inputReady {
 			return blt.Read()
-		} else {
-			return -1
 		}
+
+		return -1
 	}
 
 	// Default behavior is to use blocking reads

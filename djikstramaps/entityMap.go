@@ -1,10 +1,10 @@
-package DijkstraMaps
+package dijkstramaps
 
 import (
 	"github.com/gogue-framework/gogue/gamemap"
 )
 
-// An EntityMap is a Dijkstra map that centers around an entity. This could be the player, an item, a monster, a door,
+// EntityDijkstraMap is a Dijkstra map that centers around an entity. This could be the player, an item, a monster, a door,
 // etc. They are the simplest implementation, as the map radiates values from a single point, setting that point (the
 // location of the entity) as the source, meaning it will have the lowest value. These maps can optionally be inverted,
 // to make other entities move away from it (fleeing, for example). Each map will keep track of where the source entity
@@ -26,7 +26,6 @@ import (
 // then be multiplied across all the values of every competing map. A positive number means they want to be far away
 // from that entity, 0 is indifference, and negative numbers mean high desire. Multiply values on the map by the desires
 // and you end up with a combined set of maps with values that reflect the monsters desires.
-
 type EntityDijkstraMap struct {
 	source      int // The source entity ID
 	sourceX     int
@@ -37,6 +36,9 @@ type EntityDijkstraMap struct {
 	ValuesMap   [][]int
 }
 
+// NewEntityMap creates a new EntityDijkstraMap. The source coordinates indicate where the Dijkstra map originates,
+// and the map width and height indicate how large the map should be (typically the same as the gamemap). mapType is
+// a string identifier to help show what this maps function is.
 func NewEntityMap(sourceEntity int, sourceX, sourceY int, mapType string, mapWidth, mapHeight int) *EntityDijkstraMap {
 	edm := EntityDijkstraMap{}
 	edm.ValuesMap = make([][]int, mapWidth+1)
@@ -70,7 +72,7 @@ func (edm *EntityDijkstraMap) UpdateSourceCoordinates(x, y int) {
 
 // UpdateMap checks the map to see if the update criteria (location of the source entity has changed) is met. If so,
 // the map will be regenerated.
-func (edm *EntityDijkstraMap) UpdateMap(surface *gamemap.Map) {
+func (edm *EntityDijkstraMap) UpdateMap(surface *gamemap.GameMap) {
 	if (edm.sourceX != edm.sourcePrevX) || (edm.sourceY != edm.sourcePrevY) {
 		// The coordinates differ from the last previous set, meaning the entity has moved. Re-generate the map.
 		edm.GenerateMap(surface)
@@ -78,7 +80,7 @@ func (edm *EntityDijkstraMap) UpdateMap(surface *gamemap.Map) {
 }
 
 // GenerateMap will create a Dijkstra map, centered around the source entities current location.
-func (edm *EntityDijkstraMap) GenerateMap(surface *gamemap.Map) {
+func (edm *EntityDijkstraMap) GenerateMap(surface *gamemap.GameMap) {
 	// Starting from the source, flood fill every tile on the map, incrementing the value for each tile by one,
 	// based on how far away from the source it is. Make a visited array first though (everything but the source is
 	// unvisited initially. Also mark blocking tiles as visited.
@@ -87,7 +89,10 @@ func (edm *EntityDijkstraMap) GenerateMap(surface *gamemap.Map) {
 	edm.BreadthFirstSearch(edm.sourceX, edm.sourceY, surface.Width, surface.Height, 0, visited, surface)
 }
 
-func (edm *EntityDijkstraMap) BreadthFirstSearch(x, y, n, m, value int, visited map[*gamemap.Tile]bool, surface *gamemap.Map) {
+// BreadthFirstSearch implements a standard BFS algorithm to fill in values for each tile in the Dijkstra map. It will
+// visit all Tiles the same distance away from the source, before moving to the next step away, and repeating. Each tile
+// visited is assigned a distance from the source. Walls are ignored.
+func (edm *EntityDijkstraMap) BreadthFirstSearch(x, y, n, m, value int, visited map[*gamemap.Tile]bool, surface *gamemap.GameMap) {
 	// Check if this location has already been visited
 	tile := surface.Tiles[x][y]
 

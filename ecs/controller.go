@@ -6,6 +6,9 @@ import (
 	"sort"
 )
 
+// Controller acts as a central coordinator for all entities within the game. In most cases, a single controller will
+// suffice for an entire game. The controller is responsible for creating new entities, managing components attached to
+// those entities, and registering and coordinating systems that act upon those entities.
 type Controller struct {
 	systems       map[reflect.Type]System
 	sortedSystems map[int][]System
@@ -34,7 +37,7 @@ func NewController() *Controller {
 	return &controller
 }
 
-// Create a new entity in the world. An entity is simply a unique integer.
+// CreateEntity creates a new entity in the world. An entity is simply a unique integer.
 // If any components are provided, they will be associated with the created entity
 func (c *Controller) CreateEntity(components []Component) int {
 	entity := c.nextEntityID
@@ -47,7 +50,7 @@ func (c *Controller) CreateEntity(components []Component) int {
 		}
 	}
 
-	c.nextEntityID += 1
+	c.nextEntityID++
 
 	return entity
 }
@@ -56,7 +59,7 @@ func (c *Controller) CreateEntity(components []Component) int {
 // that entity
 func (c *Controller) DeleteEntity(entity int) {
 	// First, delete all the component associations for the entity to be removed
-	for k, _ := range c.entities[entity] {
+	for k := range c.entities[entity] {
 		c.RemoveComponent(entity, k)
 	}
 
@@ -65,7 +68,7 @@ func (c *Controller) DeleteEntity(entity int) {
 	delete(c.entities, entity)
 }
 
-// MapComponent registers a component with the controller. This map of components gives the controller access to the
+// MapComponentClass registers a component with the controller. This map of components gives the controller access to the
 // valid components for a game system, and allows for dynamic loading of components from the data loader.
 func (c *Controller) MapComponentClass(componentName string, component Component) {
 	// TODO: Possible to overwrite existing components with old name...
@@ -77,21 +80,21 @@ func (c *Controller) MapComponentClass(componentName string, component Component
 func (c *Controller) GetMappedComponentClass(componentName string) Component {
 	if _, ok := c.componentMap[componentName]; ok {
 		return c.componentMap[componentName]
-	} else {
-		// TODO: Add better (read: actual) error handling here
-		fmt.Printf("Component[%s] not registered on Controller.\n", componentName)
-		return nil
 	}
+
+	// TODO: Add better (read: actual) error handling here
+	fmt.Printf("Component[%s] not registered on Controller.\n", componentName)
+	return nil
 }
 
-// HasComponentClass returns true if the named component has been mapped, IE a component mapped
+// HasMappedComponent returns true if the named component has been mapped, IE a component mapped
 // under "position" has been mapped to a PositionComponent
 func (c *Controller) HasMappedComponent(componentName string) bool {
 	if _, ok := c.componentMap[componentName]; ok {
 		return true
-	} else {
-		return false
 	}
+
+	return false
 }
 
 // AddComponent adds a component to an entity. The component is added to the global list of components for the
@@ -117,9 +120,9 @@ func (c *Controller) AddComponent(entity int, component Component) {
 func (c *Controller) HasComponent(entity int, componentType reflect.Type) bool {
 	if _, ok := c.entities[entity][componentType]; ok {
 		return true
-	} else {
-		return false
 	}
+
+	return false
 }
 
 // GetComponent returns the component instance for a component type, if one exists for the provided entity
@@ -134,7 +137,7 @@ func (c *Controller) GetComponent(entity int, componentType reflect.Type) Compon
 
 // GetEntity gets a specific entity, and all of its component instances
 func (c *Controller) GetEntity(entity int) map[reflect.Type]Component {
-	for i, _ := range c.entities {
+	for i := range c.entities {
 		if i == entity {
 			return c.entities[entity]
 		}
@@ -172,7 +175,7 @@ func (c *Controller) UpdateComponent(entity int, componentType reflect.Type, new
 	return entity
 }
 
-// DeleteComponent will delete a component instance from an entity, based on component type. It will also remove the
+// RemoveComponent will delete a component instance from an entity, based on component type. It will also remove the
 // association between the component and the entity, and remove the component from the processor completely if no
 // other entities are using it.
 func (c *Controller) RemoveComponent(entity int, componentType reflect.Type) int {
@@ -240,9 +243,9 @@ func (c *Controller) Process(excludedSystems []reflect.Type) {
 func (c *Controller) HasSystem(systemType reflect.Type) bool {
 	if _, ok := c.systems[systemType]; ok {
 		return true
-	} else {
-		return false
 	}
+
+	return false
 }
 
 // ProcessSystem allows for on demand processing of individual systems, rather than processing all at once via Process

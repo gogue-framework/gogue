@@ -106,25 +106,25 @@ func TestEntityLoader_CreateSingleEntity(t *testing.T) {
 	smallRat := levelOne["small_rat"].(map[string]interface{})
 	caveBat := levelOne["cave_bat"].(map[string]interface{})
 
-	entityId := entityLoader.CreateSingleEntity(smallRat)
+	entityID := entityLoader.CreateSingleEntity(smallRat)
 
-	assert.Equal(t, entityId, 0)
-	assert.True(t, controller.HasComponent(entityId, reflect.TypeOf(PositionComponent{})))
-	assert.True(t, controller.HasComponent(entityId, reflect.TypeOf(AppearanceComponent{})))
+	assert.Equal(t, entityID, 0)
+	assert.True(t, controller.HasComponent(entityID, reflect.TypeOf(PositionComponent{})))
+	assert.True(t, controller.HasComponent(entityID, reflect.TypeOf(AppearanceComponent{})))
 
-	appearance := controller.GetComponent(entityId, AppearanceComponent{}.TypeOf()).(AppearanceComponent)
+	appearance := controller.GetComponent(entityID, AppearanceComponent{}.TypeOf()).(AppearanceComponent)
 
 	assert.Equal(t, "Small rat", appearance.Name)
 	assert.Equal(t, "r", appearance.Glyph.Char())
 	assert.Equal(t, "brown", appearance.Glyph.Color())
 
-	entityId = entityLoader.CreateSingleEntity(caveBat)
+	entityID = entityLoader.CreateSingleEntity(caveBat)
 
-	assert.Equal(t, entityId, 1)
-	assert.True(t, controller.HasComponent(entityId, reflect.TypeOf(PositionComponent{})))
-	assert.True(t, controller.HasComponent(entityId, reflect.TypeOf(AppearanceComponent{})))
+	assert.Equal(t, entityID, 1)
+	assert.True(t, controller.HasComponent(entityID, reflect.TypeOf(PositionComponent{})))
+	assert.True(t, controller.HasComponent(entityID, reflect.TypeOf(AppearanceComponent{})))
 
-	appearance = controller.GetComponent(entityId, AppearanceComponent{}.TypeOf()).(AppearanceComponent)
+	appearance = controller.GetComponent(entityID, AppearanceComponent{}.TypeOf()).(AppearanceComponent)
 
 	assert.Equal(t, "Cave bat", appearance.Name)
 	assert.Equal(t, "b", appearance.Glyph.Char())

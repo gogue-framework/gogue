@@ -2,6 +2,9 @@ package screens
 
 import "fmt"
 
+// Screen is display state for the game. It has hooks for when it is entered, exited, and rendered. A Screen can have
+// inputs associated with it, and it can optionally use the ECS if that is in use. If the ECS is used for a screen,
+// all systems will be processed on each frame while the user is  interacting with the screen.
 type Screen interface {
 	Enter()
 	Exit()
@@ -10,6 +13,8 @@ type Screen interface {
 	UseEcs() bool
 }
 
+// ScreenManager is a coordinator for all defined screens. This is meant as a singleton, and keeps track of all screens,
+// as well as the previous and current screens, to facilitate easy switching between Screens.
 type ScreenManager struct {
 	Screens        map[string]Screen
 	CurrentScreen  Screen
@@ -34,10 +39,10 @@ func (sm *ScreenManager) AddScreen(screenName string, screen Screen) error {
 		// A screen with the given name does not yet exist on the ScreenManager, go ahead and add it
 		sm.Screens[screenName] = screen
 		return nil
-	} else {
-		err := fmt.Errorf("A screen with name %v was already added to the ScreenManager %v!", screenName, sm)
-		return err
 	}
+
+	err := fmt.Errorf("screen with name %v was already added to the ScreenManager %v", screenName, sm)
+	return err
 }
 
 // RemoveScreen will remove a screen from the ScreenManager. This can be useful when a temporary screen needs to be
@@ -48,11 +53,11 @@ func (sm *ScreenManager) RemoveScreen(screenName string) error {
 	if _, ok := sm.Screens[screenName]; ok {
 		delete(sm.Screens, screenName)
 		return nil
-	} else {
-		// A screen with the given name does not exist
-		err := fmt.Errorf("A screen with name %v was not found on ScreenManager %v!", screenName, sm)
-		return err
 	}
+
+	// A screen with the given name does not exist
+	err := fmt.Errorf("screen with name %v was not found on ScreenManager %v", screenName, sm)
+	return err
 }
 
 // SetScreen will set the current screen property of the screen manager to the provided screen
@@ -76,9 +81,9 @@ func (sm *ScreenManager) SetScreenByName(screenName string) error {
 	if _, ok := sm.Screens[screenName]; ok {
 		sm.setScreen(sm.Screens[screenName])
 		return nil
-	} else {
-		// A screen with the given name does not exist
-		err := fmt.Errorf("A screen with name %v was not found on ScreenManager %v!", screenName, sm)
-		return err
 	}
+
+	// A screen with the given name does not exist
+	err := fmt.Errorf("screen with name %v was not found on ScreenManager %v", screenName, sm)
+	return err
 }

@@ -7,36 +7,26 @@ import (
 	"time"
 )
 
-type BySize [][]*Tile
-
-func (s BySize) Len() int {
-	return len(s)
-}
-
-func (s BySize) Swap(i, j int) {
-	s[i], s[j] = s[j], s[i]
-}
-
-func (s BySize) Less(i, j int) bool {
-	return len(s[i]) < len(s[j])
-}
-
+// CoordinatePair represents a point in a 2D space
 type CoordinatePair struct {
 	X int
 	Y int
 }
 
+// Tile is a drawable feature on a gamemap. IT has a glyph for representation, and properties to determine if it blocks
+// movement, sight, and sound. Furthermore, each tile keeps track of whether the player has visited it, if its visible,
+// and if its been seen. Each tile also keeps track of any noises generated on it by entities.
 type Tile struct {
-	Glyph       gogue.Glyph
-	Blocked     bool
-	BlocksSight bool
-	BlocksSound bool
-	Visited     bool
-	Explored    bool
-	Visible     bool
-	X           int
-	Y           int
-	Noises      map[int]float64
+	Glyph        gogue.Glyph
+	Blocked      bool
+	BlocksSight  bool
+	BlocksNoises bool
+	Visited      bool
+	Explored     bool
+	Visible      bool
+	X            int
+	Y            int
+	Noises       map[int]float64
 }
 
 // IsWall determines if a tile acts as a wall or not. A wall blocks sight and movement. If both of these criteria are
@@ -44,12 +34,15 @@ type Tile struct {
 func (t *Tile) IsWall() bool {
 	if t.BlocksSight && t.Blocked {
 		return true
-	} else {
-		return false
 	}
+
+	return false
 }
 
-type Map struct {
+// GameMap is a 2D slice of Tile. The bounds of the map are determined by the width and height. FloorTiles keeps track
+// of all tiles in the GameMap that are marked as floors (does not block movement or sight, and can be occupied), this
+// useful for finding open tiles for spawning entities.
+type GameMap struct {
 	Width      int
 	Height     int
 	Tiles      [][]*Tile
@@ -59,7 +52,7 @@ type Map struct {
 // InitializeMap sets up a GameMap for use. It sets the Tiles property of the GameMap to a 2D array of Tile objects,
 // with a width and height matching those set for the GameMap. It also initializes a random seed to use for map
 // generation
-func (m *Map) InitializeMap() {
+func (m *GameMap) InitializeMap() {
 	// Initialize a two dimensional array that will represent the current game map (of dimensions Width x Height)
 	m.Tiles = make([][]*Tile, m.Width+1)
 	for i := range m.Tiles {
@@ -74,7 +67,7 @@ func (m *Map) InitializeMap() {
 // visible to the player, and within the viewport of the Camera. If a Tile does not meet these criteria, it will not be
 // drawn. If a Tile is within the viewport of the Camera, but is outside the players FOV, and has been explored, it will
 // be drawn using the Tile.Glyph exploredColor.
-func (m *Map) Render(gameCamera *camera.GameCamera, newCameraX, newCameraY int) {
+func (m *GameMap) Render(gameCamera *camera.GameCamera, newCameraX, newCameraY int) {
 
 	gameCamera.MoveCamera(newCameraX, newCameraY, m.Width, m.Height)
 
@@ -107,27 +100,28 @@ func (m *Map) Render(gameCamera *camera.GameCamera, newCameraX, newCameraY int) 
 }
 
 // IsBlocked returns true if the Tile in the GameMap has its blocked property set to true. False otherwise.
-func (m *Map) IsBlocked(x, y int) bool {
+func (m *GameMap) IsBlocked(x, y int) bool {
 	// Check to see if the provided coordinates contain a blocked tile
 	if m.Tiles[x][y].Blocked {
 		return true
-	} else {
-		return false
 	}
+
+	return false
 }
 
-func (m *Map) BlocksNoises(x, y int) bool {
+// BlocksNoises returns true if the Tile in the GameMap has its BlocksNoises property set to true. False otherwise.
+func (m *GameMap) BlocksNoises(x, y int) bool {
 	// Check to see if the provided coordinates contain a tile that blocks noises
-	if m.Tiles[x][y].BlocksSound {
+	if m.Tiles[x][y].BlocksNoises {
 		return true
-	} else {
-		return false
 	}
+
+	return false
 }
 
 // GetNeighbors will return a list of tiles that are directly next to the given coordinates. It can optionally exclude
 // blocked tiles
-func (m *Map) GetNeighbors(x, y int) []*Tile {
+func (m *GameMap) GetNeighbors(x, y int) []*Tile {
 	neighbors := []*Tile{}
 	sourceTile := m.Tiles[x][y]
 
@@ -160,32 +154,36 @@ func (m *Map) GetNeighbors(x, y int) []*Tile {
 	return neighbors
 }
 
-func (m *Map) IsVisibleToPlayer(x, y int) bool {
+// IsVisibleToPlayer returns true if the given position on the map is within the players vision radius
+func (m *GameMap) IsVisibleToPlayer(x, y int) bool {
 	// Check to see if the given position on the map is visible to the player currently
 	if m.Tiles[x][y].Visible {
 		return true
-	} else {
-		return false
 	}
+
+	return false
 }
 
-func (m *Map) IsVisibleAndExplored(x, y int) bool {
+// IsVisibleAndExplored returns true if the player has visited the tile, and it is visible
+func (m *GameMap) IsVisibleAndExplored(x, y int) bool {
 	if m.Tiles[x][y].Visible && m.Tiles[x][y].Explored {
 		return true
-	} else {
-		return false
 	}
+
+	return false
 }
 
-func (m *Map) HasNoises(x, y int) bool {
+// HasNoises returns true if the given tile has any noises
+func (m *GameMap) HasNoises(x, y int) bool {
 	if len(m.Tiles[x][y].Noises) > 0 {
 		return true
-	} else {
-		return false
 	}
+
+	return false
 }
 
-func (m *Map) GetAdjacentNoisesForEntity(entity, x, y int) map[*Tile]float64 {
+// GetAdjacentNoisesForEntity gets all adjacent tiles that have a noise associated with the given entity
+func (m *GameMap) GetAdjacentNoisesForEntity(entity, x, y int) map[*Tile]float64 {
 	// Get a list of the neighboring tiles for the location
 	tiles := m.GetNeighbors(x, y)
 

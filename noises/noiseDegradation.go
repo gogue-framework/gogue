@@ -4,7 +4,11 @@ import "github.com/gogue-framework/gogue/gamemap"
 
 // DegradeNoises iterates over every tile on the map, and reduces the amount of noise on each tile by a set amount.
 // If a noise reaches an intensity of 0, the noise is removed from the tile. This is intended to be run each frame.
-func DegradeNoises(mapSurface *gamemap.Map, degradationRate float64) {
+// This simulates sounds being intially made, and maybe echoing around for a brief time, but then eventually disappearing
+// An example would be if an entity is tracking another entity by the sound its generating, if the tracked entity stops
+// generating sounds, eventually, the tracking entity will no longer be able to follow the trail of sound, as the sound
+// no longer exists.
+func DegradeNoises(mapSurface *gamemap.GameMap, degradationRate float64) {
 	for x := 0; x < mapSurface.Width; x++ {
 		for y := 0; y < mapSurface.Height; y++ {
 			if mapSurface.HasNoises(x, y) {

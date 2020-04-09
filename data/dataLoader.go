@@ -14,10 +14,13 @@ import (
 // Data files will contain information such as an item identifier, name, description, and systems that need to be
 // attached to the entity, color, stats, etc.
 
+// FileLoader contains the location where data will be loaded from.. It also allows for loading data from a single file
+// or loading data from all files found in the source location.
 type FileLoader struct {
 	dataFilesLocation string
 }
 
+// NewFileLoader creates a new FileLoader. If the location provided is invalid (doesn't exist), an error is returned
 func NewFileLoader(dataDir string) (*FileLoader, error) {
 	fileLoader := FileLoader{}
 
