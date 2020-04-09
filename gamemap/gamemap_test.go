@@ -1,14 +1,14 @@
 package gamemap
 
 import (
-	"github.com/gogue-framework/gogue"
+	"github.com/gogue-framework/gogue/ui"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
 // GenerateArena takes a GameMap object, and creates a giant room, ringed with walls. This is a very simple type of
 // map that contains no features other than the walls.
-func GenerateArena(surface *GameMap, wallGlyph, floorGlyph gogue.Glyph) {
+func GenerateArena(surface *GameMap, wallGlyph, floorGlyph ui.Glyph) {
 	// Generates a large, empty room, with walls ringing the outside edges
 	for x := 0; x <= surface.Width; x++ {
 		for y := 0; y <= surface.Height; y++ {
@@ -26,7 +26,7 @@ func GenerateArena(surface *GameMap, wallGlyph, floorGlyph gogue.Glyph) {
 }
 
 func TestTile_IsWall(t *testing.T) {
-	glyph := gogue.NewGlyph("#", "white", "white")
+	glyph := ui.NewGlyph("#", "white", "white")
 	noises := make(map[int]float64)
 	tile := Tile{glyph, true, true, true, false, false, false, 1, 1, noises}
 
@@ -46,8 +46,8 @@ func TestMap_InitializeMap(t *testing.T) {
 }
 
 func TestMap_IsBlocked(t *testing.T) {
-	wallGlyph := gogue.NewGlyph("#", "white", "gray")
-	floorGlyph := gogue.NewGlyph(".", "white", "gray")
+	wallGlyph := ui.NewGlyph("#", "white", "gray")
+	floorGlyph := ui.NewGlyph(".", "white", "gray")
 
 	gameMap := GameMap{Width: 100, Height: 100}
 	gameMap.InitializeMap()
@@ -66,8 +66,8 @@ func TestMap_IsBlocked(t *testing.T) {
 }
 
 func TestMap_GetNeighbors(t *testing.T) {
-	wallGlyph := gogue.NewGlyph("#", "white", "gray")
-	floorGlyph := gogue.NewGlyph(".", "white", "gray")
+	wallGlyph := ui.NewGlyph("#", "white", "gray")
+	floorGlyph := ui.NewGlyph(".", "white", "gray")
 
 	gameMap := GameMap{Width: 100, Height: 100}
 	gameMap.InitializeMap()

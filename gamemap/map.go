@@ -1,8 +1,8 @@
 package gamemap
 
 import (
-	"github.com/gogue-framework/gogue"
 	"github.com/gogue-framework/gogue/camera"
+	"github.com/gogue-framework/gogue/ui"
 	"math/rand"
 	"time"
 )
@@ -17,7 +17,7 @@ type CoordinatePair struct {
 // movement, sight, and sound. Furthermore, each tile keeps track of whether the player has visited it, if its visible,
 // and if its been seen. Each tile also keeps track of any noises generated on it by entities.
 type Tile struct {
-	Glyph        gogue.Glyph
+	Glyph        ui.Glyph
 	Blocked      bool
 	BlocksSight  bool
 	BlocksNoises bool
@@ -91,9 +91,9 @@ func (m *GameMap) Render(gameCamera *camera.GameCamera, newCameraX, newCameraY i
 			// 1. Its visible or explored
 			// 2. It hasn't been printed yet. This will prevent over printing due to camera conversion
 			if tile.Visible {
-				gogue.PrintGlyph(camX, camY, tile.Glyph, "", 0)
+				ui.PrintGlyph(camX, camY, tile.Glyph, "", 0)
 			} else if tile.Explored {
-				gogue.PrintGlyph(camX, camY, tile.Glyph, "", 0, true)
+				ui.PrintGlyph(camX, camY, tile.Glyph, "", 0, true)
 			}
 		}
 	}

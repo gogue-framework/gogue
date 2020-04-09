@@ -1,8 +1,8 @@
 package data
 
 import (
-	"github.com/gogue-framework/gogue"
 	"github.com/gogue-framework/gogue/ecs"
+	"github.com/gogue-framework/gogue/ui"
 	"github.com/stretchr/testify/assert"
 	"reflect"
 	"testing"
@@ -83,7 +83,7 @@ func (pc PositionComponent) TypeOf() reflect.Type {
 type AppearanceComponent struct {
 	Name        string
 	Description string
-	Glyph       gogue.Glyph
+	Glyph       ui.Glyph
 	Layer       int
 }
 

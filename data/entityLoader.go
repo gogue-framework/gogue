@@ -1,8 +1,8 @@
 package data
 
 import (
-	"github.com/gogue-framework/gogue"
 	"github.com/gogue-framework/gogue/ecs"
+	"github.com/gogue-framework/gogue/ui"
 	"reflect"
 )
 
@@ -98,7 +98,7 @@ func (el *EntityLoader) setFieldValues(values map[string]interface{}, value refl
 							char = glyphPropValue.(string)
 						}
 					}
-					glyph := gogue.NewGlyph(char, color, "")
+					glyph := ui.NewGlyph(char, color, "")
 					field.Set(reflect.ValueOf(glyph))
 				}
 			}

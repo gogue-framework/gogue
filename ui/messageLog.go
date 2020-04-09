@@ -1,9 +1,5 @@
 package ui
 
-import (
-	"github.com/gogue-framework/gogue"
-)
-
 // MessageLog keeps track of a list messages, and defines how many messages to keep track of before truncating the list
 type MessageLog struct {
 	messages  []string
@@ -49,7 +45,7 @@ func (ml *MessageLog) PrintMessages(viewAreaX, viewAreaY, windowSizeX, windowSiz
 	printedMessages := []string{}
 
 	for i := toShow; i > 0; i-- {
-		gogue.PrintText(1, (viewAreaY-1)+i, 0, 0, ml.messages[i-1], "white", "", 1)
+		PrintText(1, (viewAreaY-1)+i, 0, 0, ml.messages[i-1], "white", "", 1)
 		printedMessages = append(printedMessages, ml.messages[i-1])
 	}
 
@@ -59,11 +55,11 @@ func (ml *MessageLog) PrintMessages(viewAreaX, viewAreaY, windowSizeX, windowSiz
 // ClearMessage clears the defined message area, starting at viewAreaX and Y, and ending at the width and height of
 // the message area
 func clearMessages(viewAreaX, viewAreaY, windowSizeX, windowSizeY, layer int) {
-	gogue.ClearArea(viewAreaX, viewAreaY, windowSizeX, windowSizeY-viewAreaY, 1)
+	ClearArea(viewAreaX, viewAreaY, windowSizeX, windowSizeY-viewAreaY, 1)
 }
 
 // PrintToMessageArea clears the message area, and print a single message at the top
 func PrintToMessageArea(message string, viewAreaX, viewAreaY, windowSizeX, windowSizeY, layer int) {
 	clearMessages(viewAreaX, viewAreaY, windowSizeX, windowSizeY, layer)
-	gogue.PrintText(1, viewAreaY, 0, 0, message, "white", "", 1)
+	PrintText(1, viewAreaY, 0, 0, message, "white", "", 1)
 }

@@ -1,4 +1,4 @@
-package gogue
+package ui
 
 // Glyph represents a single character that can be drawn to the terminal. Char is the physical character representation,
 // Color is the display color, and ExploredColor is the color it is shown when not in direct view (usually a darker

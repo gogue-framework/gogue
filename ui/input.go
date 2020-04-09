@@ -1,4 +1,4 @@
-package gogue
+package ui
 
 import (
 	"fmt"

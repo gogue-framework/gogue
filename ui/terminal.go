@@ -1,4 +1,4 @@
-package gogue
+package ui
 
 import (
 	blt "github.com/gogue-framework/bearlibterminalgo"
