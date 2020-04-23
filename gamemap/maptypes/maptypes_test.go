@@ -40,11 +40,19 @@ func TestGenerateCavern(t *testing.T) {
 
 	// For a cavern, we seal up all the edges of the map, so when x == 0, or y == 0, or x == width, or y == width,
 	// there should never be a floor
-	for x := 0; x <= gameMap.Width; x++ {
-		for y := 0; y <= gameMap.Height; y++ {
-			if x == 0 || x == gameMap.Width-1 || y == 0 || y == gameMap.Height-1 {
-				assert.Equal(t, gameMap.Tiles[x][y].Glyph, wallGlyph)
-			}
-		}
+	for x := 0; x < gameMap.Width; x++ {
+		assert.Equal(t, gameMap.Tiles[x][0].Glyph, wallGlyph)
+	}
+
+	for y := 0; y < gameMap.Width; y++ {
+		assert.Equal(t, gameMap.Tiles[0][y].Glyph, wallGlyph)
+	}
+
+	for x := 0; x < gameMap.Width; x++ {
+		assert.Equal(t, gameMap.Tiles[x][gameMap.Height - 1].Glyph, wallGlyph)
+	}
+
+	for y := 0; y < gameMap.Width; y++ {
+		assert.Equal(t, gameMap.Tiles[gameMap.Width - 1][y].Glyph, wallGlyph)
 	}
 }
