@@ -6,9 +6,9 @@ import (
 	"testing"
 )
 
-// GenerateArena takes a GameMap object, and creates a giant room, ringed with walls. This is a very simple type of
+// generateArena takes a GameMap object, and creates a giant room, ringed with walls. This is a very simple type of
 // map that contains no features other than the walls.
-func GenerateArena(surface *GameMap, wallGlyph, floorGlyph ui.Glyph) {
+func generateArena(surface *GameMap, wallGlyph, floorGlyph ui.Glyph) {
 	// Generates a large, empty room, with walls ringing the outside edges
 	for x := 0; x <= surface.Width; x++ {
 		for y := 0; y <= surface.Height; y++ {
@@ -53,7 +53,7 @@ func TestMap_IsBlocked(t *testing.T) {
 	gameMap.InitializeMap()
 
 	// Generate an arena style map
-	GenerateArena(&gameMap, wallGlyph, floorGlyph)
+	generateArena(&gameMap, wallGlyph, floorGlyph)
 
 	// If map generation went correctly, the Tile at position (0, 0) should be a wall
 	topLeftCornerWall := gameMap.Tiles[0][0]
@@ -73,7 +73,7 @@ func TestMap_GetNeighbors(t *testing.T) {
 	gameMap.InitializeMap()
 
 	// Generate an arena style map
-	GenerateArena(&gameMap, wallGlyph, floorGlyph)
+	generateArena(&gameMap, wallGlyph, floorGlyph)
 
 	// Get the neighbors of the Tile at (1, 1). This should return eight Tiles, at [(0, 0), (0, 1), (0, 2), (1, 2),
 	// (2, 2), (2, 1), (2, 0), (1, 0)]
