@@ -19,7 +19,7 @@ func TestGenerateArena(t *testing.T) {
 	gameMap := &gamemap.GameMap{Width: 50, Height: 50}
 	gameMap.InitializeMap()
 
-	GenerateArena(gameMap, wallGlyph, floorGlyph, false)
+	GenerateArena(gameMap, wallGlyph, floorGlyph)
 
 	assert.Equal(t, gameMap.Tiles[0][0].Glyph, wallGlyph)
 	assert.Equal(t, gameMap.Tiles[2][2].Glyph, floorGlyph)
@@ -32,7 +32,7 @@ func TestGenerateCavern(t *testing.T) {
 	gameMap := &gamemap.GameMap{Width: 50, Height: 50}
 	gameMap.InitializeMap()
 
-	GenerateCavern(gameMap, wallGlyph, floorGlyph, 5, false)
+	GenerateCavern(gameMap, wallGlyph, floorGlyph, 5)
 
 	// Kind of hard to test procedural code, so we'll just check some basic parameters to ensure that a map was
 	// actually generated
@@ -49,10 +49,10 @@ func TestGenerateCavern(t *testing.T) {
 	}
 
 	for x := 0; x < gameMap.Width; x++ {
-		assert.Equal(t, gameMap.Tiles[x][gameMap.Height - 1].Glyph, wallGlyph)
+		assert.Equal(t, gameMap.Tiles[x][gameMap.Height-1].Glyph, wallGlyph)
 	}
 
 	for y := 0; y < gameMap.Width; y++ {
-		assert.Equal(t, gameMap.Tiles[gameMap.Width - 1][y].Glyph, wallGlyph)
+		assert.Equal(t, gameMap.Tiles[gameMap.Width-1][y].Glyph, wallGlyph)
 	}
 }

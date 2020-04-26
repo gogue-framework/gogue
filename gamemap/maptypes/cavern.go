@@ -29,17 +29,19 @@ func (s bySize) Less(i, j int) bool {
 // the edge of the map. Step 5 uses a flood fill algorithm to find the largest cavern, and finally, step 6, fills all
 // smaller caverns. This algorithm is simple and does not connect unconnected caverns, and simply uses the largest
 // cavern as the play area.
-func GenerateCavern(surface *gamemap.GameMap, wallGlyph, floorGlyph ui.Glyph, smoothingPasses int, explored bool) {
+func GenerateCavern(surface *gamemap.GameMap, wallGlyph, floorGlyph ui.Glyph, smoothingPasses int) {
 	// Step 1: Fill the map space with a random assortment of walls and floors. This uses a roughly 40/60 ratio in favor
 	// of floors, as I've found that to produce the nicest results.
 
 	for x := 0; x < surface.Width; x++ {
 		for y := 0; y < surface.Height; y++ {
 			state := rand.Intn(100)
+			// All Tiles are created visible, by default. It is left up to the developer to set Tiles to not visible
+			// as they see fit (say, through use of the FoV tools in Gogue).
 			if state < 30 {
-				surface.Tiles[x][y] = &gamemap.Tile{Glyph: wallGlyph, Blocked: true, BlocksSight: true, Visited: explored, Explored: explored, Visible: explored, X: x, Y: y, Noises: make(map[int]float64)}
+				surface.Tiles[x][y] = &gamemap.Tile{Glyph: wallGlyph, Blocked: true, BlocksSight: true, Visited: false, Explored: false, Visible: true, X: x, Y: y, Noises: make(map[int]float64)}
 			} else {
-				surface.Tiles[x][y] = &gamemap.Tile{Glyph: floorGlyph, Blocked: false, BlocksSight: false, Visited: explored, Explored: explored, Visible: explored, X: x, Y: y, Noises: make(map[int]float64)}
+				surface.Tiles[x][y] = &gamemap.Tile{Glyph: floorGlyph, Blocked: false, BlocksSight: false, Visited: false, Explored: false, Visible: true, X: x, Y: y, Noises: make(map[int]float64)}
 			}
 		}
 	}
