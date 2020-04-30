@@ -128,12 +128,22 @@ func AddFont(name, path string, fontSize int) {
 
 // SetCompositionMode sets the composition mode for drawing glyphs to the terminal. 0 is no composition, meaning the
 // entire cell will be replaced by the character drawn. 1 means the character drawn will be composed onto any lower
-// level characters
+// level characters. This is used to set the composition mode each time a character is printed.
 func SetCompositionMode(mode int) {
-	if mode == 0 || mode == 1 {
+	if mode == blt.TK_OFF || mode == blt.TK_ON {
 		compositionMode = mode
 	}
 }
+
+// SetGlobalComposition sets the global terminal state of composition. Off means that each character printed to a cell
+// will, graphically, replace all other characters in that cell. Composition on means that each character printed to a
+// cell will be composed on top or beneath (depending on layer) any other characters present in that cell.
+func SetGlobalComposition(mode int){
+	if mode == blt.TK_OFF || mode == blt.TK_ON {
+		blt.Composition(mode)
+	}
+}
+
 
 // Refresh calls blt.Refresh on the current console window
 func Refresh() {
