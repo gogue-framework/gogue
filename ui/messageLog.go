@@ -45,7 +45,7 @@ func (ml *MessageLog) PrintMessages(viewAreaX, viewAreaY, windowSizeX, windowSiz
 	printedMessages := []string{}
 
 	for i := toShow; i > 0; i-- {
-		PrintText(1, (viewAreaY-1)+i, 0, 0, ml.messages[i-1], "white", "", 1)
+		PrintText(viewAreaX, (viewAreaY-1)+i, 0, 0, ml.messages[i-1], "white", "", 1)
 		printedMessages = append(printedMessages, ml.messages[i-1])
 	}
 
