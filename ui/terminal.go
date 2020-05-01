@@ -138,12 +138,11 @@ func SetCompositionMode(mode int) {
 // SetGlobalComposition sets the global terminal state of composition. Off means that each character printed to a cell
 // will, graphically, replace all other characters in that cell. Composition on means that each character printed to a
 // cell will be composed on top or beneath (depending on layer) any other characters present in that cell.
-func SetGlobalComposition(mode int){
+func SetGlobalComposition(mode int) {
 	if mode == blt.TK_OFF || mode == blt.TK_ON {
 		blt.Composition(mode)
 	}
 }
-
 
 // Refresh calls blt.Refresh on the current console window
 func Refresh() {
@@ -188,7 +187,6 @@ func PrintGlyph(x, y int, g Glyph, backgroundColor string, layer int, useExplore
 	}
 
 	// Finally, print the character at the provided coordinates
-	blt.Composition(compositionMode)
 	blt.Print(x, y, string(g.Char()))
 }
 
