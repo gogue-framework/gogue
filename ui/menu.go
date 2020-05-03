@@ -142,7 +142,7 @@ func (ml *MenuList) Print(height, width, xOffset, yOffset int) {
 
 	for _, keyRune := range ml.keys {
 		input := ml.Inputs[rune(keyRune)]
-		PrintText(xOffset, lineStart, 0, 0, "("+string(keyRune)+")"+ml.Options[input], "", "", 0)
+		PrintText(xOffset, lineStart, "("+string(keyRune)+")"+ml.Options[input], "", "", 0, 0)
 		lineStart++
 	}
 }

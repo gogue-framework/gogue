@@ -45,7 +45,7 @@ func (ml *MessageLog) PrintMessages(viewAreaX, viewAreaY, windowSizeX, windowSiz
 	printedMessages := []string{}
 
 	for i := toShow; i > 0; i-- {
-		PrintText(viewAreaX, (viewAreaY-1)+i, 0, 0, ml.messages[i-1], "white", "", 1)
+		PrintText(viewAreaX, (viewAreaY-1)+i, ml.messages[i-1], "white", "", 1, 0)
 		printedMessages = append(printedMessages, ml.messages[i-1])
 	}
 
@@ -61,5 +61,5 @@ func clearMessages(viewAreaX, viewAreaY, windowSizeX, windowSizeY, layer int) {
 // PrintToMessageArea clears the message area, and print a single message at the top
 func PrintToMessageArea(message string, viewAreaX, viewAreaY, windowSizeX, windowSizeY, layer int) {
 	clearMessages(viewAreaX, viewAreaY, windowSizeX, windowSizeY, layer)
-	PrintText(1, viewAreaY, 0, 0, message, "white", "", 1)
+	PrintText(1, viewAreaY, message, "white", "", 1, 0)
 }

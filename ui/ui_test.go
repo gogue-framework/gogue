@@ -58,3 +58,13 @@ func TestMessageLog_PrintMessages(t *testing.T) {
 	assert.Equal(t, "newest message", printedMessages[5])
 	assert.Equal(t, "first message", printedMessages[0])
 }
+
+func TestSplitLines(t *testing.T) {
+	testString := "The quick brown fox jumped over the lazy dog. The lazy dog was actually not that lazy, and chased the fox."
+
+	lines := SplitLines(testString, 40)
+	assert.Equal(t, 3, len(lines))
+	assert.Equal(t, "The quick brown fox jumped over the", lines[0])
+	assert.Equal(t, "lazy dog. The lazy dog was actually not", lines[1])
+	assert.Equal(t, "that lazy, and chased the fox.", lines[2])
+}

@@ -191,8 +191,8 @@ func PrintGlyph(x, y int, g Glyph, backgroundColor string, layer int, useExplore
 }
 
 // PrintText will print a string of text, starting at the (X, Y) coords provided, using the color/background color
-// provided, on the layer provided. If width and height are 0, text will be printed at standard size
-func PrintText(x, y, width, height int, text, color, backgroundColor string, layer int) {
+// provided, on the layer provided.
+func PrintText(x, y int, text, color, backgroundColor string, layer int, splitWidth int) {
 	// Set the layer first. If not provided, this defaults to 0, the base layer in BearLibTerminal
 	blt.Layer(layer)
 
@@ -210,7 +210,20 @@ func PrintText(x, y, width, height int, text, color, backgroundColor string, lay
 	}
 
 	// Finally, print the character at the provided coordinates
-	blt.PrintExt(x, y, width, height, blt.TK_ALIGN_DEFAULT, text)
+	if splitWidth > 0 {
+		// If a split width is specified, break the string into lines (on word boundaries), and print each line one cell
+		// below the previous
+		lines := SplitLines(text, splitWidth)
+
+		lineY := y
+
+		for _, line := range lines {
+			blt.Print(x, y, line)
+			lineY++
+		}
+	} else {
+		blt.Print(x, y, text)
+	}
 }
 
 // ReadInput reads the next input event from the Input queue.
