@@ -218,7 +218,7 @@ func PrintText(x, y int, text, color, backgroundColor string, layer int, splitWi
 		lineY := y
 
 		for _, line := range lines {
-			blt.Print(x, y, line)
+			blt.Print(x, lineY, line)
 			lineY++
 		}
 	} else {
