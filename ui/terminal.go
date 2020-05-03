@@ -187,7 +187,7 @@ func PrintGlyph(x, y int, g Glyph, backgroundColor string, layer int, useExplore
 	}
 
 	// Finally, print the character at the provided coordinates
-	blt.Print(x, y, string(g.Char()))
+	blt.PrintExt(x, y, 0, 0, blt.TK_ALIGN_MIDDLE, string(g.Char()))
 }
 
 // PrintText will print a string of text, starting at the (X, Y) coords provided, using the color/background color
